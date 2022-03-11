@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import { API_URL } from 'src/env';
+import { ApiService } from './api.service';
+// import { saveAs } from 'file-saver';
+import { FileSaverService } from 'ngx-filesaver';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +10,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'frontend';
+  videoURL: string = API_URL + '/static/videos/wdf-piano-example.mp4';
+  video: File;
+  constructor(private apiService: ApiService, private fileSaver: FileSaverService) {
+    this.video = new File([], 'sto');
+  }
+
+  ngOnInit() {
+    // this.apiService.downloadVideo().subscribe(blob => this.fileSaver.save(blob, 'wdf-piano-example.mp4'));
+  }
 }
