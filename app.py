@@ -5,7 +5,7 @@ import numpy as np
 from manim import *
 
 
-def shift_wg(val, vector, n , length):
+def shift_wg(val, vector, n, length):
     if n > length:
         m = n - np.floor(n/length)*length + 1
     else:
@@ -14,7 +14,6 @@ def shift_wg(val, vector, n , length):
     out = vector[m]
     vector[m] = val
     return out, vector
-
 
 
 def nl_felt(val, k):
@@ -82,7 +81,7 @@ class Simulator:
     string_velocity = (a1 - b1) / Z1
     string_position = 0
 
-    string_matrix = np.zeros(iterations, wgLength / 2)
+    string_matrix = np.zeros((iterations, int(wgLength / 2)))
     # init other values
     string_velocity_old = 0
     hammer_velocity_old = 0
@@ -126,15 +125,17 @@ class Simulator:
             self.hammer_velocity = (self.a5 - self.b5)/self.Z5
             self.hammer_position = self.hammer_position_old + (self.hammer_velocity + self.hammer_velocity_old)* self.Ts / 2
             self.hammer[n] = self.hammer_position
-            # fill string_matrix
+            # fill string_matrix TODO verify array indexing is correct
             x = np.array(1, self.wgLength/2)
-            l1 = self.wgLeft[1:self.wgLengthLeft/2]
-            l2 = self.wgLeft[self.wgLengthLeft/2 + 1:self.wgLengthLeft - 1]
+            l1 = self.wgLeft[0:self.wgLengthLeft/2 - 1]
+            l2 = self.wgLeft[self.wgLengthLeft/2:self.wgLengthLeft - 1]
             left = np.flip(l2) + l1
-            r1 = self.wgRight[1:self.wgLengthRight/2]
-            r2 = self.wgRight[self.wgLengthRight/2 + 1: self.wgLengthRight-1]
+            r1 = self.wgRight[1:self.wgLengthRight/2 - 1]
+            r2 = self.wgRight[self.wgLengthRight/2: self.wgLengthRight-1]
             right = np.flip(r2) + r1
             self.string_matrix[n][:] = np.concatenate(left, right)
+            return self.string_matrix
+
 
 app = Flask(__name__)
 CORS(app)
@@ -142,6 +143,9 @@ CORS(app)
 
 @app.route('/')
 def hello_world():  # put application's code here
+    # simulator = Simulator()
+    # matrix = simulator.run_simulation()
+    # console.log('Obtained matrix from simulation is: ', matrix)
     return 'Hello World!'
 
 
@@ -152,4 +156,7 @@ def get_wdf_video():
 
 
 if __name__ == '__main__':
-    app.run()
+    # simulator = Simulator()
+    # matrix = simulator.run_simulation()
+    # print('Obtained matrix from simulation is: ', matrix)
+    app.run() #TODO uncomment to run web application
