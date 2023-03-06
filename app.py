@@ -152,7 +152,7 @@ def hello_world():  # put application's code here
 @app.route('/video', methods=['GET'])
 def get_wdf_video():
     return send_from_directory(
-        directory='./static/videos', path='wdf-piano-example.mp4', mimetype='video/mp4', as_attachment=True)
+        directory='./static/videos', path='Visualizer.mp4', mimetype='video/mp4', as_attachment=True)
 
 
 if __name__ == '__main__':
