@@ -66,11 +66,6 @@ class Visualizer(Scene):
         config.flush_cache = True
         config.disable_caching = True
 
-        # -------------- MATLAB DATA ------------------------------------- #
-        # string = sio.loadmat('wg_out.mat')['string_matrix'] # MATLAB string
-        # string = sio.loadmat('wg_out_correct_wg_shift.mat')['string_matrix'] # MATLAB string
-        # hammer_positions = sio.loadmat('hammer.mat')['hammer']  # MATLAB hammer
-
         # -------------- PYTHON DATA --------------------------------------#
         string = MATRIX  # string obtained from current simulation
         hammer_positions = HAMMER  # PYTHON hammer
@@ -130,7 +125,9 @@ def get_wdf_video():
 
 
 if __name__ == '__main__':
-    simulator = Simulator()
-    # matrix = simulator.run_simulation()
-    # print('Obtained matrix from simulation is: ', matrix)
+    simulator = Simulator()  # create Simulator instance
+    result = simulator.run_simulation()  # run simulation
+    # print('result matrix from simulation is: ', MATRIX)
+    MATRIX = result[0]
+    HAMMER = result[1]
     app.run()
