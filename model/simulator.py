@@ -1,3 +1,8 @@
+import numpy as np
+import scipy.io as sio
+import math
+
+
 def dwg_shift(val, wg, n):
     """
     Updates the digital waveguide

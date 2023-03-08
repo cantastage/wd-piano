@@ -1,11 +1,9 @@
-# Web App imports
+# Web App related imports
 
 from flask import Flask, send_from_directory, Response, url_for, jsonify
 from flask_cors import CORS
 
-# Simulator imports
-import math
-import scipy.io as sio
+# Visualizer related imports
 from manim import *
 from model.simulator import Simulator
 
