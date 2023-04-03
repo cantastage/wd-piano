@@ -1,4 +1,10 @@
-<video width="320" height="240" controls>
+<!-- <video width="320" height="240" controls>
   <source src={{videoURL}} type="video/mp4">
 Your browser does not support the video tag.
-</video>
+</video> -->
+
+<vg-player>
+  <video [vgMedia]="$any(media)" #media id="singleVideo" preload="auto" controls>
+      <source src={{videoURL}} type="video/mp4">
+  </video>
+</vg-player>
