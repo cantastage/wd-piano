@@ -39,6 +39,7 @@ class Simulator:
     Class modeling the piano hammer-string interaction
     """
     def __init__(self):
+        # TODO add simulation parameters through dictionary that can be received from client in json format
         self.iterations = np.uintc(88200)
         self.Fs = np.uintc(44100)
         self.Ts = np.double(1 / self.Fs)

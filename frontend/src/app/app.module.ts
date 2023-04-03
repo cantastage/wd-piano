@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FileSaverModule } from 'ngx-filesaver';
 import * as FileSaver from 'file-saver';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import * as FileSaver from 'file-saver';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FileSaverModule
+    FileSaverModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
