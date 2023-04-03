@@ -10,9 +10,10 @@ from model.simulator import Simulator
 # GLOBAL VARS
 #  TODO redefine NOT as global variables
 PERIOD = 1 / 44100
-MATRIX = 0.0
-HAMMER = 0.0
-
+# MATRIX = 0.0
+# HAMMER = 0.0
+global MATRIX
+global HAMMER
 
 # ----- VISUALIZER PART ---------------
 
@@ -120,6 +121,13 @@ def hello_world():  # put application's code here
 def get_wdf_video():
     return send_from_directory(
         directory='./static/videos', path='Visualizer.mp4', mimetype='video/mp4', as_attachment=True)
+
+
+# @app.route('/simulation', methods=['GET'])
+# def get_simulation_result():
+#     result = simulator.run_simulation()
+#     MATRIX = result[0]
+#     HAMMER = result[1]
 
 
 if __name__ == '__main__':
