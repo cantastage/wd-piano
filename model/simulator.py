@@ -34,20 +34,40 @@ def nl_felt(val, k):
     return out
 
 
+def calc_wg_lengths(wg_length: int, hammer_position: float) -> (int, int):
+    """
+    Calculates the length of the left and right part of the waveguide
+
+    :param wg_length: length of the waveguide
+    :param hammer_position: position of the hammer
+    :return: length of the left part of the waveguide
+    """
+    effective_wg_length = wg_length / 2  # since wg_length is 2L, i.e. an even integer, we can divide it by 2
+    wg_left_length = math.ceil(wg_length * 0.116)
+    if wg_left_length % 2 != 0:
+        wg_left_length += 1  # if wg_left_length is odd, we add 1 to make it even
+    wg_right_length = wg_length - wg_left_length  # right part of the waveguide length
+    return wg_left_length, wg_right_length
+
+
 class Simulator:
     """
     Class modeling the piano hammer-string interaction
     """
+
     def __init__(self):
         # TODO add simulation parameters through dictionary that can be received from client in json format
         self.iterations = np.uintc(88200)
         self.Fs = np.uintc(44100)
         self.Ts = np.double(1 / self.Fs)
         self.wg_length = np.uintc(168)
-        self.wg_length_left = np.uintc(math.ceil(self.wg_length * 0.116))
-        # print('wg_length_left: ', self.wg_length_left)
-        self.wg_length_right = np.uintc(self.wg_length - self.wg_length_left)
-        # print('wg_length_right: ', self.wg_length_right)
+        calculated_lengths = calc_wg_lengths(self.wg_length, 0.116)
+        # self.wg_length_left = np.uintc(math.ceil(self.wg_length * 0.116))
+        self.wg_length_left = calculated_lengths[0]
+        print('wg_length_left: ', self.wg_length_left)
+        # self.wg_length_right = np.uintc(self.wg_length - self.wg_length_left)
+        self.wg_length_right = calculated_lengths[1]
+        print('wg_length_right: ', self.wg_length_right)
         self.K = np.double(0.98)  # soundboard reflection coefficient
         self.A = np.uintc(1000)  # linear felt stiffness TODO check if better int or float
         self.str_length = np.double(0.62)  # string length
@@ -78,7 +98,7 @@ class Simulator:
         # print(self.wg_left)
         self.wg_right = np.zeros(self.wg_length_right)
         # print('init wg_right_shape is: ', self.wg_right.shape)
-        self.string = np.zeros(self.iterations)
+        self.string = np.zeros(self.iterations)  # store values of string @ contact pt for audio file creation
         # print('init string shape is: ', self.string.shape)
         self.hammer = np.zeros(self.iterations)
         # print('init hammer shape is ', self.hammer.shape)
@@ -193,8 +213,12 @@ class Simulator:
             # print('string_matrix[', n, '] size is: ', self.string_matrix[n].size)
 
         print('Ended WDF-Piano algorithm')
+        # Creates a .mat file containing the string matrix
         file_name = 'python_string_matrix.mat'
         print('Saving simulation output to: ', file_name)
         sio.savemat(file_name, {'python_string_matrix': self.string_matrix})
+        # Create audio file with the string @ contact point
+        scaled_string = np.int16(self.string / np.max(np.abs(self.string)) * 32767)
+        audio_file_name = 'python_audio_string.wav'
+        sio.wavfile.write(audio_file_name, self.Fs, scaled_string)
         return self.string_matrix, self.hammer
-

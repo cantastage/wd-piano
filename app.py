@@ -96,7 +96,8 @@ class Visualizer(Scene):
         self.add(string_graph, hammer)
 
         # add sound
-        self.add_sound("string.wav", time_offset=1, gain=1)  # regolare time_offset in base al numero di wait effettuate prima che parta il video
+        # self.add_sound("string.wav", time_offset=1, gain=1)  # regolare time_offset in base al numero di wait effettuate prima che parta il video
+        self.add_sound("python_audio_string.wav", time_offset=1, gain=1) # with python created audio
         self.wait()
         # TODO check se la duration dell'animazione deve essere di string_shape[0] o string_shape[0] - 1
         self.play(ApplyMethod(idx_tracker.increment_value, (string_shape[0] - 1)), run_time=PERIOD * (string_shape[0] - 1))
@@ -123,17 +124,24 @@ def get_wdf_video():
         directory='./static/videos', path='Visualizer.mp4', mimetype='video/mp4', as_attachment=True)
 
 
-# @app.route('/simulation', methods=['GET'])
-# def get_simulation_result():
-#     result = simulator.run_simulation()
-#     MATRIX = result[0]
-#     HAMMER = result[1]
+@app.route('/simulation', methods=['GET'])
+def get_simulation_result():
+    global MATRIX  # to reference global variable
+    global HAMMER  # to reference global variable
+
+    simulator = Simulator()  # create Simulator instance
+    visualizer = Visualizer()  # create Visualizer instance
+    result = simulator.run_simulation()
+    MATRIX = result[0]
+    HAMMER = result[1]
+    visualizer.render()
 
 
 if __name__ == '__main__':
-    simulator = Simulator()  # create Simulator instance
-    result = simulator.run_simulation()  # run simulation
-    # print('result matrix from simulation is: ', MATRIX)
-    MATRIX = result[0]
-    HAMMER = result[1]
+    # simulator = Simulator()  # create Simulator instance
+    # visualizer = Visualizer()  # create Visualizer instance
+    # result = simulator.run_simulation()  # run simulation
+    # MATRIX = result[0]
+    # HAMMER = result[1]
+    # visualizer.render()
     app.run()

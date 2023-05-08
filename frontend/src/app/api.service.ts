@@ -39,6 +39,13 @@ export class ApiService {
       );
   }
 
+  runSimulation(): Observable<any> {  
+    return this.http.get<any>(API_URL + '/simulation')
+      .pipe(
+        catchError(this.handleError<any>('ERRORE AIUTOOO'))
+      );
+  }
+
   /**
    * Handle Http operation that failed. Taken from Angular Tour of Heroes
    * Let the app continue.
