@@ -65,8 +65,6 @@ class Visualizer(Scene):
         config.disable_caching = True
 
         # -------------- PYTHON DATA --------------------------------------#
-        # string = MATRIX  # string obtained from current simulation
-        # hammer_positions = HAMMER  # PYTHON hammer
         string = Settings.get_string()
         hammer_positions = Settings.get_hammer()
 
@@ -114,9 +112,6 @@ CORS(app)
 
 @app.route('/')
 def hello_world():  # put application's code here
-    # simulator = Simulator()
-    # matrix = simulator.run_simulation()
-    # console.log('Obtained matrix from simulation is: ', matrix)
     return 'Hello World!'
 
 
@@ -128,24 +123,13 @@ def get_wdf_video():
 
 @app.route('/simulation', methods=['GET'])
 def get_simulation_result():
-    # global MATRIX  # to reference global variable
-    # global HAMMER  # to reference global variable
-
     simulator = Simulator()  # create Simulator instance
     visualizer = Visualizer()  # create Visualizer instance
     result = simulator.run_simulation()
-    # MATRIX = result[0]
-    # HAMMER = result[1]
     Settings.set_string(result[0])
     Settings.set_hammer(result[1])
     visualizer.render()
 
 
 if __name__ == '__main__':
-    # simulator = Simulator()  # create Simulator instance
-    # visualizer = Visualizer()  # create Visualizer instance
-    # result = simulator.run_simulation()  # run simulation
-    # MATRIX = result[0]
-    # HAMMER = result[1]
-    # visualizer.render()
     app.run()
