@@ -6,14 +6,13 @@ from flask_cors import CORS
 # Visualizer related imports
 from manim import *
 from model.simulator import Simulator
+from model.settings import Settings
 
 # GLOBAL VARS
 #  TODO redefine NOT as global variables
 PERIOD = 1 / 44100
-# MATRIX = 0.0
-# HAMMER = 0.0
-global MATRIX
-global HAMMER
+# global MATRIX
+# global HAMMER
 
 # ----- VISUALIZER PART ---------------
 
@@ -66,8 +65,10 @@ class Visualizer(Scene):
         config.disable_caching = True
 
         # -------------- PYTHON DATA --------------------------------------#
-        string = MATRIX  # string obtained from current simulation
-        hammer_positions = HAMMER  # PYTHON hammer
+        # string = MATRIX  # string obtained from current simulation
+        # hammer_positions = HAMMER  # PYTHON hammer
+        string = Settings.get_string()
+        hammer_positions = Settings.get_hammer()
 
         string_shape = string.shape
         string_max_value = np.max(string)
@@ -103,6 +104,7 @@ class Visualizer(Scene):
         self.play(ApplyMethod(idx_tracker.increment_value, (string_shape[0] - 1)), run_time=PERIOD * (string_shape[0] - 1))
         self.wait()
 
+
 # --- WEB APP PART ---
 
 
@@ -126,14 +128,16 @@ def get_wdf_video():
 
 @app.route('/simulation', methods=['GET'])
 def get_simulation_result():
-    global MATRIX  # to reference global variable
-    global HAMMER  # to reference global variable
+    # global MATRIX  # to reference global variable
+    # global HAMMER  # to reference global variable
 
     simulator = Simulator()  # create Simulator instance
     visualizer = Visualizer()  # create Visualizer instance
     result = simulator.run_simulation()
-    MATRIX = result[0]
-    HAMMER = result[1]
+    # MATRIX = result[0]
+    # HAMMER = result[1]
+    Settings.set_string(result[0])
+    Settings.set_hammer(result[1])
     visualizer.render()
 
 
