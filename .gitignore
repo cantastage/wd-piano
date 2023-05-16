@@ -156,5 +156,7 @@ dmypy.json
 # Cython debug sym
 
 ### WDF-Piano project specific files ###
-*.wav # audio files generated from the simulation
-*.mat # matrix files generated from the simulation
+.wav # audio files generated from the simulation
+.mat # matrix files generated from the simulation
+
+media/
