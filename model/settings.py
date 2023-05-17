@@ -1,11 +1,7 @@
-"""
-Class containing all the settings for the simulation and other globals
-NOTE: due to manim library limitations (cannot pass arguments to scene)
-we need to store here all global variables
-"""
-
-
 class Settings(object):
+    """
+    This class contains some global variables needed by the application
+    """
     _instance = None  # singleton instance
     _string = None
     _hammer = None

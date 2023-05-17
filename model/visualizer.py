@@ -43,12 +43,12 @@ class Visualizer(Scene):
     def construct(self):
         # Config settings
         # config.custom_folders = True
-        # config.media_dir = './assets/esticazzi'
+        # config.media_dir = './assets/media'
         # config.output_file = 'prova-video.mp4'
         # config.renderer = "opengl"
         # config.write_to_movie = True
-        config.flush_cache = True
-        config.disable_caching = True
+        config.flush_cache = True  # TODO check if this is needed
+        config.disable_caching = True  # TODO check if this is needed
 
         # -------------- PYTHON DATA --------------------------------------#
         period = 1 / Settings.get_sampling_freq()  # calculated from settings TODO check if needs to be given as param
@@ -83,8 +83,7 @@ class Visualizer(Scene):
         self.add(string_graph, hammer)
 
         # add sound
-        # self.add_sound("string.wav", time_offset=1, gain=1)  # regolare time_offset in base al numero di wait effettuate prima che parta il video
-        self.add_sound("python_audio_string.wav", time_offset=1, gain=1)  # with python created audio
+        self.add_sound("python_audio_string.wav", time_offset=1, gain=1)  # TODO check time_offset to align sound to vid
         self.wait()
         # TODO check se la duration dell'animazione deve essere di string_shape[0] o string_shape[0] - 1
         self.play(ApplyMethod(idx_tracker.increment_value, (string_shape[0] - 1)),

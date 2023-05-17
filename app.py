@@ -23,8 +23,9 @@ def get_wdf_video():
 
 
 @app.route('/simulation', methods=['GET'])
+# TODO implement post request with all simulation parameters
 def get_simulation_result():
-    simulator = Simulator()  # create Simulator instance
+    simulator = Simulator(262.22, Settings.get_sampling_freq(), 0.116)  # create Simulator instance
     visualizer = Visualizer()  # create Visualizer instance
     result = simulator.run_simulation()
     Settings.set_string(result[0])

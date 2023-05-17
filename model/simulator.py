@@ -3,7 +3,7 @@ import scipy.io as sio
 import math
 
 
-def dwg_shift(val, wg, n):
+def dwg_shift(val: float, wg, n: int):
     """
     Updates the digital waveguide
 
@@ -23,9 +23,9 @@ def nl_felt(val, k):
     """
     Models the response of a nonlinear piano hammer felt
 
-    :param val:
-    :param k:
-    :return:
+    :param val: incoming waveguide value
+    :param k: Felt's elasticity coefficient
+    :return: felt's response value
     """
     if val < 0:
         out = -val
@@ -34,16 +34,17 @@ def nl_felt(val, k):
     return out
 
 
-def calc_wg_lengths(wg_length: int, hammer_position: float) -> (int, int):
+def calc_wg_lengths(f0: float, sampling_freq: int, relative_hammer_position: float) -> (int, int):
     """
-    Calculates the length of the left and right part of the waveguide
+    Calculates the length of the left and right part of the waveguide given:
 
-    :param wg_length: length of the waveguide
-    :param hammer_position: position of the hammer
-    :return: length of the left part of the waveguide
+    :param f0: fundamental frequency of the string
+    :param sampling_freq: sampling frequency
+    :param relative_hammer_position: relative position of the hammer on the string
+    :return: length of the left and right part of the waveguide
     """
-    effective_wg_length = wg_length / 2  # since wg_length is 2L, i.e. an even integer, we can divide it by 2
-    wg_left_length = math.ceil(wg_length * 0.116)
+    wg_length = round(sampling_freq / f0)  # rounded to be an integer value (in samples)
+    wg_left_length = round(wg_length * relative_hammer_position)  # round to the nearest integer position
     if wg_left_length % 2 != 0:
         wg_left_length += 1  # if wg_left_length is odd, we add 1 to make it even
     wg_right_length = wg_length - wg_left_length  # right part of the waveguide length
@@ -55,27 +56,28 @@ class Simulator:
     Class modeling the piano hammer-string interaction
     """
 
-    def __init__(self):
+    def __init__(self, f0: float, sampling_freq: int, relative_hammer_position: float):
         # TODO add simulation parameters through dictionary that can be received from client in json format
-        self.iterations = np.uintc(88200)
+        self.iterations = np.uintc(88200)  # TODO get from client
         self.Fs = np.uintc(44100)
         self.Ts = np.double(1 / self.Fs)
-        self.wg_length = np.uintc(168)
-        calculated_lengths = calc_wg_lengths(self.wg_length, 0.116)
-        # self.wg_length_left = np.uintc(math.ceil(self.wg_length * 0.116))
+        calculated_lengths = calc_wg_lengths(f0, sampling_freq, relative_hammer_position)
         self.wg_length_left = calculated_lengths[0]
         print('wg_length_left: ', self.wg_length_left)
-        # self.wg_length_right = np.uintc(self.wg_length - self.wg_length_left)
         self.wg_length_right = calculated_lengths[1]
         print('wg_length_right: ', self.wg_length_right)
-        self.K = np.double(0.98)  # soundboard reflection coefficient
+        self.wg_length = self.wg_length_left + self.wg_length_right  # NB: formula per wg_length: wg_length = Fs / f0
+        print('Total waveguide length: ', self.wg_length)
+        self.K = np.double(0.98)  # soundboard reflection coefficient TODO get from client
         self.A = np.uintc(1000)  # linear felt stiffness TODO check if better int or float
-        self.str_length = np.double(0.62)  # string length
-        self.tension = np.double(670)
-        self.hammer_initial_velocity = np.double(7)
-        self.hs_distance = np.double(0.01)  # hammer-string distance
-        self.Lh = np.double(3.93e-3)
-        self.Z = np.double(10.28)  # characteristic impedance of the string
+        self.str_length = np.double(0.62)  # string length TODO get from client
+        self.tension = np.double(670)  # TODO get from client
+        self.hammer_initial_velocity = np.double(7)  # TODO get from client
+        self.hs_distance = np.double(0.01)  # hammer-string distance # TODO get from client
+        # self.Lh = np.double(3.93e-3)  # hammer mass inductance TODO calculate from impedance analogy
+        self.Lh = np.double(8.71e-3)  # hammer mass inductance TODO calculate from impedance analogy
+        # self.Z = np.double(10.28)  # characteristic impedance of the string TODO calculate
+        self.Z = np.double(2.15)  # characteristic impedance of the string TODO calculate
 
         # Adaptations conditions (connection of WDF blocks)
         self.Z1 = self.Z
@@ -144,8 +146,9 @@ class Simulator:
     def run_simulation(self):
         """
         Runs the simulation
-        :return:
 
+        :return: string matrix containing summed waveguide values at each iteration for plotting
+        :return: hammer matrix containing matrix positions at each iteration for plotting
         """
         print('Starting WDF-Piano algorithm')
         print('Simulation will be run for: ', len(range(0, self.iterations)), ' steps')
