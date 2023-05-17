@@ -6,6 +6,7 @@ class Settings(object):
     _string = None
     _hammer = None
     _sampling_freq = 44100
+    _hammer_initial_position: float = 0.0
 
     def __new__(cls):
         if not hasattr(cls, 'instance'):
@@ -25,6 +26,10 @@ class Settings(object):
     def get_sampling_freq(cls):
         return cls._sampling_freq
 
+    @classmethod
+    def get_hammer_initial_position(cls):
+        return cls._hammer_initial_position
+
     # Setters
     @classmethod
     def set_string(cls, string):
@@ -38,3 +43,6 @@ class Settings(object):
     def set_sampling_freq(cls, sampling_freq):
         cls._sampling_freq = sampling_freq
 
+    @classmethod
+    def set_hammer_initial_position(cls, hammer_initial_position):
+        cls._hammer_initial_position = hammer_initial_position

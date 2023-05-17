@@ -2,6 +2,8 @@ import numpy as np
 import scipy.io as sio
 import math
 
+from model.settings import Settings
+
 
 def dwg_shift(val: float, wg, n: int):
     """
@@ -128,6 +130,7 @@ class Simulator:
         self.hammer_velocity = (self.a5 - self.b5) / self.Z5
         self.hammer_position = (self.b8 - self.a8) * self.C
         self.hammer_initial_position = self.hammer_position
+        # Settings.set_hammer_initial_position(self.hammer_initial_position)
         self.string_velocity = (self.a1 - self.b1) / self.Z1
         self.string_position = np.double(0)
 
