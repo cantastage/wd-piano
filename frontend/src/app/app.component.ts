@@ -10,6 +10,7 @@ import { FileSaverService } from 'ngx-filesaver';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  appTitle: string = 'WDF-Piano';
   videoURL: string = API_URL + '/static/videos/Visualizer.mp4';
   video: File;
   constructor(private apiService: ApiService, private fileSaver: FileSaverService) {
