@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<!-- <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">{{appTitle}}</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,24 +33,34 @@
       </form>
     </div>
   </div>
+</nav> -->
+<nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      <span class="material-icons">piano</span>
+      {{appTitle}}
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <!-- Collapsable content -->
+    </div>
+  </div>
 </nav>
 
+<!-- Parameters input -->
+<app-parameters></app-parameters>
 
 <!-- Standard HTML5 video player -->
-<video width="320" height="240" controls>
+<!-- <video width="320" height="240" controls>
   <source src={{videoURL}} type="video/mp4">
 Your browser does not support the video tag.
-</video>
+</video> -->
 
 <!-- DEBUG run simulation -->
 <button type="button" class="btn" (click)="runSimulation()">RUN SIMULATION</button>
-
-<!-- Videogular videoplayer -->
-<!-- <vg-player>
-  <video [vgMedia]="$any(media)" #media id="singleVideo" preload="auto" controls>
-      <source src={{videoURL}} type="video/mp4">
-  </video>
-</vg-player> -->
 
 <!-- Trying piano component -->
 <app-piano-keyboard></app-piano-keyboard>

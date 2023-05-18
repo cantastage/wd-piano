@@ -6,11 +6,13 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PianoKeyboardComponent } from './piano-keyboard/piano-keyboard.component';
+import { ParametersComponent } from './parameters/parameters.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PianoKeyboardComponent
+    PianoKeyboardComponent,
+    ParametersComponent
   ],
   imports: [
     BrowserModule,
