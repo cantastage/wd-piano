@@ -20,11 +20,9 @@
     "@angular/platform-browser": "^16.0.2",
     "@angular/platform-browser-dynamic": "^16.0.2",
     "@angular/router": "^16.0.2",
-    "@videogular/ngx-videogular": "^7.0.1",
     "boostrap": "^2.0.0",
     "bootstrap": "^5.3.0-alpha3",
     "file-saver": "^2.0.5",
-    "ngx-filesaver": "^13.0.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"

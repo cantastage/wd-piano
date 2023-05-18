@@ -32,7 +32,6 @@
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "./node_modules/@videogular/ngx-videogular/fonts/videogular.css",
               "src/styles.scss"
             ],
             "scripts": [

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { API_URL } from 'src/env';
 import { ApiService } from './api.service';
 // import { saveAs } from 'file-saver';
-import { FileSaverService } from 'ngx-filesaver';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +12,7 @@ export class AppComponent {
   appTitle: string = 'WDF-Piano';
   videoURL: string = API_URL + '/static/videos/Visualizer.mp4';
   video: File;
-  constructor(private apiService: ApiService, private fileSaver: FileSaverService) {
+  constructor(private apiService: ApiService) {
     this.video = new File([], 'sto');
   }
 
