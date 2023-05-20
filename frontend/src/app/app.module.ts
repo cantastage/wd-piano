@@ -24,7 +24,7 @@ import { FormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     MatSliderModule,
     MatCardModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

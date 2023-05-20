@@ -35,4 +35,9 @@ export class ParametersComponent {
     return `${value}`;
   }
   constructor(private apiService:ApiService) { }
+
+  // TODO complete method with return result
+  runSimulation(): void {
+    this.apiService.runSimulation().subscribe(() => console.log('Simulation started'));
+  }
 }

@@ -19,8 +19,4 @@ export class AppComponent {
   ngOnInit() {
     // this.apiService.downloadVideo().subscribe(blob => this.fileSaver.save(blob, 'wdf-piano-example.mp4'));
   }
-
-  runSimulation(): void {
-    this.apiService.runSimulation().subscribe(() => console.log('Simulation started'));
-  }
 }
