@@ -5,7 +5,9 @@ export class SimulationParameters {
      * @param iterations - the number of iterations to be performed
      * @samplingFrequency - the sampling frequency of the simulation in Hz
      * @param stringFrequency - the fundamental frequency of the string in Hz
-     * @param stringTension - the tension of the string in N
+     * @param stringTension - the tension of the string at rest in N
+     * @param stringLength - the length of the string in cm
+     * @param stringDiameter - the diameter of the string in mm
      * @param soundboardReflectionCoefficient - the reflection coefficient of the soundboard
      * @param hammerMass - the mass of the hammer in g
      * @param linearFeltStiffness - the linear stiffness of the felt in N/m
@@ -17,6 +19,8 @@ export class SimulationParameters {
     private samplingFrequency: number = 44100;
     private stringFrequency: number = 440;
     private stringTension: number = 670;
+    private stringLength: number = 65.7;
+    private stringDiameter: number = 1.064; // in mm
     private soundboardReflectionCoefficient:number = 0.98;
     private hammerMass: number = 8.71;
     private linearFeltStiffness = 1000;
@@ -27,7 +31,9 @@ export class SimulationParameters {
     constructor(iterations: number, 
         samplingFrequency: number, 
         stringFrequency: number, 
-        stringTension: number, 
+        stringTension: number,
+        stringLength: number,
+        stringDiameter: number, 
         soundboardReflectionCoefficient: number,
         hammerMass: number,
         linearFeltStiffness: number,
@@ -38,6 +44,8 @@ export class SimulationParameters {
             this.samplingFrequency = samplingFrequency; 
             this.stringFrequency = stringFrequency;     
             this.stringTension = stringTension; 
+            this.stringLength = stringLength;
+            this.stringDiameter = stringDiameter;
             this.soundboardReflectionCoefficient = soundboardReflectionCoefficient; 
             this.hammerMass = hammerMass;
             this.linearFeltStiffness = linearFeltStiffness;   
@@ -60,6 +68,14 @@ export class SimulationParameters {
 
     public getStringTension(): number {
         return this.stringTension
+    }
+
+    public getStringLength(): number {
+        return this.stringLength;
+    }
+
+    public getStringDiameter(): number {
+        return this.stringDiameter;
     }
 
     public getSoundboardReflectionCoefficient(): number {   

@@ -47,18 +47,30 @@
         <div class="row">
           <div class="col-lg-4">
             <label for="hammerInitialVelocity" class="form-label">Initial velocity [m/s]</label>
-            <input type="number" min={{minHammerInitialVelocity}} max={{maxHammerInitialVelocity}} class="form-control" id="hammerInitialVelocity"
-              [(ngModel)]="hammerInitialVelocity">
+            <input type="number" min={{minHammerInitialVelocity}} max={{maxHammerInitialVelocity}} class="form-control"
+              id="hammerInitialVelocity" [(ngModel)]="hammerInitialVelocity">
           </div>
           <div class="col-lg-4">
             <label for="hammerRelativeStrikingPoint" class="form-label">Hammer Relative Striking Point [%]</label>
-            <input type="number" min={{minHammerRelativeStrikingPoint}} max={{maxHammerRelativeStrikingPoint}}  class="form-control" id="hammerRelativeStrikingPoint"
-              [(ngModel)]="hammerRelativeStrikingPoint">
+            <input type="number" min={{minHammerRelativeStrikingPoint}} max={{maxHammerRelativeStrikingPoint}}
+              class="form-control" id="hammerRelativeStrikingPoint" [(ngModel)]="hammerRelativeStrikingPoint">
           </div>
           <div class="col-lg-4">
             <label for="hammerStringDistance" class="form-label">Hammer-String Distance [cm]</label>
-            <input type="number" min={{minHammerStringDistance}} max={{maxHammerStringDistance}}  class="form-control" id="hammerStringDistance"
-              [(ngModel)]="hammerStringDistance">
+            <input type="number" min={{minHammerStringDistance}} max={{maxHammerStringDistance}} class="form-control"
+              id="hammerStringDistance" [(ngModel)]="hammerStringDistance">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6">
+            <label for="stringLength" class="form-label">String Length [cm]</label>
+            <input type="number" min={{minStringLength}} max={{maxStringLength}} class="form-control" id="stringLength"
+              [(ngModel)]="stringLength">
+          </div>
+          <div class="col-lg-6">
+            <label for="stringDiameter" class="form-label">String Diameter [mm]</label>
+            <input type="number" min={{minStringDiameter}} max={{maxStringDiameter}} class="form-control" id="stringDiameter"
+              [(ngModel)]="stringDiameter">
           </div>
         </div>
       </div>

@@ -36,7 +36,7 @@ def nl_felt(val, k):
     return out
 
 
-def calc_wg_lengths(f0: float, sampling_freq: int, relative_hammer_position: float) -> (int, int):
+def get_wg_lengths(f0: float, sampling_freq: int, relative_hammer_position: float) -> (int, int):
     """
     Calculates the length of the left and right part of the waveguide given:
 
@@ -53,33 +53,55 @@ def calc_wg_lengths(f0: float, sampling_freq: int, relative_hammer_position: flo
     return wg_left_length, wg_right_length
 
 
+def get_string_impedance(string_tension: float, string_diameter: float, string_volumetric_density: float) -> float:
+    """
+    Calculates the characteristic impedance of the string
+    :param string_tension: the tension of the string in N
+    :param string_diameter: the diameter of the string in m
+    :param string_volumetric_density: the linear mass density of the string in kg/m
+    :return: the characteristic impedance of the string in Ns/m
+    """
+    string_section = math.pi * (string_diameter / 2) ** 2
+    string_linear_density = string_volumetric_density * string_section
+    string_characteristic_impedance = math.sqrt(string_tension * string_linear_density)
+    return string_characteristic_impedance
+
+
 class Simulator:
     """
     Class modeling the piano hammer-string interaction
     """
 
-    def __init__(self, f0: float, sampling_freq: int, relative_hammer_position: float):
-        # TODO add simulation parameters through dictionary that can be received from client in json format
-        self.iterations = np.uintc(88200)  # TODO get from client
-        self.Fs = np.uintc(44100)
+    def __init__(self, iterations: int,
+                 sampling_freq: int,
+                 string_frequency: float,
+                 string_tension: float,
+                 string_length: float,
+                 string_diameter: float,
+                 soundboard_reflection_coefficient: float,
+                 hammer_mass: float,
+                 linear_felt_stiffness: float,
+                 hammer_relative_striking_point: float,
+                 hammer_initial_velocity: float,
+                 hammer_string_distance: float):
+        self.iterations = iterations
+        self.Fs = sampling_freq
         self.Ts = np.double(1 / self.Fs)
-        calculated_lengths = calc_wg_lengths(f0, sampling_freq, relative_hammer_position)
-        self.wg_length_left = calculated_lengths[0]
+        wg_lengths = get_wg_lengths(string_frequency, sampling_freq, hammer_relative_striking_point)
+        self.wg_length_left = wg_lengths[0]
         print('wg_length_left: ', self.wg_length_left)
-        self.wg_length_right = calculated_lengths[1]
+        self.wg_length_right = wg_lengths[1]
         print('wg_length_right: ', self.wg_length_right)
         self.wg_length = self.wg_length_left + self.wg_length_right  # NB: formula per wg_length: wg_length = Fs / f0
         print('Total waveguide length: ', self.wg_length)
-        self.K = np.double(0.98)  # soundboard reflection coefficient TODO get from client
-        self.A = np.uintc(1000)  # linear felt stiffness TODO check if better int or float
-        self.str_length = np.double(0.62)  # string length TODO get from client
-        self.tension = np.double(670)  # TODO get from client
-        self.hammer_initial_velocity = np.double(7)  # TODO get from client
-        self.hs_distance = np.double(0.01)  # hammer-string distance # TODO get from client
-        # self.Lh = np.double(3.93e-3)  # hammer mass inductance TODO calculate from impedance analogy
-        self.Lh = np.double(8.71e-3)  # hammer mass inductance TODO calculate from impedance analogy
-        # self.Z = np.double(10.28)  # characteristic impedance of the string TODO calculate
-        self.Z = np.double(2.15)  # characteristic impedance of the string TODO calculate
+        self.K = soundboard_reflection_coefficient
+        self.A = linear_felt_stiffness
+        self.str_length = Settings.get_sound_speed_in_air() / sampling_freq  # string length in m
+        self.tension = string_tension
+        self.hammer_initial_velocity = hammer_initial_velocity
+        self.hs_distance = hammer_string_distance  # hammer-string distance
+        self.Lh = hammer_mass  # hammer mass inductance in kg
+        self.Z = get_string_impedance(string_tension, string_diameter, Settings.get_string_volumetric_density())
 
         # Adaptations conditions (connection of WDF blocks)
         self.Z1 = self.Z
@@ -220,9 +242,10 @@ class Simulator:
 
         print('Ended WDF-Piano algorithm')
         # Creates a .mat file containing the string matrix
-        file_name = 'python_string_matrix.mat'
-        print('Saving simulation output to: ', file_name)
-        sio.savemat(file_name, {'python_string_matrix': self.string_matrix})
+        # file_name = 'python_string_matrix.mat'
+        # print('Saving simulation output to: ', file_name)
+        # sio.savemat(file_name, {'python_string_matrix': self.string_matrix})
+
         # Create audio file with the string @ contact point
         scaled_string = np.int16(self.string / np.max(np.abs(self.string)) * 32767)
         audio_file_name = 'python_audio_string.wav'

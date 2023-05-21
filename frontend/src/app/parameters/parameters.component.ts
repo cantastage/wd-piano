@@ -8,26 +8,33 @@ import { SimulationParameters } from '../model/SimulationParameters';
   styleUrls: ['./parameters.component.scss']
 })
 export class ParametersComponent {
+  // NOTE: all default values are referred to the C4 note of the piano
   iterations: number = 88200;
   minIterations: number = 1;
   maxIterations: number = 200000;
-  samplingFrequency: number = 44100;
-  stringFrequency = 262.22; // C4
-  minStringFrequency: number = 0;
-  maxStringFrequency: number = 20000;
-  stringTension: number = 670;
-  minStringTension: number = 0; // TODO check suitable range
-  maxStringTension: number = 1000; // TODO check suitable range
+  samplingFrequency: number = 44100; // in Hz
+  stringFrequency = 262.22; // in Hz
+  minStringFrequency: number = 20; // in Hz
+  maxStringFrequency: number = 20000; // in Hz
+  stringTension: number = 670; // in N
+  minStringTension: number = 400; // in N
+  maxStringTension: number = 1000; // in N
+  stringLength: number = 65.7; // in cm
+  minStringLength: number = 5; // in cm
+  maxStringLength: number = 500; // in cm 
+  stringDiameter: number = 1.064; // in mm
+  minStringDiameter: number = 0.5; // in mm
+  maxStringDiameter: number = 2; // in mm
   soundBoardReflectionCoefficient: number = 0.98;
   minSoundboardReflectionCoefficient: number = 0; // TODO check suitable range
   maxSoundboardReflectionCoefficient: number = 1; // TODO check suitable range
-  hammerMass: number = 0;
-  minHammerMass: number = 0; // TODO check suitable range
-  maxHammerMass: number = 1000; // TODO check suitable range
+  hammerMass: number = 8.71;
+  minHammerMass: number = 5; 
+  maxHammerMass: number = 10; 
   linearFeltStiffness: number = 1000;
   minLinearFeltStiffness: number = 0; // TODO check suitable range
   maxLinearFeltStiffness: number = 10000; // TODO check suitable range
-  hammerInitialVelocity: number = 0;
+  hammerInitialVelocity: number = 7;
   minHammerInitialVelocity: number = 0; // TODO check suitable range
   maxHammerInitialVelocity: number = 10; // TODO check suitable range
   hammerRelativeStrikingPoint: number = 0.116;
@@ -50,10 +57,26 @@ export class ParametersComponent {
   constructor(private apiService:ApiService) { }
 
   // TODO complete method with return result
-  runSimulation(simulationParams: SimulationParameters): void {
-    this.apiService.runSimulation(simulationParams)
+  runSimulation(): void {
+    this.apiService.runSimulation(this.packSimulationParameters())
     .subscribe((data) => {
       console.log('Returned data: ' + data)
     });
+  }
+
+  private packSimulationParameters(): SimulationParameters {
+    let simulationSettings = new SimulationParameters(this.iterations,
+      this.samplingFrequency,
+      this.stringFrequency,
+      this.stringTension,
+      this.stringLength,
+      this.stringDiameter,
+      this.soundBoardReflectionCoefficient,
+      this.hammerMass,
+      this.linearFeltStiffness,
+      this.hammerRelativeStrikingPoint,
+      this.hammerInitialVelocity,
+      this.hammerStringDistance);
+      return simulationSettings;
   }
 }

@@ -1,10 +1,11 @@
 # Web App related imports
 
-from flask import Flask, send_from_directory, Response, url_for, jsonify
+from flask import Flask, send_from_directory, request
 from flask_cors import CORS
 
 from model.simulator import Simulator
 from model.settings import Settings
+from model.utils import Utils
 from model.visualizer import Visualizer
 
 app = Flask(__name__)
@@ -22,16 +23,17 @@ def get_wdf_video():
         directory='./static/videos', path='Visualizer.mp4', mimetype='video/mp4', as_attachment=True)
 
 
-@app.route('/simulation', methods=['GET'])
+@app.route('/simulation', methods=['POST'])
 # TODO implement post request with all simulation parameters
-def get_simulation_result():
-    simulator = Simulator(262.22, Settings.get_sampling_freq(), 0.116)  # create Simulator instance
+def run_simulation():
+    simulation_settings = request.json
+    scaled_parameters = Utils.parse_simulation_settings(simulation_settings)
+    simulator = Simulator(scaled_parameters)  # TODO: parse params from dictionary
     visualizer = Visualizer()  # create Visualizer instance
     result = simulator.run_simulation()
     Settings.set_string(result[0])
     Settings.set_hammer(result[1])
     visualizer.render()
-
 
 if __name__ == '__main__':
     app.run()
