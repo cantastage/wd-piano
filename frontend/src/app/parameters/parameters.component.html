@@ -1,67 +1,70 @@
 <div class="accordion" id="accordionPanelsStayOpenExample">
-    <div class="accordion-item">
-      <h2 class="accordion-header">
-        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-          String Parameters
-        </button>
-      </h2>
-      <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
-        <div class="accordion-body">
-            <!-- TODO fill with string params -->
-            <div class="row">
-              <div class="col-lg-6">
-                <label for="stringFrequency" class="form-label">Frequency [Hz]</label>
-                <input type="number" min="20" max="20000" class="form-control" id="stringFrequency" placeholder="440">
-              </div>
-              <div class="col-lg-6">
-                <label for="stringTension" class="form-label">Tension [N]</label>
-                <input type="number" min="0" max="1000" class="form-control" id="stringTension">
-              </div>
-            </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse"
+        data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+        Simulation Settings
+      </button>
+    </h2>
+    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+      <div class="accordion-body">
+        <!-- TODO fill with simulation params -->
+        <div class="row">
+          <div class="col-lg-4">
+            <label for="numIterations" class="form-label">Iterations</label>
+            <input type="number" min={{minIterations}} max={{maxIterations}} class="form-control" id="numIterations"
+              [(ngModel)]="iterations">
+          </div>
+          <div class="col-lg-4">
+            <label for="stringFrequency" class="form-label">String Frequency [Hz]</label>
+            <input type="number" min={{minStringFrequency}} max={{maxStringFrequency}} class="form-control"
+              id="stringFrequency" [(ngModel)]="stringFrequency">
+          </div>
+          <div class="col-lg-4">
+            <label for="stringTension" class="form-label">String Tension [N]</label>
+            <input type="number" min={{minStringTension}} max={{maxStringTension}} class="form-control"
+              id="stringTension" [(ngModel)]="stringTension">
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="accordion-item">
-      <h2 class="accordion-header">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-          Hammer Parameters
-        </button>
-      </h2>
-      <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
-        <div class="accordion-body">
-          <div class="row">
-            <div class="col-lg-4">
-              <label for="relativeStrikingPoint" class="form-label">Relative striking point [%]</label>
-              <input type="number" class="form-control" id="relativeStrikingPoint" placeholder="440">
-            </div>
-            <div class="col-lg-4">
-              <label for="hammerMass" class="form-label">Mass [g]</label>
-              <input type="number" min="5" max="11" class="form-control" id="hammerMass">
-            </div>
-            <div class="col-lg-4">
-              <label for="hammerInitialVelocity" class="form-label">Initial velocity [m/s]</label>
-              <input type="number" min="5" max="11" class="form-control" id="hammerInitialVelocity">
-            </div>
+        <!-- Another row of parameters -->
+        <div class="row">
+          <div class="col-lg-4">
+            <label for="soundboardReflectionCoeffiecient" class="form-label">Soundboard Reflection Coeffiecient</label>
+            <input type="number" min={{minSoundboardReflectionCoefficient}} max={{maxSoundboardReflectionCoefficient}}
+              class="form-control" id="soundboardReflectionCoeffiecient" [(ngModel)]="soundBoardReflectionCoefficient">
+          </div>
+          <div class="col-lg-4">
+            <label for="hammerMass" class="form-label">Hammer Mass [g]</label>
+            <input type="number" min={{minHammerMass}} max={{maxHammerMass}} class="form-control" id="hammerMass"
+              [(ngModel)]="hammerMass">
+          </div>
+          <div class="col-lg-4">
+            <label for="linearFeltStiffness" class="form-label">Linear Felt Stiffness [N/m]</label>
+            <input type="number" min={{minLinearFeltStiffness}} max={{maxLinearFeltStiffness}} class="form-control"
+              id="linearFeltStiffness" [(ngModel)]="linearFeltStiffness">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4">
+            <label for="hammerInitialVelocity" class="form-label">Initial velocity [m/s]</label>
+            <input type="number" min={{minHammerInitialVelocity}} max={{maxHammerInitialVelocity}} class="form-control" id="hammerInitialVelocity"
+              [(ngModel)]="hammerInitialVelocity">
+          </div>
+          <div class="col-lg-4">
+            <label for="hammerRelativeStrikingPoint" class="form-label">Hammer Relative Striking Point [%]</label>
+            <input type="number" min={{minHammerRelativeStrikingPoint}} max={{maxHammerRelativeStrikingPoint}}  class="form-control" id="hammerRelativeStrikingPoint"
+              [(ngModel)]="hammerRelativeStrikingPoint">
+          </div>
+          <div class="col-lg-4">
+            <label for="hammerStringDistance" class="form-label">Hammer-String Distance [cm]</label>
+            <input type="number" min={{minHammerStringDistance}} max={{maxHammerStringDistance}}  class="form-control" id="hammerStringDistance"
+              [(ngModel)]="hammerStringDistance">
           </div>
         </div>
       </div>
-    </div>
-    <div clas="row">
-      <div class="col-auto">
-        <!-- <button type="submit" class="btn btn-primary" (click)="runSimulation()">RUN SIMULATION</button> -->
-      </div>
-    </div>
-    
-    <!-- <div class="accordion-item">
-      <h2 class="accordion-header">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-          Accordion Item #3
-        </button>
-      </h2>
-      <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
-        <div class="accordion-body">
-          <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+      <div clas="row">
+        <div class="col-auto">
+          <button type="submit" class="btn btn-primary" (click)="runSimulation()">RUN SIMULATION</button>
         </div>
       </div>
-    </div> -->
-  </div>
+    </div>
