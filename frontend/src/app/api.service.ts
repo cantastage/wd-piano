@@ -4,6 +4,7 @@ import { API_URL } from 'src/env';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { VideoUrlObject } from './videoUrlObject';
+import { SimulationParameters } from './model/SimulationParameters';
 
 @Injectable({
   providedIn: 'root'
@@ -39,8 +40,10 @@ export class ApiService {
       );
   }
 
-  runSimulation(): Observable<any> {  
-    return this.http.get<any>(API_URL + '/simulation')
+  runSimulation(simulationParams: SimulationParameters): Observable<any> {  
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    const body = JSON.stringify(simulationParams);
+    return this.http.post<any>(API_URL + '/simulation', body, { 'headers': headers })
       .pipe(
         catchError(this.handleError<any>('ERRORE AIUTOOO'))
       );
