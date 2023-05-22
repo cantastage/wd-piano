@@ -27,13 +27,15 @@ def get_wdf_video():
 # TODO implement post request with all simulation parameters
 def run_simulation():
     simulation_settings = request.json
-    scaled_parameters = Utils.parse_simulation_settings(simulation_settings)
-    simulator = Simulator(scaled_parameters)  # TODO: parse params from dictionary
-    visualizer = Visualizer()  # create Visualizer instance
-    result = simulator.run_simulation()
-    Settings.set_string(result[0])
-    Settings.set_hammer(result[1])
-    visualizer.render()
+    print('received from client: ', simulation_settings)
+    # scaled_parameters = Utils.parse_simulation_settings(simulation_settings)
+    # simulator = Simulator(scaled_parameters)  # TODO: parse params from dictionary
+    # visualizer = Visualizer()  # create Visualizer instance
+    # result = simulator.run_simulation()
+    # Settings.set_string(result[0])
+    # Settings.set_hammer(result[1])
+    # visualizer.render()
+
 
 if __name__ == '__main__':
     app.run()

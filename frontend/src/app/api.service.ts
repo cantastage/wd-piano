@@ -4,7 +4,7 @@ import { API_URL } from 'src/env';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { VideoUrlObject } from './videoUrlObject';
-import { SimulationParameters } from './model/SimulationParameters';
+import { WDParam } from './model/wd-settings';
 
 @Injectable({
   providedIn: 'root'
@@ -40,7 +40,7 @@ export class ApiService {
       );
   }
 
-  runSimulation(simulationParams: SimulationParameters): Observable<any> {  
+  runSimulation(simulationParams: Object): Observable<any> {  
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const body = JSON.stringify(simulationParams);
     return this.http.post<any>(API_URL + '/simulation', body, { 'headers': headers })
