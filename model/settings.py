@@ -46,39 +46,6 @@ class Settings(object):
         return cls._sampling_frequency
 
     @classmethod
-    def set_wd_params(cls, iterations,
-                      sampling_frequency,
-                      sound_speed,
-                      string_fundamental_freq,
-                      string_tension,
-                      string_length,
-                      string_diameter,
-                      string_volumetric_density,
-                      soundboard_reflection_coefficient,
-                      hammer_mass,
-                      linear_felt_stiffness,
-                      hammer_relative_striking_point,
-                      hammer_initial_velocity,
-                      hammer_string_distance):
-        """
-        This method sets all the simulation parameters in one call
-        """
-        cls._iterations = iterations
-        cls._sampling_frequency = sampling_frequency
-        cls._sound_speed = sound_speed
-        cls._string_fundamental_freq = string_fundamental_freq
-        cls._string_tension = string_tension
-        cls._string_length = string_length
-        cls._string_diameter = string_diameter
-        cls._string_volumetric_density = string_volumetric_density
-        cls._soundboard_reflection_coefficient = soundboard_reflection_coefficient
-        cls._hammer_mass = hammer_mass
-        cls._hammer_relative_striking_point = hammer_relative_striking_point
-        cls._hammer_initial_velocity = hammer_initial_velocity
-        cls._hammer_string_distance = hammer_string_distance
-        cls._linear_felt_stiffness = linear_felt_stiffness
-
-    @classmethod
     def get_string_fundamental_freq(cls):
         return cls._string_fundamental_freq
 
@@ -93,6 +60,38 @@ class Settings(object):
     @classmethod
     def get_string_diameter(cls):
         return cls._string_diameter
+
+    @classmethod
+    def set_wd_params(cls, iterations,
+                      sampling_frequency,
+                      sound_speed,
+                      string_fundamental_frequency,
+                      string_tension,
+                      string_length,
+                      string_diameter,
+                      soundboard_reflection_coefficient,
+                      hammer_mass,
+                      hammer_relative_striking_point,
+                      hammer_initial_velocity,
+                      hammer_string_distance,
+                      linear_felt_stiffness):
+        """
+        This method sets all the simulation parameters in one call
+        """
+        cls._iterations = iterations
+        cls._sampling_frequency = sampling_frequency
+        cls._sound_speed = sound_speed
+        cls._string_fundamental_freq = string_fundamental_frequency
+        cls._string_tension = string_tension
+        cls._string_length = string_length
+        cls._string_diameter = string_diameter
+        cls._string_volumetric_density = string_volumetric_density
+        cls._soundboard_reflection_coefficient = soundboard_reflection_coefficient
+        cls._hammer_mass = hammer_mass
+        cls._hammer_relative_striking_point = hammer_relative_striking_point
+        cls._hammer_initial_velocity = hammer_initial_velocity
+        cls._hammer_string_distance = hammer_string_distance
+        cls._linear_felt_stiffness = linear_felt_stiffness
 
     @classmethod
     def get_soundboard_reflection_coefficient(cls):

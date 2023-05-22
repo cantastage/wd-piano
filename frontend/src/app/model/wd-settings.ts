@@ -3,6 +3,7 @@ export interface WDParam {
     value: number;
     min: number;
     max: number;
+    unit: string;
 }
 
 export interface SimpleWDParam {
@@ -10,20 +11,21 @@ export interface SimpleWDParam {
     value: number;
 }
 
+// TODO add units of measure 
 export const WDPARAMS: WDParam[] = [
-    { name: 'iterations', value: 88200, min: 1, max: 200000 },
-    { name: 'samplingFrequency', value: 44100, min: 1, max: 200000 },
-    { name: 'soundSpeed', value: 331, min: 300, max: 400 },  // in m/s
-    { name: 'stringFrequency', value: 262.22, min: 20, max: 20000 },
-    { name: 'stringTension', value: 670, min: 400, max: 1000 },
-    { name: 'stringLength', value: 65.7, min: 5, max: 500 },
-    { name: 'stringDiameter', value: 1.064, min: 0.5, max: 2 },
-    { name: 'soundboardReflectionCoefficient', value: 0.98, min: 0, max: 1 },
-    { name: 'hammerMass', value: 8.71, min: 5, max: 10 },
-    { name: 'hammerRelativeStrikingPoint', value: 0.116, min: 0, max: 1 },
-    { name: 'hammerInitialVelocity', value: 7, min: 0, max: 10 },
-    { name: 'hammerStringDistance', value: 0.01, min: 0, max: 30 },
-    { name: 'linearFeltStiffness', value: 1000, min: 0, max: 10000 },
+    { name: 'iterations', value: 88200, min: 1, max: 200000, unit: 'steps' },
+    { name: 'samplingFrequency', value: 44100, min: 1, max: 200000, unit: 'Hz' },
+    { name: 'soundSpeed', value: 331, min: 300, max: 400, unit: 'm/s'},  // in m/s
+    { name: 'stringFundamentalFrequency', value: 262.22, min: 20, max: 20000, unit: 'Hz' },
+    { name: 'stringTension', value: 670, min: 400, max: 1000, unit: 'N' },
+    { name: 'stringLength', value: 65.7, min: 5, max: 500, unit: 'cm' },
+    { name: 'stringDiameter', value: 1.064, min: 0.5, max: 2, unit: 'mm' },
+    { name: 'soundboardReflectionCoefficient', value: 98, min: 0, max: 100, unit: '%' },
+    { name: 'hammerMass', value: 8.71, min: 5, max: 11, unit: 'g' },
+    { name: 'hammerRelativeStrikingPoint', value: 0.116, min: 0, max: 1, unit: '%' },
+    { name: 'hammerInitialVelocity', value: 7, min: 0, max: 10, unit: 'm/s' },
+    { name: 'hammerStringDistance', value: 10, min: 0, max: 30, unit: 'cm' },
+    { name: 'linearFeltStiffness', value: 1000, min: 0, max: 10000, unit: 'N/m' },
 ]
 
 // export class WDParameters {

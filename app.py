@@ -26,15 +26,40 @@ def get_wdf_video():
 @app.route('/simulation', methods=['POST'])
 # TODO implement post request with all simulation parameters
 def run_simulation():
-    simulation_settings = request.json
-    print('received from client: ', simulation_settings)
-    scaled_parameters = Utils.parse_simulation_settings(simulation_settings)
-    # simulator = Simulator(scaled_parameters)  # TODO: parse params from dictionary
-    # visualizer = Visualizer()  # create Visualizer instance
-    # result = simulator.run_simulation()
-    # Settings.set_string(result[0])
-    # Settings.set_hammer(result[1])
-    # visualizer.render()
+    received_wd_parameters = request.json
+    # print('received from client: ', received_wd_parameters)
+    scaled = Utils.scale_wd_parameters(received_wd_parameters)
+    Settings.set_wd_params(scaled['iterations'],
+                           scaled['samplingFrequency'],
+                           scaled['soundSpeed'],
+                           scaled['stringFundamentalFrequency'],
+                           scaled['stringTension'],
+                           scaled['stringLength'],
+                           scaled['stringDiameter'],
+                           scaled['soundboardReflectionCoefficient'],
+                           scaled['hammerMass'],
+                           scaled['hammerRelativeStrikingPoint'],
+                           scaled['hammerInitialVelocity'],
+                           scaled['hammerStringDistance'],
+                           scaled['linearFeltStiffness'])
+    simulator = Simulator(scaled['iterations'],
+                          scaled['samplingFrequency'],
+                          scaled['soundSpeed'],
+                          scaled['stringFundamentalFrequency'],
+                          scaled['stringTension'],
+                          scaled['stringLength'],
+                          scaled['stringDiameter'],
+                          scaled['soundboardReflectionCoefficient'],
+                          scaled['hammerMass'],
+                          scaled['hammerRelativeStrikingPoint'],
+                          scaled['hammerInitialVelocity'],
+                          scaled['hammerStringDistance'],
+                          scaled['linearFeltStiffness'])
+    visualizer = Visualizer()  # create Visualizer instance
+    result = simulator.run_simulation()
+    Settings.set_string(result[0])
+    Settings.set_hammer(result[1])
+    visualizer.render()
 
 
 if __name__ == '__main__':

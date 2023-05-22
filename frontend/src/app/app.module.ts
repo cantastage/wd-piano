@@ -10,12 +10,14 @@ import { ParametersComponent } from './parameters/parameters.component';
 import {MatSliderModule} from '@angular/material/slider';
 import {MatCardModule} from '@angular/material/card';
 import { FormsModule } from '@angular/forms';
+import { CamelcaseToWordsPipe } from './camelcase-to-words.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     PianoKeyboardComponent,
-    ParametersComponent
+    ParametersComponent,
+    CamelcaseToWordsPipe
   ],
   imports: [
     BrowserModule,

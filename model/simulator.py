@@ -74,16 +74,17 @@ class Simulator:
 
     def __init__(self, iterations: int,
                  sampling_freq: int,
+                 sound_speed: float,
                  string_frequency: float,
                  string_tension: float,
                  string_length: float,
                  string_diameter: float,
                  soundboard_reflection_coefficient: float,
                  hammer_mass: float,
-                 linear_felt_stiffness: float,
                  hammer_relative_striking_point: float,
                  hammer_initial_velocity: float,
-                 hammer_string_distance: float):
+                 hammer_string_distance: float,
+                 linear_felt_stiffness: float):
         self.iterations = iterations
         self.Fs = sampling_freq
         self.Ts = np.double(1 / self.Fs)
