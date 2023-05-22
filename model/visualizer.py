@@ -51,8 +51,8 @@ class Visualizer(Scene):
         # config.output_file = 'prova-video.mp4'
         # config.renderer = "opengl"
         # config.write_to_movie = True
-        config.flush_cache = True  # TODO check if this is needed
-        config.disable_caching = True  # TODO check if this is needed
+        # config.flush_cache = True  # TODO check if this is needed
+        # config.disable_caching = True  # TODO check if this is needed
 
         # -------------- PYTHON DATA --------------------------------------#
         period = 1 / Settings.get_sampling_freq()  # calculated from settings TODO check if needs to be given as param
@@ -84,7 +84,7 @@ class Visualizer(Scene):
         # labels = VGroup(axes_labels)
         print('hammer_positions[0]: ', hammer_positions[0])
         # hammer_center_point = Dot(point=axes.c2p(19, 0, 0), color=YELLOW)
-        hammer = always_redraw(lambda: get_hammer(hammer_positions, axes, idx_tracker.get_value()))
+        hammer = always_redraw(lambda: get_hammer(hammer_positions, axes, idx_tracker.get_value(), 19))  # TODO fix when relative striking position changes
 
         # self.add(string_graph, hammer, hammer_center_point)
         self.add(string_graph, hammer)

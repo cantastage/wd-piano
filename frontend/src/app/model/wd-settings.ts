@@ -11,7 +11,7 @@ export interface SimpleWDParam {
     value: number;
 }
 
-// TODO add units of measure 
+// TODO add units of measure TODO add step to define granularity and decimals
 export const WDPARAMS: WDParam[] = [
     { name: 'iterations', value: 88200, min: 1, max: 200000, unit: 'steps' },
     { name: 'samplingFrequency', value: 44100, min: 1, max: 200000, unit: 'Hz' },

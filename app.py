@@ -1,6 +1,6 @@
 # Web App related imports
 
-from flask import Flask, send_from_directory, request
+from flask import Flask, send_from_directory, request, make_response, jsonify
 from flask_cors import CORS
 
 from model.simulator import Simulator
@@ -55,11 +55,13 @@ def run_simulation():
                           scaled['hammerInitialVelocity'],
                           scaled['hammerStringDistance'],
                           scaled['linearFeltStiffness'])
-    visualizer = Visualizer()  # create Visualizer instance
     result = simulator.run_simulation()
     Settings.set_string(result[0])
     Settings.set_hammer(result[1])
+    visualizer = Visualizer()  # create Visualizer instance
     visualizer.render()
+    video_url = 'http://localhost:5000/media/videos/1080p60/Visualizer.mp4'
+    return make_response(jsonify({'videoUrl': video_url}), 200)
 
 
 if __name__ == '__main__':

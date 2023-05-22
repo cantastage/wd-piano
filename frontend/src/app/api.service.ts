@@ -44,9 +44,6 @@ export class ApiService {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const body = JSON.stringify(simulationParams);
     return this.http.post<any>(API_URL + '/simulation', body, { 'headers': headers })
-      .pipe(
-        catchError(this.handleError<any>('ERRORE AIUTOOO'))
-      );
   }
 
   /**

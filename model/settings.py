@@ -85,7 +85,7 @@ class Settings(object):
         cls._string_tension = string_tension
         cls._string_length = string_length
         cls._string_diameter = string_diameter
-        cls._string_volumetric_density = string_volumetric_density
+        # cls._string_volumetric_density = string_volumetric_density
         cls._soundboard_reflection_coefficient = soundboard_reflection_coefficient
         cls._hammer_mass = hammer_mass
         cls._hammer_relative_striking_point = hammer_relative_striking_point

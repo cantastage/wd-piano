@@ -19,7 +19,7 @@ export class ParametersComponent {
   runSimulation(): void {
     this.apiService.runSimulation(this.getWDParams())
       .subscribe((data) => {
-        console.log('Returned data: ' + data)
+        console.log(data)
       });
   }
 
