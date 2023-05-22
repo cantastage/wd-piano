@@ -46,20 +46,20 @@ class Settings(object):
         return cls._sampling_frequency
 
     @classmethod
-    def set_simulation_settings(cls, iterations,
-                                sampling_frequency,
-                                sound_speed,
-                                string_fundamental_freq,
-                                string_tension,
-                                string_length,
-                                string_diameter,
-                                string_volumetric_density,
-                                soundboard_reflection_coefficient,
-                                hammer_mass,
-                                linear_felt_stiffness,
-                                hammer_relative_striking_point,
-                                hammer_initial_velocity,
-                                hammer_string_distance):
+    def set_wd_params(cls, iterations,
+                      sampling_frequency,
+                      sound_speed,
+                      string_fundamental_freq,
+                      string_tension,
+                      string_length,
+                      string_diameter,
+                      string_volumetric_density,
+                      soundboard_reflection_coefficient,
+                      hammer_mass,
+                      linear_felt_stiffness,
+                      hammer_relative_striking_point,
+                      hammer_initial_velocity,
+                      hammer_string_distance):
         """
         This method sets all the simulation parameters in one call
         """

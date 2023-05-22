@@ -9,7 +9,7 @@ import { WDParam, WDPARAMS } from '../model/wd-settings';
 })
 export class ParametersComponent {
 
-  private wdParams: WDParam[]; //contains all the parameters for the simulation
+  wdParams: WDParam[]; //contains all the parameters for the simulation
 
   constructor(private apiService: ApiService) {
     this.wdParams = WDPARAMS;

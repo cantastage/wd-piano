@@ -13,9 +13,10 @@ class Utils(object):
 
     @classmethod
     def parse_simulation_settings(cls, settings: Dict) -> Dict:
-        settings['hammerMass'] = settings['hammer_mass'] / 1000  # convert from grams to kilograms
-        settings['stringDiameter'] = settings['string_diameter'] / 1000  # convert from millimeters to meters
-        settings['hammerStringDistance'] = settings['hammer_string_distance'] / 100  # convert from cm to m
+        settings['hammerMass'] = settings['hammerMass'] / 1000  # convert from grams to kilograms
+        settings['stringLength'] = settings['stringLength'] / 100  # convert from cm to m
+        settings['stringDiameter'] = settings['stringDiameter'] / 1000  # convert from millimeters to meters
+        settings['hammerStringDistance'] = settings['hammerStringDistance'] / 100  # convert from cm to m
         return settings
 
 

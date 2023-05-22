@@ -8,6 +8,30 @@
     </h2>
     <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
       <div class="accordion-body">
+        <div class="row">
+          <div class="col-lg-4" *ngFor="let param of wdParams">
+            <label for="{{param.name}}" class="form-label">{{param.name}}</label>
+            <input type="number" min={{param.min}} max={{param.max}} class="form-control" id="{{param.name}}"
+              [(ngModel)]="param.value">
+          </div>
+        </div>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         <!-- <div class="row">
           <div class="col-lg-4">
             <label for="numIterations" class="form-label">Iterations</label>
@@ -61,6 +85,7 @@
         </div>
         <div class="row">
           <div class="col-lg-6">
+
             <label for="stringLength" class="form-label">String Length [cm]</label>
             <input type="number" min={{minStringLength}} max={{maxStringLength}} class="form-control" id="stringLength"
               [(ngModel)]="stringLength">
