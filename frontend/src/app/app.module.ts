@@ -11,13 +11,15 @@ import {MatSliderModule} from '@angular/material/slider';
 import {MatCardModule} from '@angular/material/card';
 import { FormsModule } from '@angular/forms';
 import { CamelcaseToWordsPipe } from './camelcase-to-words.pipe';
+import { VideoPlayerComponent } from './video-player/video-player.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PianoKeyboardComponent,
     ParametersComponent,
-    CamelcaseToWordsPipe
+    CamelcaseToWordsPipe,
+    VideoPlayerComponent
   ],
   imports: [
     BrowserModule,
