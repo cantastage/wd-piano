@@ -3,11 +3,11 @@ import { ApiService } from '../api.service';
 import { WDParam, WDPARAMS } from '../model/wd-settings';
 
 @Component({
-  selector: 'app-parameters',
-  templateUrl: './parameters.component.html',
-  styleUrls: ['./parameters.component.scss']
+  selector: 'app-simulation',
+  templateUrl: './simulation.component.html',
+  styleUrls: ['./simulation.component.scss']
 })
-export class ParametersComponent {
+export class SimulationComponent {
 
   wdParams: WDParam[]; //contains all the parameters for the simulation
 
