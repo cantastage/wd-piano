@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ApiService } from '../api.service';
 import { WDParam, WDPARAMS } from '../model/wd-settings';
+import { API_URL } from 'src/env';
 
 @Component({
   selector: 'app-simulation',
@@ -24,7 +25,7 @@ export class SimulationComponent {
     this.apiService.runSimulation(this.getWDParams())
       .subscribe((data) => {
         // console.log(data.videoUrl);
-        this.videoUrl = data.videoUrl;
+        this.videoUrl = API_URL +  data.videoUrl;
         console.log('extracted videoUrl: ' + this.videoUrl)
         this.isRendered = true;
       });

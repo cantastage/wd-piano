@@ -47,7 +47,7 @@ class Visualizer(Scene):
     def construct(self):
         # Config settings
         # config.custom_folders = True
-        # config.media_dir = './assets/media'
+        # config.media_dir = './static'
         # config.output_file = 'prova-video.mp4'
         # config.renderer = "opengl"
         # config.write_to_movie = True

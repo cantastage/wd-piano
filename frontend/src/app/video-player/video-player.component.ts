@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { API_URL } from 'src/env';
 
 @Component({
   selector: 'app-video-player',
@@ -6,6 +7,6 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./video-player.component.scss']
 })
 export class VideoPlayerComponent {
-  @Input() videoUrl: string = ''; //url of the video to be rendered
-
+ @Input() videoUrl: string = ''; //url of the video to be rendered
+//  videoUrl: string = API_URL + '/media/videos/1080p60/Visualizer.mp4'; //url of the video to be rendered
 }
