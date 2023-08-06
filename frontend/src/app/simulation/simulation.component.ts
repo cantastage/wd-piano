@@ -11,15 +11,21 @@ export class SimulationComponent {
 
   wdParams: WDParam[]; //contains all the parameters for the simulation
 
+  isRendered: boolean = false; //true if the simulation has been rendered
+  videoUrl: string = ''; //url of the video to be rendered
+
   constructor(private apiService: ApiService) {
     this.wdParams = WDPARAMS;
   }
 
   // TODO complete method with return result
   runSimulation(): void {
+    this.isRendered = false;
     this.apiService.runSimulation(this.getWDParams())
       .subscribe((data) => {
         console.log(data)
+        this.videoUrl = data.videoURL;
+        this.isRendered = true;
       });
   }
 

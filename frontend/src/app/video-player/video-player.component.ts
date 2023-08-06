@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-video-player',
@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./video-player.component.scss']
 })
 export class VideoPlayerComponent {
+  @Input() public videoUrl: string = ''; //url of the video to be rendered
 
 }
