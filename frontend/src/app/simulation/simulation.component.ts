@@ -25,7 +25,7 @@ export class SimulationComponent {
     this.apiService.runSimulation(this.getWDParams())
       .subscribe((data) => {
         // console.log(data.videoUrl);
-        this.videoUrl = API_URL +  data.videoUrl;
+        this.videoUrl = API_URL + data.videoUrl;
         console.log('extracted videoUrl: ' + this.videoUrl)
         this.isRendered = true;
       });
