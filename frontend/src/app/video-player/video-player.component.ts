@@ -6,6 +6,6 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./video-player.component.scss']
 })
 export class VideoPlayerComponent {
-  @Input() public videoUrl: string = ''; //url of the video to be rendered
+  @Input() videoUrl: string = ''; //url of the video to be rendered
 
 }
