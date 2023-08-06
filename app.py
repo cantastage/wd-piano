@@ -19,20 +19,20 @@ def hello_world():  # put application's code here
 
 @app.route('/video/<filename>', methods=['GET'])
 def get_wdf_video(filename):
-    print('ENTRA QUI')
+    """
+    Returns the video file to the client
+    :param filename: the name of the video file
+    :return:
+    """
     return send_from_directory(
-        directory='media', path=filename, mimetype='video/mp4', as_attachment=False)
-
-
-# @app.route('/video', methods=['GET'])
-# def get_wdf_video():
-#     return send_from_directory(
-#         directory='./static/videos', path='Visualizer.mp4', mimetype='video/mp4', as_attachment=True)
+        directory='media/videos/1080p60', path=filename, mimetype='video/mp4', as_attachment=False)
 
 
 @app.route('/simulation', methods=['POST'])
-# TODO implement post request with all simulation parameters
 def run_simulation():
+    """
+    Requests the rendering of the wd-piano algorithm to the server
+    """
     received_wd_parameters = request.json
     # print('received from client: ', received_wd_parameters)
     scaled = Utils.scale_wd_parameters(received_wd_parameters)
