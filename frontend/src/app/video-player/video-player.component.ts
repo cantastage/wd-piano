@@ -7,6 +7,6 @@ import { API_URL } from 'src/env';
   styleUrls: ['./video-player.component.scss']
 })
 export class VideoPlayerComponent {
- @Input() videoUrl: string = ''; //url of the video to be rendered
-//  videoUrl: string = API_URL + '/media/videos/1080p60/Visualizer.mp4'; //url of the video to be rendered
+//  @Input() videoUrl: string = ''; //url of the video to be rendered
+ videoUrl: string = API_URL + '/video/Visualizer.mp4'; //url of the video to be rendered
 }
