@@ -1,12 +1,13 @@
 # Web App related imports
 
-from flask import Flask, send_from_directory, request, make_response, jsonify, url_for
+from flask import Flask, send_from_directory, request, make_response, jsonify
 from flask_cors import CORS
 
-from model.simulator import Simulator
 from model.settings import Settings
+from model.simulator import Simulator
 from model.utils import Utils
 from model.visualizer import Visualizer
+from model.visualizer import set_visualizer_config
 
 app = Flask(__name__)
 CORS(app)
@@ -65,10 +66,14 @@ def run_simulation():
     result = simulator.run_simulation()
     Settings.set_string(result[0])
     Settings.set_hammer(result[1])
+    video_filename = "CACCA.mp4"
+    # with tempconfig({"output_file": video_filename}):
+    #     visualizer = Visualizer()  # create Visualizer instance
+    #     visualizer.render()
+    set_visualizer_config({"output_file": video_filename})
     visualizer = Visualizer()  # create Visualizer instance
     visualizer.render()
     # video_url = 'http://localhost:5000/media/videos/1080p60/Visualizer.mp4'
-    video_filename = 'Visualizer.mp4'
     return make_response(jsonify({'videoFilename': video_filename}), 200)
 
 

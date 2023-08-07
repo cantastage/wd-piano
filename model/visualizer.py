@@ -1,8 +1,21 @@
 import math
+from typing import Dict
 
 import manim
 from manim import *
 from model.settings import Settings
+
+
+def set_visualizer_config(config_params: Dict):
+    """
+    Sets the visualizer config parameters
+
+    :param config_params: the config parameters
+    :return:
+    """
+    # unique for to set the config in manim config
+    for k, v in config_params.items():
+        config[k] = v
 
 
 def plot_string_graph(string_matrix, axes, row_idx):
