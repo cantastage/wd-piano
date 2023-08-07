@@ -1,4 +1,5 @@
 # Web App related imports
+from datetime import datetime
 
 from flask import Flask, send_from_directory, request, make_response, jsonify
 from flask_cors import CORS
@@ -66,7 +67,7 @@ def run_simulation():
     result = simulator.run_simulation()
     Settings.set_string(result[0])
     Settings.set_hammer(result[1])
-    video_filename = "CACCA.mp4"
+    video_filename = "WD-Piano-" + datetime.now().strftime("%Y%m%d-%H%M%S") + ".mp4"
     # with tempconfig({"output_file": video_filename}):
     #     visualizer = Visualizer()  # create Visualizer instance
     #     visualizer.render()

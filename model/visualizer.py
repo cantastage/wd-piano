@@ -13,6 +13,7 @@ def set_visualizer_config(config_params: Dict):
     :param config_params: the config parameters
     :return:
     """
+    # TODO maybe add consistency checks or let the function accept only the required parameters
     # unique for to set the config in manim config
     for k, v in config_params.items():
         config[k] = v
