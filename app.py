@@ -68,13 +68,9 @@ def run_simulation():
     Settings.set_string(result[0])
     Settings.set_hammer(result[1])
     video_filename = "WD-Piano-" + datetime.now().strftime("%Y%m%d-%H%M%S") + ".mp4"
-    # with tempconfig({"output_file": video_filename}):
-    #     visualizer = Visualizer()  # create Visualizer instance
-    #     visualizer.render()
     set_visualizer_config({"output_file": video_filename})
     visualizer = Visualizer()  # create Visualizer instance
     visualizer.render()
-    # video_url = 'http://localhost:5000/media/videos/1080p60/Visualizer.mp4'
     return make_response(jsonify({'videoFilename': video_filename}), 200)
 
 
