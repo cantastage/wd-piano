@@ -9,6 +9,9 @@ from model.simulator import Simulator
 from model.utils import Utils
 from model.visualizer import Visualizer
 from model.visualizer import set_visualizer_config
+from model.data_service import DataService
+import pandas as pd
+import json
 
 app = Flask(__name__)
 CORS(app)
@@ -17,6 +20,15 @@ CORS(app)
 @app.route('/')
 def hello_world():  # put application's code here
     return 'Hello World!'
+
+
+@app.route('/strings', methods=['GET'])
+def get_strings():
+    df = pd.read_csv('./model/transpose.csv', encoding='utf-8')
+    strings = df.to_json(orient='values')
+    # json_strings = json.dumps(strings, indent=4)
+    # strings = df.to_json(orient='columns')
+    return make_response(strings, 200)
 
 
 @app.route('/video/<filename>', methods=['GET'])

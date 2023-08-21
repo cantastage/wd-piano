@@ -9,6 +9,7 @@ import { API_URL } from 'src/env';
   styleUrls: ['./simulation.component.scss']
 })
 export class SimulationComponent {
+  showPianoKeyboard: boolean = true;
 
   wdParams: WDParam[]; //contains all the parameters for the simulation
 

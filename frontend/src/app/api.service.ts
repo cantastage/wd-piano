@@ -29,6 +29,14 @@ export class ApiService {
       )
   }
 
+  /**
+   * 
+   * @returns String data as json
+   */
+  getStrings(): Observable<Array<any>> {
+    return this.http.get<any>(API_URL + '/strings')
+  }
+
   getVideoFile(): Observable<File> {
     return this.http.get<File>(API_URL + '/video')
   }
@@ -40,7 +48,7 @@ export class ApiService {
       );
   }
 
-  runSimulation(simulationParams: Object): Observable<any> {  
+  runSimulation(simulationParams: Object): Observable<any> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const body = JSON.stringify(simulationParams);
     return this.http.post<any>(API_URL + '/simulation', body, { 'headers': headers })
