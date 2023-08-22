@@ -12,7 +12,7 @@ import {MatCardModule} from '@angular/material/card';
 import { FormsModule } from '@angular/forms';
 import { CamelcaseToWordsPipe } from './camelcase-to-words.pipe';
 import { VideoPlayerComponent } from './video-player/video-player.component';
-
+import { ScrollingModule } from '@angular/cdk/scrolling';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,6 +29,7 @@ import { VideoPlayerComponent } from './video-player/video-player.component';
     MatSliderModule,
     MatCardModule,
     FormsModule,
+    ScrollingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

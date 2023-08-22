@@ -35,7 +35,7 @@ export class SimulationComponent {
   private getWDParams(): Object {
     let jsonParams: Object[] = Object.assign(this.wdParams.map(key => ({ [key.name]: key.value })));
     let finalObj = {};
-    jsonParams.forEach(obj => {Object.assign(finalObj, obj)});
+    jsonParams.forEach(obj => { Object.assign(finalObj, obj) });
     console.log(finalObj);
     return finalObj;
   }
