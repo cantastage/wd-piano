@@ -1,15 +1,19 @@
 <!-- TODO implement programmatically with ngFor based on how many keys you want -->
-<ul class="set">
-    <li class="white b"></li>
-    <li class="black as"></li>
-    <li class="white a"></li>
-    <li class="black gs"></li>
-    <li class="white g"></li>
-    <li class="black fs"></li>
-    <li class="white f"></li>
-    <li class="white e"></li>
-    <li class="black ds"></li>
-    <li class="white d"></li>
-    <li class="black cs"></li>
-    <li class="white c"></li>
+<ul class="w-50 set">
+    <li class="white c"><span class="white-note-label">C</span></li>
+    <li class="black cs"><span class="black-note-label">C#</span></li>
+    <li class="white d"><span class="white-note-label">D</span></li>
+    <li class="black ds"><span class="black-note-label">D#</span></li>
+    <li class="white f"><span class="white-note-label">E</span></li>
+    <li class="white e"><span class="white-note-label">F</span></li>
+    <li class="black fs"><span class="black-note-label">F#</span></li>
+    <li class="white g"><span class="white-note-label">G</span></li>
+    <li class="black gs"><span class="black-note-label">G#</span></li>
+    <li class="white a"><span class="white-note-label">A</span></li>
+    <li class="black as"><span class="black-note-label">A#</span></li>
+    <li class="white c"><span class="white-note-label">B</span></li>
 </ul>
+
+<!-- <ul class="set">
+    <li *ngFor="let key of unwrappedStringKeys; let i = index" [ngClass]="getPianoKeyStyle(i)"></li>
+</ul> -->

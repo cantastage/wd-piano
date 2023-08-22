@@ -21,7 +21,11 @@
             </div>
           </div>
           <!-- Piano Keyboard component, shown on condition -->
-          <app-piano-keyboard *ngIf="showPianoKeyboard"></app-piano-keyboard>
+          <div class="row">
+            <div class="col-sm-12">
+              <app-piano-keyboard *ngIf="showPianoKeyboard"></app-piano-keyboard>
+            </div>
+          </div>
           <div class="row">
             <div class="col-lg-4" *ngFor="let param of wdParams">
               <label for="{{param.name}}" class="form-label">{{param.name | camelcaseToWords}}<span
