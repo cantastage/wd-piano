@@ -8,8 +8,9 @@
   }
   
   ul {
+    // height:18.875em;
     height:18.875em;
-    width:34em;
+    width:33em;
     margin:5em auto;
     padding:3em 0 0 3em;
     position:relative;
@@ -36,6 +37,7 @@
   }
 
   li .black-note-label {
+    font-size: smaller;
     position: relative;
     color:white;
     top: 80%;
@@ -98,7 +100,7 @@
 //     background:linear-gradient(45deg,#222 0%,#555 100%)
 //   }
   
-  .black:active {
+  ul .black:active {
     box-shadow:-1px -1px 2px rgba(255,255,255,0.2) inset,0 -2px 2px 3px rgba(0,0,0,0.6) inset,0 1px 2px rgba(0,0,0,0.5);
     background:linear-gradient(to right,#444 0%,#222 100%)
   }

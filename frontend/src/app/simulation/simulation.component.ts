@@ -10,6 +10,7 @@ import { API_URL } from 'src/env';
 })
 export class SimulationComponent {
   showPianoKeyboard: boolean = true;
+  showProMode: boolean = true;
 
   wdParams: WDParam[]; //contains all the parameters for the simulation
 
@@ -30,6 +31,14 @@ export class SimulationComponent {
         console.log('extracted videoUrl: ' + this.videoUrl)
         this.isRendered = true;
       });
+  }
+
+  public togglePianoView() {
+    this.showPianoKeyboard = !this.showPianoKeyboard;
+  }
+
+  public toggleProMode() {
+    this.showProMode = !this.showProMode;
   }
 
   private getWDParams(): Object {

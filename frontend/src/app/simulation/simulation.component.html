@@ -13,10 +13,10 @@
           <div class="row">
             <!-- Checkbox group for parameters editing options -->
             <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-              <input type="checkbox" class="btn-check" id="piano-mode" autocomplete="off">
+              <input type="checkbox" class="btn-check" id="piano-mode" autocomplete="off" (click)="togglePianoView()" checked="showPianoKeyboard">
               <label class="btn btn-outline-primary" for="piano-mode">Piano Keyboard</label>
 
-              <input type="checkbox" class="btn-check" id="pro-mode" autocomplete="off">
+              <input type="checkbox" class="btn-check" id="pro-mode" autocomplete="off" (click)="toggleProMode()" checked="showPianoKeyboard">
               <label class="btn btn-outline-primary" for="pro-mode">Pro Mode</label>
             </div>
           </div>

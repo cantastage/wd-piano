@@ -12,6 +12,8 @@ export class PianoKeyboardComponent {
   // private pianoToMidiOffset = 20; // 20 is the offset from piano key to corresponding midi note number
   // private numKeys = 88; // 88 keys on a piano
   unwrappedStringKeys: Array<PianoKey> = []; // TODO maybe add getter and make field private
+  // shownPianoLabels: Array<string> = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+  currentOctaveIndex: number = 4;
 
   ngOnInit() {
     this.apiService.getStrings().subscribe((data) => {
@@ -43,6 +45,8 @@ export class PianoKeyboardComponent {
   //   let midiNote = pianoKeyIndex + this.pianoToMidiOffset;
   //   return midiNote.toString();
   // }
+
+
 
   public getPianoKeyStyle(pianoKeyIndex: number): string {
     let noteLabel = this.unwrappedStringKeys[pianoKeyIndex].getNoteLabel();
@@ -80,5 +84,6 @@ export class PianoKeyboardComponent {
     }
     return pianoKeys;
   }
+  
 
 }
