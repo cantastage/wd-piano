@@ -35,6 +35,10 @@ li {
 //Original version
 ul .white {
   flex: 2;
+  display:flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
   height: 16em;
   width: 4em;
   z-index: 1; // it goes beyond black key
@@ -46,19 +50,19 @@ ul .white {
 }
 
 li .white-note-label {
-  position: relative;
-  top: 90%;
-  left: 40%;
+  // position: relative;
+  // top: 90%;
+  // left: 40%;
   // margin:auto;
 }
 
 li .black-note-label {
   font-size: smaller;
-  position: relative;
+  // position: relative;
   color: white;
-  top: 80%;
-  left: 4px;
-  align-content: center;
+  // top: 80%;
+  // left: 4px;
+  // align-content: center;
 }
 
 // Changes when key is pressed
@@ -72,6 +76,10 @@ ul .white:active {
 
 ul .black {
   flex: 1;
+  display:flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
   max-height: 8em;
   max-width: 2em;
   margin: 0 0 0 -1em;
