@@ -11,12 +11,10 @@ ul {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  
   max-height: 18.875em;
   max-width: 33em;
   margin: 5em auto; // NOTA: change if you need to move the keyboard in the screen
   padding: 3em 2em 0 3em;
-  // position: relative;
   border: 1px solid #160801;
   border-radius: 1em;
   // background:linear-gradient(to bottom right,rgba(0,0,0,0.3),rgba(0,0,0,0)),url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/187/vwood.png);
@@ -50,19 +48,12 @@ ul .white {
 }
 
 li .white-note-label {
-  // position: relative;
-  // top: 90%;
-  // left: 40%;
-  // margin:auto;
+  font-size:medium;
 }
 
 li .black-note-label {
   font-size: smaller;
-  // position: relative;
   color: white;
-  // top: 80%;
-  // left: 4px;
-  // align-content: center;
 }
 
 // Changes when key is pressed
