@@ -85,9 +85,9 @@ class Simulator:
                  hammer_initial_velocity: float,
                  hammer_string_distance: float,
                  linear_felt_stiffness: float):
-        self.iterations = iterations
-        self.Fs = sampling_freq
-        self.Ts = np.double(1 / self.Fs)
+        self.iterations = iterations # set number of iterations
+        self.Fs = sampling_freq # set sampling frequency
+        self.Ts = np.double(1 / self.Fs)  # sampling period calculated from sampling frequency
         wg_lengths = get_wg_lengths(string_frequency, sampling_freq, hammer_relative_striking_point)
         self.wg_length_left = wg_lengths[0]
         print('wg_length_left: ', self.wg_length_left)
@@ -95,7 +95,7 @@ class Simulator:
         print('wg_length_right: ', self.wg_length_right)
         self.wg_length = self.wg_length_left + self.wg_length_right  # NB: formula per wg_length: wg_length = Fs / f0
         print('Total waveguide length: ', self.wg_length)
-        self.K = soundboard_reflection_coefficient
+        self.K = soundboard_reflection_coefficient # set soundboard reflection coefficient
         self.A = linear_felt_stiffness
         self.str_length = Settings.get_sound_speed_in_air() / sampling_freq  # string length in m
         self.tension = string_tension

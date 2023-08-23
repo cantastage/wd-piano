@@ -13,13 +13,15 @@ import { FormsModule } from '@angular/forms';
 import { CamelcaseToWordsPipe } from './camelcase-to-words.pipe';
 import { VideoPlayerComponent } from './video-player/video-player.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { ParametersComponent } from './parameters/parameters.component';
 @NgModule({
   declarations: [
     AppComponent,
     PianoKeyboardComponent,
     SimulationComponent,
     CamelcaseToWordsPipe,
-    VideoPlayerComponent
+    VideoPlayerComponent,
+    ParametersComponent
   ],
   imports: [
     BrowserModule,

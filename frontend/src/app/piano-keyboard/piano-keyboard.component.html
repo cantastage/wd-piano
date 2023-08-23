@@ -1,5 +1,5 @@
 <!-- TODO implement programmatically with ngFor based on how many keys you want -->
-<ul class="set">
+<!-- <ul class="set">
     <li class="white c"><span class="white-note-label">C{{currentOctaveIndex}}</span></li>
     <li class="black cs"><span class="black-note-label">C#{{currentOctaveIndex}}</span></li>
     <li class="white d"><span class="white-note-label">D{{currentOctaveIndex}}</span></li>
@@ -12,8 +12,9 @@
     <li class="white a"><span class="white-note-label">A{{currentOctaveIndex}}</span></li>
     <li class="black as"><span class="black-note-label">A#{{currentOctaveIndex}}</span></li>
     <li class="white b"><span class="white-note-label">B{{currentOctaveIndex}}</span></li>
-</ul>
-
-<!-- <ul class="set">
-    <li *ngFor="let key of unwrappedStringKeys; let i = index" [ngClass]="getPianoKeyStyle(i)"></li>
 </ul> -->
+
+<ul class="set">
+    <li *ngFor="let label of keyLabels; let i = index" [ngClass]="getPianoKeyStyle(i)"><span
+            [ngClass]="getNoteLabelStyle(i)">{{keyLabels[i]}}{{currentOctaveIndex}}</span></li>
+</ul>

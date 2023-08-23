@@ -11,16 +11,17 @@ import { style } from '@angular/animations';
 export class PianoKeyboardComponent {
   // private pianoToMidiOffset = 20; // 20 is the offset from piano key to corresponding midi note number
   // private numKeys = 88; // 88 keys on a piano
-  unwrappedStringKeys: Array<PianoKey> = []; // TODO maybe add getter and make field private
-  // shownPianoLabels: Array<string> = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
-  currentOctaveIndex: number = 4;
+  // unwrappedStringKeys: Array<PianoKey> = []; // TODO maybe add getter and make field private
+  keyLabels: Array<string> = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+  currentOctaveIndex: number = 4; // octave index of the keyboard
+  selectedKeyLabel: string= ""; // selected key in the piano keyboard
 
-  ngOnInit() {
-    this.apiService.getStrings().subscribe((data) => {
-      // console.log("ARRIVED FROM SERVER: ", data);
-      this.unwrappedStringKeys = this.parsePianoKeys(data);
-    });
-  }
+  // ngOnInit() {
+  //   this.apiService.getStrings().subscribe((data) => {
+  //     // console.log("ARRIVED FROM SERVER: ", data);
+  //     this.unwrappedStringKeys = this.parsePianoKeys(data);
+  //   });
+  // }
 
   constructor(private apiService: ApiService) {
   }
@@ -49,11 +50,11 @@ export class PianoKeyboardComponent {
 
 
   public getPianoKeyStyle(pianoKeyIndex: number): string {
-    let noteLabel = this.unwrappedStringKeys[pianoKeyIndex].getNoteLabel();
+    let noteLabel = this.keyLabels[pianoKeyIndex];
     // TODO check if it can be optimized
     let styleClass = "";
-    console.log("original note label for index " + pianoKeyIndex + ": ", noteLabel);
-    if (noteLabel.includes("d",1)) {
+    console.log("root note label for index " + pianoKeyIndex + ": ", noteLabel);
+    if (noteLabel.includes("#",1)) {
       styleClass = "black " + noteLabel[0].toLowerCase() + "s"; 
     } else {
       styleClass = "white " + noteLabel[0].toLowerCase();
@@ -62,28 +63,8 @@ export class PianoKeyboardComponent {
     return styleClass;
   }
 
-  private parsePianoKeys(rawKeys: Array<string>): Array<PianoKey> {
-    let pianoKeys: Array<PianoKey> = []; // init array of piano key objects
-    for (let i = 0; i < rawKeys.length; i++) {
-      let rawKey: String = rawKeys[i][0];
-      let splitted = rawKey.split(";", 18); // split the values of the key
-      // console.log('Split rawKey: ', splitted);
-      let pianoKey = new PianoKey(
-        splitted[0], // noteLabel
-        parseFloat(splitted[1]), // centerFrequency,
-        parseFloat(splitted[2]), // stringLength,
-        parseFloat(splitted[3]), // stringDiameter,
-        parseFloat(splitted[4]), // stringVolumetricDensity,
-        parseInt(splitted[5]), // stringTension,
-        parseFloat(splitted[12]), // hammerNonLinearElasticExponent,
-        parseFloat(splitted[13]), // hammerImpactPosition,
-        parseFloat(splitted[14]), // hammerMass,
-        parseFloat(splitted[15]), // hammerElasticityCoefficient
-      );
-      pianoKeys.push(pianoKey);
-    }
-    return pianoKeys;
+  public getNoteLabelStyle(pianoKeyIndex: number): string {
+    let noteLabel = this.keyLabels[pianoKeyIndex];
+    return noteLabel.includes("#",1) ? "black-note-label" : "white-note-label";
   }
-  
-
 }
