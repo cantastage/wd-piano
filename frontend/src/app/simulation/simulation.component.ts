@@ -14,7 +14,7 @@ export class SimulationComponent {
   // UI flags to show parameters panel
   showPianoKeyboard: boolean = true;
   showProMode: boolean = true;
-  isRendered: boolean = false; //true if the simulation video has been rendered
+  isRendered: boolean = true; //true if the simulation video has been rendered
 
   // Parameters related fields
   wdParams: WDParam[]; //contains all the parameters for the simulation
@@ -22,7 +22,6 @@ export class SimulationComponent {
   paramsContainer: Map<string, SimpleWDParam>;
 
   videoUrl: string = ''; //url of the video to be rendered
-  // @Output() selectedKey: string = "C4";  //key selected by the user
 
   ngOnInit() {
     this.apiService.getPianoKeys().subscribe((data) => {
@@ -32,6 +31,7 @@ export class SimulationComponent {
   }
 
   constructor(private apiService: ApiService) {
+    this.videoUrl = API_URL + '/video/C4-Default.mp4'; //url of the video to be rendered
     this.wdParams = WDPARAMS; // retrieves from model the default parameters for the simulation
     this.paramsContainer = new Map<string, WDParam>();
     this.initWDParams();
