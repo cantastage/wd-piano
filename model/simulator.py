@@ -26,7 +26,7 @@ def nl_felt(val, k):
     Models the response of a nonlinear piano hammer felt
 
     :param val: incoming waveguide value
-    :param k: Felt's elasticity coefficient
+    :param k: Felt's nonlinear elasticity coefficient
     :return: felt's response value
     """
     if val < 0:
@@ -85,8 +85,8 @@ class Simulator:
                  hammer_initial_velocity: float,
                  hammer_string_distance: float,
                  linear_felt_stiffness: float):
-        self.iterations = iterations # set number of iterations
-        self.Fs = sampling_freq # set sampling frequency
+        self.iterations = iterations  # set number of iterations
+        self.Fs = sampling_freq  # set sampling frequency
         self.Ts = np.double(1 / self.Fs)  # sampling period calculated from sampling frequency
         wg_lengths = get_wg_lengths(string_frequency, sampling_freq, hammer_relative_striking_point)
         self.wg_length_left = wg_lengths[0]

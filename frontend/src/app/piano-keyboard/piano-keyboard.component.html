@@ -1,4 +1,4 @@
 <ul class="set">
-    <li *ngFor="let label of keyLabels; let i = index" [ngClass]="getPianoKeyStyle(i)"><span
+    <li *ngFor="let label of keyLabels; let i = index" [ngClass]="getPianoKeyStyle(i)" (click)="selectPianoKey(i)"><span
             [ngClass]="getNoteLabelStyle(i)">{{keyLabels[i]}}{{currentOctaveIndex}}</span></li>
 </ul>

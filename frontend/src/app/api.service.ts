@@ -31,9 +31,9 @@ export class ApiService {
 
   /**
    * 
-   * @returns String data as json
+   * @returns Piano keys data as json
    */
-  getStrings(): Observable<Array<any>> {
+  getPianoKeys(): Observable<Array<any>> {
     return this.http.get<any>(API_URL + '/strings')
   }
 

@@ -24,7 +24,7 @@
         <!-- Piano Keyboard component, shown on condition -->
         <div class="row">
           <div class="col-sm-12">
-            <app-piano-keyboard *ngIf="showPianoKeyboard"></app-piano-keyboard>
+            <app-piano-keyboard *ngIf="showPianoKeyboard" (selectedKeyEvent)="setWDPianoKeyParams($event)"></app-piano-keyboard>
           </div>
         </div>
         <div class="row">
