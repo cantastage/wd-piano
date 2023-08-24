@@ -72,6 +72,7 @@ export class SimulationComponent {
       this.wdParams[6].value = selectedKey.getStringTension();
       this.wdParams[8].value = selectedKey.getHammerMass();
       this.wdParams[9].value = selectedKey.getHammerImpactPosition()/selectedKey.getStringLength()*100; // we need to display it in %
+      console.log('calculated relative striking point: ', this.wdParams[9].value);
       // this.wdParams[12].value = selectedKey.getHammerElasticityCoefficient();
     }
     // if ()

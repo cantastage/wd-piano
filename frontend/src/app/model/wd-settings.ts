@@ -31,7 +31,7 @@ export const WDPARAMS: WDParam[] = [
     { name: 'stringTension', value: 670, min: 400, max: 1000, unit: 'N' },
     { name: 'soundboardReflectionCoefficient', value: 98, min: 0, max: 100, unit: '%' },
     { name: 'hammerMass', value: 8.71, min: 5, max: 11, unit: 'g' },
-    { name: 'hammerRelativeStrikingPoint', value: 0.116, min: 0, max: 1, unit: '%' },
+    { name: 'hammerRelativeStrikingPoint', value: 11.6, min: 0, max: 100, unit: '%' },
     { name: 'hammerInitialVelocity', value: 7, min: 0, max: 10, unit: 'm/s' },
     { name: 'hammerStringDistance', value: 10, min: 0, max: 30, unit: 'cm' },
     { name: 'linearFeltStiffness', value: 1000, min: 0, max: 10000, unit: 'N/m' },
