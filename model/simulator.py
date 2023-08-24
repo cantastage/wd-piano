@@ -45,11 +45,19 @@ def get_wg_lengths(f0: float, sampling_freq: int, relative_hammer_position: floa
     :param relative_hammer_position: relative position of the hammer on the string
     :return: length of the left and right part of the waveguide
     """
+    # wg_length = round(sampling_freq / f0)  # rounded to be an integer value (in samples)
+    # wg_left_length = round(wg_length * relative_hammer_position)  # round to the nearest integer position
+    # if wg_left_length % 2 != 0:
+    #     wg_left_length += 1  # if wg_left_length is odd, we add 1 to make it even
+    # wg_right_length = wg_length - wg_left_length  # right part of the waveguide length
+    # V2, to get always even lengths TODO check if it can be optimized
     wg_length = round(sampling_freq / f0)  # rounded to be an integer value (in samples)
     wg_left_length = round(wg_length * relative_hammer_position)  # round to the nearest integer position
     if wg_left_length % 2 != 0:
         wg_left_length += 1  # if wg_left_length is odd, we add 1 to make it even
     wg_right_length = wg_length - wg_left_length  # right part of the waveguide length
+    if wg_right_length % 2 != 0:
+        wg_right_length += 1
     return wg_left_length, wg_right_length
 
 
@@ -94,7 +102,7 @@ class Simulator:
         self.wg_length_right = wg_lengths[1]
         print('wg_length_right: ', self.wg_length_right)
         self.wg_length = self.wg_length_left + self.wg_length_right  # NB: formula per wg_length: wg_length = Fs / f0
-        print('Total waveguide length: ', self.wg_length)
+        print('Total waveguide length: ', self.wg_length + self.wg_length_right)
         self.K = soundboard_reflection_coefficient # set soundboard reflection coefficient
         self.A = linear_felt_stiffness
         self.str_length = Settings.get_sound_speed_in_air() / sampling_freq  # string length in m

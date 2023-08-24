@@ -38,7 +38,7 @@ export class SimulationComponent {
   }
 
   // TODO complete method with error management
-  runSimulation(): void {
+  public runSimulation(): void {
     this.isRendered = false;
     this.apiService.runSimulation(this.parseWDParams())
       .subscribe((data) => {
@@ -61,25 +61,14 @@ export class SimulationComponent {
     console.log('key label: ', keyLabel);
     let selectedKey: PianoKey | undefined = this.pianoKeys.find(key => key.getNoteLabel() == translatedLabel);
     if (selectedKey !== undefined) {
-      // set parameters
-      // for (let i=0; i<this.wdParams.length; i++) { 
-      //   this.
-      // }
-      // this.wdParams.find(param => param.name == 'stringFundamentalFrequency').value = 262.22;
       this.wdParams[3].value = selectedKey.getCenterFrequency();
-      this.wdParams[4].value = selectedKey.getStringLength()*100; // we need to display it in cm
+      this.wdParams[4].value = (selectedKey.getStringLength()); // we need to display it in cm
       this.wdParams[5].value = selectedKey.getStringDiameter();
       this.wdParams[6].value = selectedKey.getStringTension();
       this.wdParams[8].value = selectedKey.getHammerMass();
-      this.wdParams[9].value = selectedKey.getHammerImpactPosition()/selectedKey.getStringLength()*100; // we need to display it in %
+      this.wdParams[9].value = parseFloat((selectedKey.getHammerImpactPosition()/selectedKey.getStringLength()*100).toFixed(2)); // we need to display it in %
       console.log('calculated relative striking point: ', this.wdParams[9].value);
-      // this.wdParams[12].value = selectedKey.getHammerElasticityCoefficient();
     }
-    // if ()
-    // this.wdParams.find(param => param.name == 'stringFundamentalFrequency').value = selectedKey.getCenterFrequency();
-    // this.wdParams.find(param => param.name == 'stringLength').value = selectedKey.getStringLength();
-    // this.wdParams.find(param => param.name == 'stringDiameter').value = selectedKey.getStringDiameter();
-    // this.wdParams.find(param => param.name == 'stringTension').value = selectedKey.getStringTension();
   }
 
   
