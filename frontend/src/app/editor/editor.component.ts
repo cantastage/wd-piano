@@ -5,11 +5,11 @@ import { API_URL } from 'src/env';
 import { PianoKey } from '../model/piano-strings';
 
 @Component({
-  selector: 'app-simulation',
-  templateUrl: './simulation.component.html',
-  styleUrls: ['./simulation.component.scss']
+  selector: 'app-editor',
+  templateUrl: './editor.component.html',
+  styleUrls: ['./editor.component.scss']
 })
-export class SimulationComponent {
+export class EditorComponent {
 
   // UI flags to show parameters panel
   showPianoKeyboard: boolean = true;

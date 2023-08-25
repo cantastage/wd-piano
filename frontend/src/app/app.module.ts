@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PianoKeyboardComponent } from './piano-keyboard/piano-keyboard.component';
-import { SimulationComponent } from './simulation/simulation.component';
+import { EditorComponent } from './editor/editor.component';
 import {MatSliderModule} from '@angular/material/slider';
 import {MatCardModule} from '@angular/material/card';
 import { FormsModule } from '@angular/forms';
@@ -18,7 +18,7 @@ import { ParametersComponent } from './parameters/parameters.component';
   declarations: [
     AppComponent,
     PianoKeyboardComponent,
-    SimulationComponent,
+    EditorComponent,
     CamelcaseToWordsPipe,
     VideoPlayerComponent,
     ParametersComponent
