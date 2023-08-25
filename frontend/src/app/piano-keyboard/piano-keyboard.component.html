@@ -1,4 +1,11 @@
-<ul class="set">
-    <li *ngFor="let label of keyLabels; let i = index" [ngClass]="getPianoKeyStyle(i)" (click)="selectPianoKey(i)"><span
-            [ngClass]="getNoteLabelStyle(i)">{{keyLabels[i]}}{{currentOctaveIndex}}</span></li>
-</ul>
+<!-- <button type="button" class="btn">+1</button> -->
+<div class="keyboard-group">
+    <div class="btn-group octave-controls" role="group" aria-label="Octave buttons">
+        <button type="button" class="btn btn-outline-light" (click)="changeOctave(-1)">Oct-</button>
+        <button type="button" class="btn btn-outline-light" (click)="changeOctave(+1)">Oct+</button>
+    </div>
+    <ul class="set">
+        <li *ngFor="let label of keyLabels; let i = index" [ngClass]="getPianoKeyStyle(i)" (click)="selectPianoKey(i)"><span
+                [ngClass]="getNoteLabelStyle(i)">{{keyLabels[i]}}{{currentOctaveIndex}}</span></li>
+    </ul>
+</div>

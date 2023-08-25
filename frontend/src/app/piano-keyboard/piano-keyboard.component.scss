@@ -7,19 +7,48 @@
 //   background:#222
 // }
 
-ul {
-  display: flex;
-  flex-direction: row;
+.keyboard-group {
+  display:flex;
+  flex-direction: column;
   justify-content: center;
   max-height: 18.875em;
   max-width: 33em;
-  margin: 5em auto; // NOTA: change if you need to move the keyboard in the screen
-  padding: 3em 2em 0 3em;
+  margin: 3em auto; // NOTA: change if you need to move the keyboard in the screen
+  padding: 3em 2em 0.5em 1em;
   border: 1px solid #160801;
   border-radius: 1em;
   // background:linear-gradient(to bottom right,rgba(0,0,0,0.3),rgba(0,0,0,0)),url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/187/vwood.png);
   background: linear-gradient(to bottom right, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0)), url(../../assets/images/black_wood.jpg);
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.5) inset, 0 1px rgba(212, 152, 125, 0.2) inset, 0 5px 15px rgba(0, 0, 0, 0.5)
+}
+
+.octave-controls {
+  max-width: 32px;
+  max-height: 40px;
+  // margin: 0 auto;
+  margin: 0.5em 0 0.5em 1em;
+  // padding: 0 0 0 3em;
+
+}
+
+// .octave-button {
+//   color:white;
+// }
+
+
+ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  // max-height: 18.875em;
+  // max-width: 33em;
+  // margin: 0 auto; // NOTA: change if you need to move the keyboard in the screen
+  // padding: 3em 2em 0 3em;
+  // border: 1px solid #160801;
+  // border-radius: 1em;
+  // // background:linear-gradient(to bottom right,rgba(0,0,0,0.3),rgba(0,0,0,0)),url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/187/vwood.png);
+  // background: linear-gradient(to bottom right, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0)), url(../../assets/images/black_wood.jpg);
+  // box-shadow: 0 0 50px rgba(0, 0, 0, 0.5) inset, 0 1px rgba(212, 152, 125, 0.2) inset, 0 5px 15px rgba(0, 0, 0, 0.5)
 }
 
 li {

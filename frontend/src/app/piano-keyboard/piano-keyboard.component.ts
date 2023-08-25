@@ -77,4 +77,10 @@ export class PianoKeyboardComponent {
     console.log("selected key: ", formattedKeyLabel);
     this.selectedKeyEvent.emit(formattedKeyLabel);
   }
+
+  public changeOctave(octaveAdder: number): void {
+    if ((octaveAdder == -1 && this.currentOctaveIndex > 1) || (octaveAdder == 1 && this.currentOctaveIndex < 7)) {
+      this.currentOctaveIndex += octaveAdder;
+    }
+  }
 }
