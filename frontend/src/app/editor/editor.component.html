@@ -3,7 +3,7 @@
     <h2 class="accordion-header">
       <button class="accordion-button" type="button" data-bs-toggle="collapse"
         data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-        Algorithm Settings
+        Editor Settings
       </button>
     </h2>
     <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
@@ -24,13 +24,11 @@
         <!-- Piano Keyboard component, shown on condition -->
         <div class="row">
           <div class="col-sm-12 col-lg-6">
-            <app-video-player [videoUrl]="videoUrl" *ngIf="isRendered"></app-video-player>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-12">
             <app-piano-keyboard *ngIf="showPianoKeyboard"
               (selectedKeyEvent)="setWDPianoKeyParams($event)"></app-piano-keyboard>
+          </div>
+          <div class="col-sm-12 col-lg-6">
+            <app-video-player [videoUrl]="videoUrl" *ngIf="isRendered"></app-video-player>
           </div>
         </div>
         <div class="row">
