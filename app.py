@@ -1,7 +1,7 @@
 # Web App related imports
 from datetime import datetime
 
-from flask import Flask, send_from_directory, request, make_response, jsonify
+from flask import Flask, send_from_directory, request, make_response, jsonify, send_file
 from flask_cors import CORS
 
 from model.settings import Settings
@@ -12,6 +12,9 @@ from model.visualizer import set_visualizer_config
 from model.data_service import DataService
 import pandas as pd
 import json
+from matplotlib.figure import Figure
+from io import BytesIO
+import os
 
 app = Flask(__name__)
 CORS(app)
@@ -20,6 +23,17 @@ CORS(app)
 @app.route('/')
 def hello_world():  # put application's code here
     return 'Hello World!'
+
+
+@app.route('/chart', methods=['GET'])
+def get_daap_chart():
+    fig = Figure()
+    ax = fig.subplots()
+    ax.plot([1, 2])
+    # buf = BytesIO()
+    path = os.path.join('media', 'images', 'chart')
+    fig.savefig(os.path.join('media', 'images', 'chart.png'), format="png")
+    return send_from_directory(directory='media/images', path='chart.png', mimetype="image/png", as_attachment=False)
 
 
 @app.route('/strings', methods=['GET'])
