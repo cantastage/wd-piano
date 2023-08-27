@@ -1,56 +1,61 @@
-<div class="accordion" id="editorSettings">
-  <div class="accordion-item">
-    <h2 class="accordion-header">
-      <button class="accordion-button" type="button" data-bs-toggle="collapse"
-        data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-        Editor Settings
-      </button>
-    </h2>
-    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
-      <div class="accordion-body">
-        <div class="row">
-          <!-- Checkbox group for parameters editing options -->
-          <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-            <input type="checkbox" class="btn-check" id="piano-mode" autocomplete="off" (click)="togglePianoView()"
-              checked="showPianoKeyboard">
-            <label class="btn btn-outline-primary" for="piano-mode">Piano Keyboard</label>
-
-            <input type="checkbox" class="btn-check" id="pro-mode" autocomplete="off" (click)="toggleProMode()"
-              checked="showPianoKeyboard">
-            <label class="btn btn-outline-primary" for="pro-mode">Pro Mode</label>
+<div class="row">
+  <div class="accordion" id="editorSettings">
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+          data-bs-target="#editorCollapse" aria-expanded="true" aria-controls="editorCollapse">
+          Editor Settings
+        </button>
+      </h2>
+      <div id="editorCollapse" class="accordion-collapse collapse show">
+        <div class="accordion-body">
+          <div class="row">
+            <!-- Checkbox group for parameters editing options -->
+            <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+              <input type="checkbox" class="btn-check" id="piano-mode" autocomplete="off" (click)="togglePianoView()"
+                checked="showPianoKeyboard">
+              <label class="btn btn-outline-primary" for="piano-mode">Piano Keyboard</label>
+  
+              <input type="checkbox" class="btn-check" id="pro-mode" autocomplete="off" (click)="toggleProMode()"
+                checked="showPianoKeyboard">
+              <label class="btn btn-outline-primary" for="pro-mode">Pro Mode</label>
+            </div>
           </div>
+          <!-- Piano Keyboard component, shown on condition -->
+          <div class="row">
+            <div class="col-sm-12 col-lg-6">
+              <app-piano-keyboard *ngIf="showPianoKeyboard"
+                (selectedKeyEvent)="setWDPianoKeyParams($event)"></app-piano-keyboard>
+            </div>
+            <div class="col-sm-12 col-lg-6">
+              <app-video-player [videoUrl]="videoUrl" *ngIf="isRendered"></app-video-player>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4" *ngFor="let param of wdParams">
+              <label for="{{param.name}}" class="form-label">{{param.name | camelcaseToWords}}<span
+                  class='unit-of-measure'>[{{param.unit}}]</span></label>
+              <input type="number" min={{param.min}} max={{param.max}} class="form-control" id="{{param.name}}"
+                [(ngModel)]="param.value">
+            </div>
+          </div>
+          <div clas="row">
+            <div class="col-lg-12 text-center start-button">
+              <button type="submit" class="btn btn-primary" (click)="runSimulation()">START WD-PIANO</button>
+            </div>
+          </div>
+          <!-- prova ritorno grafico da server -->
+          <!-- <img src="http://localhost:5000/chart" alt="plot" width="500"> -->
+  
         </div>
-        <!-- Piano Keyboard component, shown on condition -->
-        <div class="row">
-          <div class="col-sm-12 col-lg-6">
-            <app-piano-keyboard *ngIf="showPianoKeyboard"
-              (selectedKeyEvent)="setWDPianoKeyParams($event)"></app-piano-keyboard>
-          </div>
-          <div class="col-sm-12 col-lg-6">
-            <app-video-player [videoUrl]="videoUrl" *ngIf="isRendered"></app-video-player>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-4" *ngFor="let param of wdParams">
-            <label for="{{param.name}}" class="form-label">{{param.name | camelcaseToWords}}<span
-                class='unit-of-measure'>[{{param.unit}}]</span></label>
-            <input type="number" min={{param.min}} max={{param.max}} class="form-control" id="{{param.name}}"
-              [(ngModel)]="param.value">
-          </div>
-        </div>
-        <div clas="row">
-          <div class="col-lg-12 text-center start-button">
-            <button type="submit" class="btn btn-primary" (click)="runSimulation()">START WD-PIANO</button>
-          </div>
-        </div>
-        <!-- prova ritorno grafico da server -->
-        <!-- <img src="http://localhost:5000/chart" alt="plot" width="500"> -->
-
       </div>
     </div>
   </div>
 </div>
 
-<h1>Results</h1>
-<!-- WD results container -->
-<app-wd-results [results]="this.wdResults"></app-wd-results>
+
+<div class="row">
+  <h1>Results</h1>
+  <!-- WD results container -->
+  <app-wd-results [results]="this.wdResults"></app-wd-results>
+</div>

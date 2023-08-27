@@ -2,12 +2,12 @@
     <div *ngFor="let result of results; let i=index" class="accordion-item">
         <h2 class="accordion-header">
             <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
-                aria-controls="panelsStayOpen-collapseOne">
+                data-bs-target="#resultPanel-collapse" aria-expanded="true"
+                aria-controls="resultPanel-collapse">
                 WD-Piano #{{i}}
             </button>
         </h2>
-        <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+        <div id="resultPanel-collapse" class="accordion-collapse collapse show">
             <div class="accordion-body">
                 <img src={{this.results[i].daapFeatures}} alt="plot" width="500">
             </div>
