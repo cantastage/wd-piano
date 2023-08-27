@@ -9,7 +9,8 @@
         </h2>
         <div id="resultPanel-collapse" class="accordion-collapse collapse show">
             <div class="accordion-body">
-                <img src={{this.results[i].daapFeatures}} alt="plot" width="500">
+                <!-- <img src="http://localhost:5000/chart" alt="plot" width="500"> -->
+                <img src={{getPlotUrl(this.results[i].daapFeatures.mfccs)}} alt="plot" width="500">
             </div>
         </div>
     </div>

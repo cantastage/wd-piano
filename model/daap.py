@@ -32,7 +32,8 @@ class AudioFeatureExtractor(object):
         # ax.setTitle('MFCCs')
         # ax.label_outer()
         base_filename = Settings.get_base_filename()  # get base filename
-        plot_filename = 'mfccs_' + base_filename + '.png'
+        plot_filename = 'mfccs-' + base_filename + '.png'
         fig.savefig(os.path.join('media', 'images', plot_filename), format="png")
-        return plot_filename
+        extracted_features = {'mfccs': plot_filename}
+        return extracted_features
 

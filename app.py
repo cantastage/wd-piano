@@ -97,12 +97,12 @@ def run_simulation():
     Settings.set_string(result[0])  # get string matrix
     Settings.set_hammer(result[1])  # get hammer positions vector
     # base_filename = "WD-Piano-" + datetime.now().strftime("%Y%m%d-%H%M%S")  # define base filename for savings
-    mfccs_plot_filename = AudioFeatureExtractor.extract_features(Settings.get_base_filename() + ".wav")
+    extracted_features = AudioFeatureExtractor.extract_features(Settings.get_base_filename() + ".wav")  # will be an array
     video_filename = Settings.get_base_filename() + ".mp4"
     set_visualizer_config({"output_file": video_filename})
     visualizer = Visualizer()  # create Visualizer instance
     visualizer.render()
-    return make_response(jsonify({'videoFilename': video_filename, 'mfccs': mfccs_plot_filename}), 200)
+    return make_response(jsonify({'videoFilename': video_filename, 'paramSummary': [], 'daapFeatures': extracted_features}), 200)
 
 
 if __name__ == '__main__':

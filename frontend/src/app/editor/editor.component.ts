@@ -43,21 +43,14 @@ export class EditorComponent {
   public runSimulation(): void {
     this.isRendered = false;
     this.apiService.runSimulation(this.parseWDParams())
-      .subscribe((data) => {
-        // console.log('returned video name from server: ' + data.videoFilename);
+      .subscribe((data: WDResult) => {
+        console.log('Arrived from server:');
         console.log(data);
-        this.parseWDResult(data);
-        console.log('extracted videoUrl: ' + this.videoUrl)
+        this.wdResults.push(data);
+        this.videoUrl = API_URL + '/video/' + data.videoFilename;
+        // console.log('extracted videoUrl: ' + this.videoUrl)
         this.isRendered = true;
       });
-  }
-
-  // TODO change data to WDResult as soon as it becomes compliant
-  private parseWDResult(data: any): void {
-    this.videoUrl = API_URL + '/video/' + data.videoFilename;
-    let daapFeatures = API_URL + '/' + data.daapFeatures;
-    let arrivedResult = new WDResult(data.videoFilename, [], daapFeatures);
-    this.wdResults.push(data);
   }
 
   /**

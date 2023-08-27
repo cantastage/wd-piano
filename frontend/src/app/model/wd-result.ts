@@ -1,13 +1,16 @@
+import { DAAPFeatures } from "./daap-features";
 import { SimpleWDParam } from "./wd-settings";
 
 export class WDResult {
-    videoFileName:string;
+    videoFilename:string;
     paramSummary: Array<SimpleWDParam>;
-    daapFeatures: any; // TODO assign type once implemented
+    daapFeatures: DAAPFeatures; // TODO assign type once implemented
 
     constructor(videoFileName:string, summary: Array<SimpleWDParam>, daapFeatures: any) {
-        this.videoFileName = videoFileName;
+        this.videoFilename = videoFileName;
         this.paramSummary = summary;
         this.daapFeatures = daapFeatures;
     }
+
+    
 }

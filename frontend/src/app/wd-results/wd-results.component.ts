@@ -1,5 +1,6 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { WDResult } from '../model/wd-result';
+import { API_URL } from 'src/env';
 
 @Component({
   selector: 'app-wd-results',
@@ -16,4 +17,7 @@ export class WdResultsComponent {
   //   this.results = changes['results'].currentValue;
   // }
 
+  public getPlotUrl(plotName: string): string {
+    return API_URL + '/plot/' + plotName;
+  }
 }
