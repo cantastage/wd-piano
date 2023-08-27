@@ -14,6 +14,8 @@ import { CamelcaseToWordsPipe } from './camelcase-to-words.pipe';
 import { VideoPlayerComponent } from './video-player/video-player.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { ParametersComponent } from './parameters/parameters.component';
+import { HsDataDirective } from './hs-data.directive';
+import { WdResultsComponent } from './wd-results/wd-results.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,7 +23,9 @@ import { ParametersComponent } from './parameters/parameters.component';
     EditorComponent,
     CamelcaseToWordsPipe,
     VideoPlayerComponent,
-    ParametersComponent
+    ParametersComponent,
+    HsDataDirective,
+    WdResultsComponent
   ],
   imports: [
     BrowserModule,

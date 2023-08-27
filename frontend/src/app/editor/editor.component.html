@@ -40,11 +40,14 @@
         </div>
         <div clas="row">
           <div class="col-lg-12 text-center start-button">
-            <button type="submit" class="btn btn-primary" (click)="runSimulation()">START ALGORITHM</button>
+            <button type="submit" class="btn btn-primary" (click)="runSimulation()">START WD-PIANO</button>
           </div>
         </div>
         <!-- prova ritorno grafico da server -->
-        <img src="http://localhost:5000/chart" alt="plot" width="500">
+        <!-- <img src="http://localhost:5000/chart" alt="plot" width="500"> -->
+        <h1>Results</h1>
+        <!-- WD results container -->
+        <app-wd-results></app-wd-results>
       </div>
     </div>
   </div>

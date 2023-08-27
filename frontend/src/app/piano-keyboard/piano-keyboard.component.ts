@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { ApiService } from '../api.service';
-import { PianoKey } from '../model/piano-strings';
+import { PianoKey } from '../model/piano-key';
 import { style } from '@angular/animations';
 
 @Component({

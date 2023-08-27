@@ -2,7 +2,7 @@ import { Component, Output } from '@angular/core';
 import { ApiService } from '../api.service';
 import { SimpleWDParam, WDParam, WDPARAMS } from '../model/wd-settings';
 import { API_URL } from 'src/env';
-import { PianoKey } from '../model/piano-strings';
+import { PianoKey } from '../model/piano-key';
 
 @Component({
   selector: 'app-editor',
