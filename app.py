@@ -34,6 +34,11 @@ def get_daap_chart():
     return send_from_directory(directory='media/images', path='chart.png', mimetype="image/png", as_attachment=False)
 
 
+@app.route('/plot/<filename>', methods=['GET'])
+def get_feature_plot(filename):
+    return send_from_directory(directory='media/images', path=filename, mimetype="image/png", as_attachment=False)
+
+
 @app.route('/strings', methods=['GET'])
 def get_strings():
     df = pd.read_csv('./model/transpose.csv', encoding='utf-8')

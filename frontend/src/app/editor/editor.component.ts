@@ -3,6 +3,7 @@ import { ApiService } from '../api.service';
 import { SimpleWDParam, WDParam, WDPARAMS } from '../model/wd-settings';
 import { API_URL } from 'src/env';
 import { PianoKey } from '../model/piano-key';
+import { WDResult } from '../model/wd-result';
 
 @Component({
   selector: 'app-editor',
@@ -22,6 +23,7 @@ export class EditorComponent {
   paramsContainer: Map<string, SimpleWDParam>;
 
   videoUrl: string = ''; //url of the video to be rendered
+  wdResults: Array<WDResult> = []; 
 
   ngOnInit() {
     this.apiService.getPianoKeys().subscribe((data) => {
@@ -44,10 +46,18 @@ export class EditorComponent {
       .subscribe((data) => {
         // console.log('returned video name from server: ' + data.videoFilename);
         console.log(data);
-        this.videoUrl = API_URL + '/video/' + data.videoFilename;
+        this.parseWDResult(data);
         console.log('extracted videoUrl: ' + this.videoUrl)
         this.isRendered = true;
       });
+  }
+
+  // TODO change data to WDResult as soon as it becomes compliant
+  private parseWDResult(data: any): void {
+    this.videoUrl = API_URL + '/video/' + data.videoFilename;
+    let daapFeatures = API_URL + '/' + data.daapFeatures;
+    let arrivedResult = new WDResult(data.videoFilename, [], daapFeatures);
+    this.wdResults.push(data);
   }
 
   /**
@@ -118,6 +128,8 @@ export class EditorComponent {
     }
     return pianoKeys;
   }
+
+
 
   private initWDParams(): void {
     // this.paramsContainer = new Map<string, WDParam>(); // già nel costruttore

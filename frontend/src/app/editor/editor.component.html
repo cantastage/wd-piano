@@ -1,4 +1,4 @@
-<div class="accordion" id="accordionPanelsStayOpenExample">
+<div class="accordion" id="editorSettings">
   <div class="accordion-item">
     <h2 class="accordion-header">
       <button class="accordion-button" type="button" data-bs-toggle="collapse"
@@ -45,10 +45,12 @@
         </div>
         <!-- prova ritorno grafico da server -->
         <!-- <img src="http://localhost:5000/chart" alt="plot" width="500"> -->
-        <h1>Results</h1>
-        <!-- WD results container -->
-        <app-wd-results></app-wd-results>
+
       </div>
     </div>
   </div>
 </div>
+
+<h1>Results</h1>
+<!-- WD results container -->
+<app-wd-results [results]="this.wdResults"></app-wd-results>

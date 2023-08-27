@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { WDResult } from '../model/wd-result';
 
 @Component({
@@ -10,5 +10,10 @@ export class WdResultsComponent {
   @Input() results: Array<WDResult> = [];
 
   constructor() { }
+
+  // ngOnChanges(changes: SimpleChanges) {
+  //   console.log("Arrived new results: ", changes);
+  //   this.results = changes['results'].currentValue;
+  // }
 
 }
