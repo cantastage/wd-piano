@@ -19,6 +19,7 @@ class Settings(object):
     _hammer_initial_velocity = 7  # m/s
     _hammer_string_distance = 0.01  # meters
     _linear_felt_stiffness = 1000  # N/m
+    _base_filename = None  # filename of the simulation data, for video and audio file saving
 
     def __new__(cls):
         """
@@ -129,6 +130,10 @@ class Settings(object):
     def get_spatial_sampling_step(cls):
         return cls.get_sound_speed_in_air() / cls.get_sampling_freq()
 
+    @classmethod
+    def get_base_filename(cls):
+        return cls._base_filename
+
     # -------------- Setters -------------- #
     @classmethod
     def set_string(cls, string):
@@ -137,6 +142,10 @@ class Settings(object):
     @classmethod
     def set_hammer(cls, hammer):
         cls._hammer = hammer
+
+    @classmethod
+    def set_base_filename(cls, filename):
+        cls._base_filename = filename
 
     # @classmethod
     # def set_sampling_freq(cls, sampling_freq):

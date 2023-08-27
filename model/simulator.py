@@ -1,7 +1,8 @@
 import numpy as np
 import scipy.io as sio
 import math
-
+import os
+from datetime import datetime
 from model.settings import Settings
 
 
@@ -257,6 +258,8 @@ class Simulator:
 
         # Create audio file with the string @ contact point
         scaled_string = np.int16(self.string / np.max(np.abs(self.string)) * 32767)
-        audio_file_name = 'python_audio_string.wav'
-        sio.wavfile.write(audio_file_name, self.Fs, scaled_string)
+        base_filename = ("WD-Piano-" + datetime.now().strftime("%Y%m%d-%H%M%S"))  # define base filename for savings
+        Settings.set_base_filename(base_filename)
+        audio_file_name = base_filename + '.wav'
+        sio.wavfile.write(os.path.join('media', 'audio', audio_file_name), self.Fs, scaled_string)  # TODO check if it saves correctly
         return self.string_matrix, self.hammer

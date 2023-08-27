@@ -42,7 +42,8 @@ export class EditorComponent {
     this.isRendered = false;
     this.apiService.runSimulation(this.parseWDParams())
       .subscribe((data) => {
-        console.log('returned video name from server: ' + data.videoFilename);
+        // console.log('returned video name from server: ' + data.videoFilename);
+        console.log(data);
         this.videoUrl = API_URL + '/video/' + data.videoFilename;
         console.log('extracted videoUrl: ' + this.videoUrl)
         this.isRendered = true;

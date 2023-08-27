@@ -1,20 +1,18 @@
 # Web App related imports
+import os
 from datetime import datetime
 
-from flask import Flask, send_from_directory, request, make_response, jsonify, send_file
+import pandas as pd
+from flask import Flask, send_from_directory, request, make_response, jsonify
 from flask_cors import CORS
+from matplotlib.figure import Figure
 
+from model.daap import AudioFeatureExtractor
 from model.settings import Settings
 from model.simulator import Simulator
 from model.utils import Utils
 from model.visualizer import Visualizer
 from model.visualizer import set_visualizer_config
-from model.data_service import DataService
-import pandas as pd
-import json
-from matplotlib.figure import Figure
-from io import BytesIO
-import os
 
 app = Flask(__name__)
 CORS(app)
@@ -31,7 +29,7 @@ def get_daap_chart():
     ax = fig.subplots()
     ax.plot([1, 2])
     # buf = BytesIO()
-    path = os.path.join('media', 'images', 'chart')
+    # path = os.path.join('media', 'images', 'chart')
     fig.savefig(os.path.join('media', 'images', 'chart.png'), format="png")
     return send_from_directory(directory='media/images', path='chart.png', mimetype="image/png", as_attachment=False)
 
@@ -90,14 +88,16 @@ def run_simulation():
                           scaled['hammerInitialVelocity'],
                           scaled['hammerStringDistance'],
                           scaled['linearFeltStiffness'])
-    result = simulator.run_simulation()
-    Settings.set_string(result[0])
-    Settings.set_hammer(result[1])
-    video_filename = "WD-Piano-" + datetime.now().strftime("%Y%m%d-%H%M%S") + ".mp4"
+    result = simulator.run_simulation()  # Run simulation
+    Settings.set_string(result[0])  # get string matrix
+    Settings.set_hammer(result[1])  # get hammer positions vector
+    # base_filename = "WD-Piano-" + datetime.now().strftime("%Y%m%d-%H%M%S")  # define base filename for savings
+    mfccs_plot_filename = AudioFeatureExtractor.extract_features(Settings.get_base_filename() + ".wav")
+    video_filename = Settings.get_base_filename() + ".mp4"
     set_visualizer_config({"output_file": video_filename})
     visualizer = Visualizer()  # create Visualizer instance
     visualizer.render()
-    return make_response(jsonify({'videoFilename': video_filename}), 200)
+    return make_response(jsonify({'videoFilename': video_filename, 'mfccs': mfccs_plot_filename}), 200)
 
 
 if __name__ == '__main__':

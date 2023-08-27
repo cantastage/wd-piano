@@ -1,5 +1,6 @@
 import math
 from typing import Dict
+import os
 
 import manim
 from manim import *
@@ -8,7 +9,7 @@ from model.settings import Settings
 
 def set_visualizer_config(config_params: Dict):
     """
-    Sets the visualizer config parameters
+    Sets the manim config parameters for the visualizer
 
     :param config_params: the config parameters
     :return:
@@ -104,7 +105,8 @@ class Visualizer(Scene):
         self.add(string_graph, hammer)
 
         # add sound
-        self.add_sound("python_audio_string.wav", time_offset=1, gain=1)  # TODO check time_offset to align sound to vid
+        audio_file_path = os.path.join('media', 'audio', Settings.get_base_filename() + '.wav')
+        self.add_sound(audio_file_path, time_offset=1, gain=1)  # TODO check time_offset to align sound to vid
         self.wait()
         # TODO check se la duration dell'animazione deve essere di string_shape[0] o string_shape[0] - 1
         self.play(ApplyMethod(idx_tracker.increment_value, (string_shape[0] - 1)),
