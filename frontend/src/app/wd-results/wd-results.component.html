@@ -1,16 +1,17 @@
-<div class="accordion" id="wdResults">
-    <div *ngFor="let result of results; let i=index" class="accordion-item">
-        <h2 class="accordion-header">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                data-bs-target="#resultPanel-collapse" aria-expanded="true"
-                aria-controls="resultPanel-collapse">
-                WD-Piano #{{i}}
-            </button>
-        </h2>
-        <div id="resultPanel-collapse" class="accordion-collapse collapse show">
-            <div class="accordion-body">
-                <!-- <img src="http://localhost:5000/chart" alt="plot" width="500"> -->
-                <img src={{getPlotUrl(this.results[i].daapFeatures.mfccs)}} alt="plot" width="500">
+<div class="col-sm-12">
+    <div class="accordion" id="wdResults">
+        <div *ngFor="let result of results; let i=index" class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#resultPanel-collapse" aria-expanded="true" aria-controls="resultPanel-collapse">
+                    WD-Piano #{{i}}
+                </button>
+            </h2>
+            <div id="resultPanel-collapse" class="accordion-collapse collapse show">
+                <div class="accordion-body">
+                    <!-- <img src="http://localhost:5000/chart" alt="plot" width="500"> -->
+                    <img src={{getPlotUrl(this.results[i].daapFeatures.mfccs)}} alt="plot" width="500">
+                </div>
             </div>
         </div>
     </div>
