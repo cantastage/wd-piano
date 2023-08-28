@@ -33,6 +33,7 @@ export class EditorComponent {
   }
 
   constructor(private apiService: ApiService) {
+    this.wdResults.push(new WDResult('C4-Default', [], {mfccs: 'mfccs-C4-default.png', spectralCentroid: 'spectralCentroid-C4-default.png'}));
     this.videoUrl = API_URL + '/video/C4-Default.mp4'; //url of the video to be rendered
     this.wdParams = WDPARAMS; // retrieves from model the default parameters for the simulation
     this.paramsContainer = new Map<string, WDParam>();

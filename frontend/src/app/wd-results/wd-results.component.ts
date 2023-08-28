@@ -10,7 +10,9 @@ import { API_URL } from 'src/env';
 export class WdResultsComponent {
   @Input() results: Array<WDResult> = [];
 
-  constructor() { }
+  constructor() {
+    // this.results.push(new WDResult('C4-Default', [], {mfccs: 'mfccs-C4-default', spectralCentroid: 'spectralCentroid-C4-default'}));
+   }
 
   // ngOnChanges(changes: SimpleChanges) {
   //   console.log("Arrived new results: ", changes);

@@ -6,7 +6,7 @@ export class WDResult {
     paramSummary: Array<SimpleWDParam>;
     daapFeatures: DAAPFeatures; // TODO assign type once implemented
 
-    constructor(videoFileName:string, summary: Array<SimpleWDParam>, daapFeatures: any) {
+    constructor(videoFileName:string, summary: Array<SimpleWDParam>, daapFeatures: DAAPFeatures) {
         this.videoFilename = videoFileName;
         this.paramSummary = summary;
         this.daapFeatures = daapFeatures;
