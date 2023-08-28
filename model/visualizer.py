@@ -30,7 +30,7 @@ def plot_string_graph(string_matrix, axes, row_idx):
     :return:
     """
 
-    print("plotting row: ", int(row_idx))
+    # print("plotting row: ", int(row_idx))
     # NOTA: per le colonne si conta x - 1 poichè le coordinate dell'asse sono indicizzate a partire da 1
     return axes.plot(lambda x: string_matrix[int(row_idx)][int(x) - 1], color=RED)
 

@@ -186,7 +186,7 @@ class Simulator:
         :return: hammer matrix containing matrix positions at each iteration for plotting
         """
         print('Starting WDF-Piano algorithm')
-        print('Simulation will be run for: ', len(range(0, self.iterations)), ' steps')
+        print('Algorithm will be run for: ', len(range(0, self.iterations)), ' steps')
         #  runs the simulation for specified number of iterations
         for n in range(0, self.iterations):
             #  Shifts the two waveguides
@@ -261,5 +261,6 @@ class Simulator:
         base_filename = ("WD-Piano-" + datetime.now().strftime("%Y%m%d-%H%M%S"))  # define base filename for savings
         Settings.set_base_filename(base_filename)
         audio_file_name = base_filename + '.wav'
-        sio.wavfile.write(os.path.join('media', 'audio', audio_file_name), self.Fs, scaled_string)  # TODO check if it saves correctly
+        sio.wavfile.write(os.path.join('media', 'audio', audio_file_name), self.Fs, scaled_string)
+        # print('Saved audio file to: ', os.path.join('media', 'audio', audio_file_name))
         return self.string_matrix, self.hammer
