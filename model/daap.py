@@ -2,6 +2,7 @@
 import librosa
 import os
 from matplotlib.figure import Figure
+import numpy as np
 
 from model.settings import Settings
 
@@ -42,7 +43,7 @@ class AudioFeatureExtractor(object):
         ax.plot(times, cent.T, label='Spectral centroid', color='w')
         ax.legend(loc='upper right')
         ax.set(title='log Power spectrogram')
-        extracted_features['spectralCentroid'] = cls.save_feature_plot(fig, 'spectralCentroid', Settings.get_base_filename()
+        extracted_features['spectralCentroid'] = cls.save_feature_plot(fig, 'spectralCentroid', Settings.get_base_filename())
         return extracted_features
         # fig.savefig(os.path.join('media', 'images', plot_filename), format="png")
 

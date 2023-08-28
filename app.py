@@ -1,11 +1,6 @@
-# Web App related imports
-import os
-from datetime import datetime
-
 import pandas as pd
 from flask import Flask, send_from_directory, request, make_response, jsonify
 from flask_cors import CORS
-from matplotlib.figure import Figure
 
 from model.daap import AudioFeatureExtractor
 from model.settings import Settings
@@ -23,15 +18,15 @@ def hello_world():  # put application's code here
     return 'Hello World!'
 
 
-@app.route('/chart', methods=['GET'])
-def get_daap_chart():
-    fig = Figure()
-    ax = fig.subplots()
-    ax.plot([1, 2])
-    # buf = BytesIO()
-    # path = os.path.join('media', 'images', 'chart')
-    fig.savefig(os.path.join('media', 'images', 'chart.png'), format="png")
-    return send_from_directory(directory='media/images', path='chart.png', mimetype="image/png", as_attachment=False)
+@app.route('/video/<filename>', methods=['GET'])
+def get_wdf_video(filename):
+    """
+    Returns the video file to the client
+    :param filename: the name of the video file
+    :return:
+    """
+    return send_from_directory(
+        directory='media/videos/1080p60', path=filename, mimetype='video/mp4', as_attachment=False)
 
 
 @app.route('/plot/<filename>', methods=['GET'])
@@ -46,17 +41,6 @@ def get_strings():
     # json_strings = json.dumps(strings, indent=4)
     # strings = df.to_json(orient='columns')
     return make_response(strings, 200)
-
-
-@app.route('/video/<filename>', methods=['GET'])
-def get_wdf_video(filename):
-    """
-    Returns the video file to the client
-    :param filename: the name of the video file
-    :return:
-    """
-    return send_from_directory(
-        directory='media/videos/1080p60', path=filename, mimetype='video/mp4', as_attachment=False)
 
 
 @app.route('/simulation', methods=['POST'])
@@ -96,7 +80,6 @@ def run_simulation():
     result = simulator.run_simulation()  # Run simulation
     Settings.set_string(result[0])  # get string matrix
     Settings.set_hammer(result[1])  # get hammer positions vector
-    # base_filename = "WD-Piano-" + datetime.now().strftime("%Y%m%d-%H%M%S")  # define base filename for savings
     extracted_features = AudioFeatureExtractor.extract_features(Settings.get_base_filename() + ".wav")  # will be an array
     video_filename = Settings.get_base_filename() + ".mp4"
     set_visualizer_config({"output_file": video_filename})
