@@ -11,7 +11,7 @@
         <div class="accordion-body">
           <div class="row">
             <!-- Checkbox group for parameters editing options -->
-            <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+            <!-- <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
               <input type="checkbox" class="btn-check" id="piano-mode" autocomplete="off" (click)="togglePianoView()"
                 checked="showPianoKeyboard">
               <label class="btn btn-outline-primary" for="piano-mode">Piano Keyboard</label>
@@ -19,7 +19,7 @@
               <input type="checkbox" class="btn-check" id="pro-mode" autocomplete="off" (click)="toggleProMode()"
                 checked="showPianoKeyboard">
               <label class="btn btn-outline-primary" for="pro-mode">Pro Mode</label>
-            </div>
+            </div> -->
           </div>
           <!-- Piano Keyboard component, shown on condition -->
           <div class="row">
@@ -28,10 +28,13 @@
                 (selectedKeyEvent)="setWDPianoKeyParams($event)"></app-piano-keyboard>
             </div>
             <div class="col-sm-12 col-lg-6">
-              <app-video-player [videoUrl]="videoUrl" *ngIf="isRendered"></app-video-player>
+              <!-- TODO move piano keyboard related parameters here -->
+              <!-- <app-video-player [videoUrl]="videoUrl" *ngIf="isRendered"></app-video-player> -->
+              
             </div>
           </div>
           <div class="row">
+            <!-- TODO move away -->
             <div class="col-lg-4" *ngFor="let param of wdParams">
               <label for="{{param.name}}" class="form-label">{{param.name | camelcaseToWords}}<span
                   class='unit-of-measure'>[{{param.unit}}]</span></label>

@@ -22,4 +22,9 @@ export class WdResultsComponent {
   public getPlotUrl(plotName: string): string {
     return API_URL + '/plot/' + plotName;
   }
+
+  public getVideoUrl(videoIndex: number): string {
+    let videoName = this.results[videoIndex].videoFilename;
+    return API_URL + '/video/' + videoName;
+  }
 }

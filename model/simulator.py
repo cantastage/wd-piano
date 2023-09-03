@@ -59,6 +59,7 @@ def get_wg_lengths(f0: float, sampling_freq: int, relative_hammer_position: floa
     wg_right_length = wg_length - wg_left_length  # right part of the waveguide length
     if wg_right_length % 2 != 0:
         wg_right_length += 1
+    Settings.set_effective_wg_length(wg_length % 2)
     return wg_left_length, wg_right_length
 
 
@@ -104,9 +105,10 @@ class Simulator:
         print('wg_length_right: ', self.wg_length_right)
         self.wg_length = self.wg_length_left + self.wg_length_right  # NB: formula per wg_length: wg_length = Fs / f0
         print('Total waveguide length: ', self.wg_length + self.wg_length_right)
-        self.K = soundboard_reflection_coefficient # set soundboard reflection coefficient
+        self.K = soundboard_reflection_coefficient  # set soundboard reflection coefficient
         self.A = linear_felt_stiffness
-        self.str_length = Settings.get_sound_speed_in_air() / sampling_freq  # string length in m
+        # self.str_length = Settings.get_sound_speed_in_air() / sampling_freq  # string length in m
+        self.str_length = string_length  # string length in m
         self.tension = string_tension
         self.hammer_initial_velocity = hammer_initial_velocity
         self.hs_distance = hammer_string_distance  # hammer-string distance
@@ -131,7 +133,6 @@ class Simulator:
         # Init waves
         self.wg_left = np.zeros(self.wg_length_left)
         # print('init wg_left shape is: ', self.wg_left.shape)
-        # print(self.wg_left)
         self.wg_right = np.zeros(self.wg_length_right)
         # print('init wg_right_shape is: ', self.wg_right.shape)
         self.string = np.zeros(self.iterations)  # store values of string @ contact pt for audio file creation
@@ -258,6 +259,12 @@ class Simulator:
 
         # Create audio file with the string @ contact point
         scaled_string = np.int16(self.string / np.max(np.abs(self.string)) * 32767)
+        print('Relative striking point:', Settings.get_hammer_relative_striking_point())
+        print('string wg length is: ', self.wg_length)
+        wg_striking_point = round((self.wg_length/2)*Settings.get_hammer_relative_striking_point())
+        Settings.set_wg_striking_point(wg_striking_point)
+        print('striking point in waveguide is ', wg_striking_point)
+
         base_filename = ("WD-Piano-" + datetime.now().strftime("%Y%m%d-%H%M%S"))  # define base filename for savings
         Settings.set_base_filename(base_filename)
         audio_file_name = base_filename + '.wav'

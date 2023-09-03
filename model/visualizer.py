@@ -14,8 +14,16 @@ def set_visualizer_config(config_params: Dict):
     :param config_params: the config parameters
     :return:
     """
+    # Useful Config settings #TODO remove after finished
+    # config.custom_folders = True
+    # config.media_dir = './static'
+    # config.output_file = 'prova-video.mp4'
+    # config.renderer = "opengl"
+    # config.write_to_movie = True
+    # config.flush_cache = True  # TODO check if this is needed
+    # config.disable_caching = True  # TODO check if this is needed
     # TODO maybe add consistency checks or let the function accept only the required parameters
-    # unique for to set the config in manim config
+    # Unique for to set the config in manim config
     for k, v in config_params.items():
         config[k] = v
 
@@ -46,8 +54,8 @@ def get_hammer(hammer_matrix, axes, position_idx, hammer_x_coord):
     :return:
     """
     center_y_coord = hammer_matrix[int(position_idx) - 1]
-    # print('center_y_coord = ', center_y_coord)
-    center_point = Dot(axes.c2p(19, center_y_coord, 0))  # TODO fix when relative striking position changes
+    center_x_coord = Settings.get_wg_striking_point()
+    center_point = Dot(axes.c2p(center_x_coord, center_y_coord, 0))
     circle = Circle(color=BLUE, fill_color=BLUE, fill_opacity=1.0).surround(center_point, buffer_factor=2.0)
     circle.move_to(circle.get_bottom())
     return circle
@@ -60,15 +68,6 @@ class Visualizer(Scene):
 
     #  TODO find if you can pass string-hammer matrices directly to Scene or you need to encapsulate it in superclass
     def construct(self):
-        # Config settings
-        # config.custom_folders = True
-        # config.media_dir = './static'
-        # config.output_file = 'prova-video.mp4'
-        # config.renderer = "opengl"
-        # config.write_to_movie = True
-        config.flush_cache = True  # TODO check if this is needed
-        # config.disable_caching = True  # TODO check if this is needed
-
         # -------------- PYTHON DATA --------------------------------------#
         period = 1 / Settings.get_sampling_freq()  # calculated from settings TODO check if needs to be given as param
 

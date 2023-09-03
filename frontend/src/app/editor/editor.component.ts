@@ -22,7 +22,6 @@ export class EditorComponent {
   pianoKeys: Array<PianoKey> = []; // TODO maybe add getter and make field private
   paramsContainer: Map<string, SimpleWDParam>;
 
-  videoUrl: string = ''; //url of the video to be rendered
   wdResults: Array<WDResult> = []; 
 
   ngOnInit() {
@@ -33,8 +32,7 @@ export class EditorComponent {
   }
 
   constructor(private apiService: ApiService) {
-    this.wdResults.push(new WDResult('C4-Default', [], {mfccs: 'mfccs-C4-default.png', spectralCentroid: 'spectralCentroid-C4-default.png'}));
-    this.videoUrl = API_URL + '/video/C4-Default.mp4'; //url of the video to be rendered
+    this.wdResults.push(new WDResult('C4-Default.mp4', [], {mfccs: 'mfccs-C4-default.png', spectralCentroid: 'spectralCentroid-C4-default.png'}));
     this.wdParams = WDPARAMS; // retrieves from model the default parameters for the simulation
     this.paramsContainer = new Map<string, WDParam>();
     this.initWDParams();
@@ -48,8 +46,6 @@ export class EditorComponent {
         console.log('Arrived from server:');
         console.log(data);
         this.wdResults.push(data);
-        this.videoUrl = API_URL + '/video/' + data.videoFilename;
-        // console.log('extracted videoUrl: ' + this.videoUrl)
         this.isRendered = true;
       });
   }
@@ -93,9 +89,14 @@ export class EditorComponent {
 
   // TODO change according to new model of simulation parameters
   private parseWDParams(): Object {
+    // let hammerRelativeStrikingPoint = this.wdParams.find(key => key.name == 'hammerRelativeStrikingPoint');
+    // if (hammerRelativeStrikingPoint !== undefined) {
+    //   hammerRelativeStrikingPoint.value = hammerRelativeStrikingPoint.value/100;
+    // }
     let jsonParams: Object[] = Object.assign(this.wdParams.map(key => ({ [key.name]: key.value })));
     let finalObj = {};
     jsonParams.forEach(obj => { Object.assign(finalObj, obj) });
+    console.log('Parsed wdParams to send to server:');
     console.log(finalObj);
     return finalObj;
   }

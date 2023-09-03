@@ -21,6 +21,9 @@ class Settings(object):
     _linear_felt_stiffness = 1000  # N/m
     _base_filename = None  # filename of the simulation data, for video and audio file saving
 
+    _effective_wg_length: int = None
+    _wg_striking_point: int = None
+
     def __new__(cls):
         """
         This method implements the singleton pattern
@@ -134,7 +137,16 @@ class Settings(object):
     def get_base_filename(cls):
         return cls._base_filename
 
+    @classmethod
+    def get_effective_wg_length(cls):
+        return cls._effective_wg_length
+
+    @classmethod
+    def get_wg_striking_point(cls):
+        return cls._wg_striking_point
+
     # -------------- Setters -------------- #
+
     @classmethod
     def set_string(cls, string):
         cls._string = string
@@ -146,6 +158,14 @@ class Settings(object):
     @classmethod
     def set_base_filename(cls, filename):
         cls._base_filename = filename
+
+    @classmethod
+    def set_effective_wg_length(cls, effective_wg_length):
+        cls._effective_wg_length = effective_wg_length
+
+    @classmethod
+    def set_wg_striking_point(cls, wg_striking_point):
+        cls._wg_striking_point = wg_striking_point
 
     # @classmethod
     # def set_sampling_freq(cls, sampling_freq):
