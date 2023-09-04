@@ -22,17 +22,23 @@ export class EditorComponent {
   pianoKeys: Array<PianoKey> = []; // TODO maybe add getter and make field private
   paramsContainer: Map<string, SimpleWDParam>;
 
-  wdResults: Array<WDResult> = []; 
+  wdResults: Array<WDResult> = [];
 
   ngOnInit() {
     this.apiService.getPianoKeys().subscribe((data) => {
       // console.log("ARRIVED FROM SERVER: ", data);
       this.pianoKeys = this.parsePianoKeys(data);
-    });  
+    });
   }
 
   constructor(private apiService: ApiService) {
-    this.wdResults.push(new WDResult('C4-Default.mp4', [], {mfccs: 'mfccs-C4-default.png', spectralCentroid: 'spectralCentroid-C4-default.png'}));
+    this.wdResults.push(new WDResult('C4-Default.mp4', [], { 
+      mfccs: 'mfccs-C4-default.png', 
+      spectralCentroid: 'spectralCentroid-C4-default.png', 
+      spectralBandwidth: 'spectralBandwidth-C4-default.png', 
+      spectralContrast: 'spectralContrast-C4-default.png',
+      spectralRollOff: 'spectralRollOff-C4-default.png', 
+    }));
     this.wdParams = WDPARAMS; // retrieves from model the default parameters for the simulation
     this.paramsContainer = new Map<string, WDParam>();
     this.initWDParams();
@@ -56,7 +62,7 @@ export class EditorComponent {
    */
   setWDPianoKeyParams(keyLabel: string): void {
     let translatedLabel = keyLabel;
-    if(keyLabel.includes("#",1)) {
+    if (keyLabel.includes("#", 1)) {
       translatedLabel = keyLabel.replace("#", "d");
     }
     console.log('key label: ', keyLabel);
@@ -67,12 +73,12 @@ export class EditorComponent {
       this.wdParams[5].value = selectedKey.getStringDiameter();
       this.wdParams[6].value = selectedKey.getStringTension();
       this.wdParams[8].value = selectedKey.getHammerMass();
-      this.wdParams[9].value = parseFloat((selectedKey.getHammerImpactPosition()/selectedKey.getStringLength()*100).toFixed(2)); // we need to display it in %
+      this.wdParams[9].value = parseFloat((selectedKey.getHammerImpactPosition() / selectedKey.getStringLength() * 100).toFixed(2)); // we need to display it in %
       console.log('calculated relative striking point: ', this.wdParams[9].value);
     }
   }
 
-  
+
   /** 
    * Toggles piano keyboard view
    */
@@ -89,10 +95,6 @@ export class EditorComponent {
 
   // TODO change according to new model of simulation parameters
   private parseWDParams(): Object {
-    // let hammerRelativeStrikingPoint = this.wdParams.find(key => key.name == 'hammerRelativeStrikingPoint');
-    // if (hammerRelativeStrikingPoint !== undefined) {
-    //   hammerRelativeStrikingPoint.value = hammerRelativeStrikingPoint.value/100;
-    // }
     let jsonParams: Object[] = Object.assign(this.wdParams.map(key => ({ [key.name]: key.value })));
     let finalObj = {};
     jsonParams.forEach(obj => { Object.assign(finalObj, obj) });

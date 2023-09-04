@@ -28,7 +28,7 @@ export const WDPARAMS: WDParam[] = [
     { name: 'stringFundamentalFrequency', value: 262.22, min: 20, max: 20000, unit: 'Hz' },
     { name: 'stringLength', value: 0.657, min: 5, max: 500, unit: 'm' },
     { name: 'stringDiameter', value: 1.064, min: 0.5, max: 2, unit: 'mm' },
-    { name: 'stringTension', value: 670, min: 400, max: 1000, unit: 'N' },
+    { name: 'stringTension', value: 829, min: 400, max: 1000, unit: 'N' },
     { name: 'soundboardReflectionCoefficient', value: 98, min: 0, max: 100, unit: '%' },
     { name: 'hammerMass', value: 8.71, min: 5, max: 11, unit: 'g' },
     { name: 'hammerRelativeStrikingPoint', value: 12.02, min: 0, max: 100, unit: '%' },

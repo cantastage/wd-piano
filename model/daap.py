@@ -25,9 +25,10 @@ class AudioFeatureExtractor(object):
         :return: the extracted features
         """
         sr = Settings.get_sampling_freq()
+        base_filename = Settings.get_base_filename()
         # init variables
         extracted_features = {}  # init dictionary of extracted features
-        audio_file_path = os.path.join('media', 'audio', audio_file_name) # audio file path
+        audio_file_path = os.path.join('media', 'audio', audio_file_name)  # audio file path
         mfccs_fig = Figure()  # init figure container
         mfccs_ax = mfccs_fig.subplots()  # init single plot container
         y, sr = librosa.load(audio_file_path, sr=sr)  # load audio file
@@ -38,7 +39,7 @@ class AudioFeatureExtractor(object):
         mfccs_img = librosa.display.specshow(mfccs, sr=sr, x_axis='time', ax=mfccs_ax)  # create img for mfccs
         mfccs_fig.colorbar(mfccs_img, ax=mfccs_ax)
         mfccs_ax.set(title='MFCCs')
-        extracted_features['mfccs'] = cls.save_feature_plot(mfccs_fig, 'mfccs', Settings.get_base_filename())
+        extracted_features['mfccs'] = cls.save_feature_plot(mfccs_fig, 'mfccs', base_filename)
 
         # Spectral centroid
         # cent = librosa.feature.spectral_centroid(y=y, sr=sr)  # extract spectral centroid
@@ -50,17 +51,41 @@ class AudioFeatureExtractor(object):
         centroid_ax.plot(cent_times, centroid.T, label='Spectral centroid', color='w')
         centroid_ax.legend(loc='upper right')
         centroid_ax.set(title='log Power spectrogram')
-        extracted_features['spectralCentroid'] = cls.save_feature_plot(centroid_fig, 'spectralCentroid', Settings.get_base_filename())
+        extracted_features['spectralCentroid'] = cls.save_feature_plot(centroid_fig, 'spectralCentroid', base_filename)
 
+        # Spectral bandwidth
         spec_bw_fig = Figure()
         spec_bw_ax = spec_bw_fig.subplots()
-        spectral_bw = librosa.feature.spectral_bandwidth(S=S)
+        spectral_bw = librosa.feature.spectral_bandwidth(S=S, sr=sr)
         spec_bw_times = librosa.times_like(spectral_bw, sr=sr)
         librosa.display.specshow(librosa.amplitude_to_db(S, ref=np.max), sr=sr, y_axis='log', x_axis='time', ax=spec_bw_ax)
+        # spec_bw_ax.set(title='Spectral bandwidth')
         spec_bw_ax.fill_between(spec_bw_times, np.maximum(0, centroid[0] - spectral_bw[0]), np.minimum(centroid[0] + spectral_bw[0], sr/2), alpha=0.5, label='Centroid  +- bandwidth')
         spec_bw_ax.plot(spec_bw_times, centroid[0], label='Spectral centroid', color='w')
         spec_bw_ax.legend(loc='lower right')
-        extracted_features['spectralBandwidth'] = cls.save_feature_plot(spec_bw_fig, 'spectralBandwidth', Settings.get_base_filename())
+        extracted_features['spectralBandwidth'] = cls.save_feature_plot(spec_bw_fig, 'spectralBandwidth', base_filename)
+
+        # Spectral contrast
+        contrast_fig = Figure()
+        contrast_ax = contrast_fig.subplots()
+        spectral_contrast = librosa.feature.spectral_contrast(S=S, sr=sr)
+        contrast_img = librosa.display.specshow(spectral_contrast, sr=sr, x_axis='time', ax=contrast_ax)
+        contrast_fig.colorbar(contrast_img, ax=contrast_ax)
+        contrast_ax.set(ylabel='Frequency bands', title='Spectral contrast')
+        extracted_features['spectralContrast'] = cls.save_feature_plot(contrast_fig, 'spectralContrast', base_filename)
+
+        # Spectral roll-off
+        rolloff_fig = Figure()
+        rolloff_ax = rolloff_fig.subplots()
+        spectral_rolloff = librosa.feature.spectral_rolloff(S=S, sr=sr, roll_percent=0.85)
+        rolloff_min = librosa.feature.spectral_rolloff(S=S, sr=sr, roll_percent=0.01)
+        librosa.display.specshow(librosa.amplitude_to_db(S, ref=np.max), sr=sr, y_axis='log', x_axis='time', ax=rolloff_ax)
+        rolloff_ax.plot(librosa.times_like(spectral_rolloff, sr=sr), spectral_rolloff[0], label='Roll-off frequency (0.85)')
+        rolloff_ax.plot(librosa.times_like(spectral_rolloff, sr=sr), rolloff_min[0], color='w', label='Roll-off frequency (0.01)')
+        rolloff_ax.legend(loc='upper right')
+        rolloff_ax.set(title='Spectral Roll-off on log power spectrogram')
+        extracted_features['spectralRollOff'] = cls.save_feature_plot(rolloff_fig, 'spectralRollOff', base_filename)
+
 
         return extracted_features
         # fig.savefig(os.path.join('media', 'images', plot_filename), format="png")

@@ -4,6 +4,7 @@ import math
 import os
 from datetime import datetime
 from model.settings import Settings
+import soundfile as sf
 
 
 def dwg_shift(val: float, wg, n: int):
@@ -46,11 +47,6 @@ def get_wg_lengths(f0: float, sampling_freq: int, relative_hammer_position: floa
     :param relative_hammer_position: relative position of the hammer on the string
     :return: length of the left and right part of the waveguide
     """
-    # wg_length = round(sampling_freq / f0)  # rounded to be an integer value (in samples)
-    # wg_left_length = round(wg_length * relative_hammer_position)  # round to the nearest integer position
-    # if wg_left_length % 2 != 0:
-    #     wg_left_length += 1  # if wg_left_length is odd, we add 1 to make it even
-    # wg_right_length = wg_length - wg_left_length  # right part of the waveguide length
     # V2, to get always even lengths TODO check if it can be optimized
     wg_length = round(sampling_freq / f0)  # rounded to be an integer value (in samples)
     wg_left_length = round(wg_length * relative_hammer_position)  # round to the nearest integer position
@@ -258,7 +254,6 @@ class Simulator:
         # sio.savemat(file_name, {'python_string_matrix': self.string_matrix})
 
         # Create audio file with the string @ contact point
-        scaled_string = np.int16(self.string / np.max(np.abs(self.string)) * 32767)
         print('Relative striking point:', Settings.get_hammer_relative_striking_point())
         print('string wg length is: ', self.wg_length)
         wg_striking_point = round((self.wg_length/2)*Settings.get_hammer_relative_striking_point())
@@ -268,6 +263,13 @@ class Simulator:
         base_filename = ("WD-Piano-" + datetime.now().strftime("%Y%m%d-%H%M%S"))  # define base filename for savings
         Settings.set_base_filename(base_filename)
         audio_file_name = base_filename + '.wav'
-        sio.wavfile.write(os.path.join('media', 'audio', audio_file_name), self.Fs, scaled_string)
-        # print('Saved audio file to: ', os.path.join('media', 'audio', audio_file_name))
+        audiofile_save_path = os.path.join('media', 'audio', audio_file_name)
+        # SAVE AUDIO FILE WITH SOUNDFILE
+        # sf.write(audiofile_save_path, self.string, samplerate=44100, subtype='PCM_24')  # we use soundfile
+        # scaled_string = np.int16(self.string / np.max(np.abs(self.string)) * 32767)
+        scaled_string = self.string / np.max(np.abs(self.string))*32767
+        sio.wavfile.write(audiofile_save_path, self.Fs, scaled_string.astype(np.int16))
+
+        # sio.wavfile.write(audiofile_save_path, self.Fs, self.string)
+        # print('Saved audio file to: ', audiofile_save_path)
         return self.string_matrix, self.hammer
