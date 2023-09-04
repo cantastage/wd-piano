@@ -38,6 +38,7 @@ export class EditorComponent {
       spectralBandwidth: 'spectralBandwidth-C4-default.png', 
       spectralContrast: 'spectralContrast-C4-default.png',
       spectralRollOff: 'spectralRollOff-C4-default.png', 
+      tonnetz:'tonnetz-C4-default.png'
     }));
     this.wdParams = WDPARAMS; // retrieves from model the default parameters for the simulation
     this.paramsContainer = new Map<string, WDParam>();

@@ -4,5 +4,6 @@ export interface DAAPFeatures {
     spectralBandwidth: string;
     spectralContrast: string;
     spectralRollOff: string;
+    tonnetz: string;
     // TODO add all other features when implemented
 }

@@ -86,7 +86,15 @@ class AudioFeatureExtractor(object):
         rolloff_ax.set(title='Spectral Roll-off on log power spectrogram')
         extracted_features['spectralRollOff'] = cls.save_feature_plot(rolloff_fig, 'spectralRollOff', base_filename)
 
-
+        # Tonnetz
+        tonnetz_fig = Figure()
+        tonnetz_ax = tonnetz_fig.subplots()
+        harmonic_component = librosa.effects.harmonic(y)
+        tonnetz = librosa.feature.tonnetz(y=harmonic_component, sr=sr)
+        tonnetz_img = librosa.display.specshow(tonnetz, sr=sr, y_axis='tonnetz', x_axis='time', ax=tonnetz_ax)
+        tonnetz_ax.set(title='Tonal centroids (Tonnetz)')
+        tonnetz_fig.colorbar(tonnetz_img)
+        extracted_features['tonnetz'] = cls.save_feature_plot(tonnetz_fig, 'tonnetz', base_filename)
         return extracted_features
         # fig.savefig(os.path.join('media', 'images', plot_filename), format="png")
 
