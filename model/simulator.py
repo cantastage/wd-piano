@@ -47,15 +47,15 @@ def get_wg_lengths(f0: float, sampling_freq: int, relative_hammer_position: floa
     :param relative_hammer_position: relative position of the hammer on the string
     :return: length of the left and right part of the waveguide
     """
-    # V2, to get always even lengths TODO check if it can be optimized
-    wg_length = round(sampling_freq / f0)  # rounded to be an integer value (in samples)
-    wg_left_length = round(wg_length * relative_hammer_position)  # round to the nearest integer position
-    if wg_left_length % 2 != 0:
-        wg_left_length += 1  # if wg_left_length is odd, we add 1 to make it even
-    wg_right_length = wg_length - wg_left_length  # right part of the waveguide length
-    if wg_right_length % 2 != 0:
-        wg_right_length += 1
-    Settings.set_effective_wg_length(wg_length % 2)
+    # v3 optimized version
+    effective_wg_length = round(sampling_freq / (2*f0))  # it is the folded wg length
+    print('effective wg length (folded) is: ', effective_wg_length)
+    effective_left_length = round(effective_wg_length * relative_hammer_position)
+    effective_right_length = effective_wg_length - effective_left_length
+    wg_left_length = effective_left_length*2
+    print('calculated left length: ', wg_left_length)
+    wg_right_length = effective_right_length*2
+    print('calculated right length: ', wg_right_length)
     return wg_left_length, wg_right_length
 
 
@@ -124,7 +124,8 @@ class Simulator:
         self.Z7 = self.Z6
 
         self.felt_slope = (self.A * self.C - 1) / (self.A * self.C + 1)
-        self.Knl = self.C * self.A
+        self.Knl = self.C * self.A  # TODO uncomment to return to previous condition
+        # self.Knl = 1.347e9
 
         # Init waves
         self.wg_left = np.zeros(self.wg_length_left)
