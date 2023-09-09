@@ -16,6 +16,7 @@ export class EditorComponent {
   showPianoKeyboard: boolean = true;
   showProMode: boolean = true;
   isRendered: boolean = true; //true if the simulation video has been rendered
+  setWgLengthMode = 0; // 0 = set f0, 1 = set length and sound speed
 
   // Parameters related fields
   wdParams: WDParam[]; //contains all the parameters for the simulation
@@ -46,15 +47,24 @@ export class EditorComponent {
   }
 
   // TODO complete method with error management
-  public runSimulation(): void {
+  public runWDPiano(): void {
     this.isRendered = false;
-    this.apiService.runSimulation(this.parseWDParams())
+    this.apiService.runWDPiano(this.parseWDParams())
       .subscribe((data: WDResult) => {
         console.log('Arrived from server:');
         console.log(data);
         this.wdResults.push(data);
         this.isRendered = true;
       });
+  }
+
+  selectFs(value: string) {
+    this.wdParams[1].value = parseInt(value);
+    console.log('Selected Fs: ', this.wdParams[1].value);
+  }
+
+  toggleSetWGLengthMode(modeIndex: number) {
+    this.setWgLengthMode = modeIndex;
   }
 
   /**

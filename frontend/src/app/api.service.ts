@@ -48,7 +48,7 @@ export class ApiService {
       );
   }
 
-  runSimulation(simulationParams: Object): Observable<any> {
+  runWDPiano(simulationParams: Object): Observable<any> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const body = JSON.stringify(simulationParams);
     return this.http.post<any>(API_URL + '/simulation', body, { 'headers': headers })

@@ -43,14 +43,13 @@ def plot_string_graph(string_matrix, axes, row_idx):
     return axes.plot(lambda x: string_matrix[int(row_idx)][int(x) - 1], color=RED)
 
 
-def get_hammer(hammer_matrix, axes, position_idx, hammer_x_coord):
+def get_hammer(hammer_matrix, axes, position_idx):
     """
     Draws the piano hammer
 
     :param hammer_matrix: the array containing the hammer positions
     :param axes: the axes system where the hammer is plot
     :param position_idx: index of the hammer position array
-    :param hammer_x_coord: x coordinate of the hammer
     :return:
     """
     center_y_coord = hammer_matrix[int(position_idx) - 1]
@@ -81,7 +80,7 @@ class Visualizer(Scene):
         print('hammer_max_value = ', hammer_max_value)
         max_y_coord = math.ceil(max(string_max_value, hammer_max_value))
         print('max_y_coord = ', max_y_coord)
-        # TODO check parameters of axes
+        # TODO check parameters of axes to get optimal view
         axes = Axes(
             x_range=[0, string_shape[1], 1],
             y_range=[-max_y_coord, max_y_coord, 1],
@@ -98,7 +97,7 @@ class Visualizer(Scene):
         # labels = VGroup(axes_labels)
         print('hammer_positions[0]: ', hammer_positions[0])
         # hammer_center_point = Dot(point=axes.c2p(19, 0, 0), color=YELLOW)
-        hammer = always_redraw(lambda: get_hammer(hammer_positions, axes, idx_tracker.get_value(), 19))  # TODO fix when relative striking position changes
+        hammer = always_redraw(lambda: get_hammer(hammer_positions, axes, idx_tracker.get_value()))
 
         # self.add(string_graph, hammer, hammer_center_point)
         self.add(string_graph, hammer)

@@ -19,6 +19,10 @@ export interface SimpleWDParam {
     unit: string;
 }
 
+export class WDParamsContainer {
+    
+}
+
 // TODO add step to define granularity and decimals
 // NOTE: default params refer to C4 note, unwrapped string
 export const WDPARAMS: WDParam[] = [
@@ -26,7 +30,7 @@ export const WDPARAMS: WDParam[] = [
     { name: 'samplingFrequency', value: 44100, min: 1, max: 200000, unit: 'Hz' },
     { name: 'soundSpeed', value: 331, min: 300, max: 400, unit: 'm/s'},  // in m/s
     { name: 'stringFundamentalFrequency', value: 262.22, min: 20, max: 20000, unit: 'Hz' },
-    { name: 'stringLength', value: 0.657, min: 5, max: 500, unit: 'm' },
+    { name: 'stringLength', value: 65.7, min: 5, max: 500, unit: 'cm' },
     { name: 'stringDiameter', value: 1.064, min: 0.5, max: 2, unit: 'mm' },
     { name: 'stringTension', value: 829, min: 400, max: 1000, unit: 'N' },
     { name: 'soundboardReflectionCoefficient', value: 98, min: 0, max: 100, unit: '%' },

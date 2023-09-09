@@ -102,8 +102,7 @@ class Simulator:
         self.wg_length = self.wg_length_left + self.wg_length_right  # NB: formula per wg_length: wg_length = Fs / f0
         print('Total waveguide length: ', self.wg_length + self.wg_length_right)
         self.K = soundboard_reflection_coefficient  # set soundboard reflection coefficient
-        self.A = linear_felt_stiffness
-        # self.str_length = Settings.get_sound_speed_in_air() / sampling_freq  # string length in m
+        self.A = linear_felt_stiffness  # set linear felt stiffness
         self.str_length = string_length  # string length in m
         self.tension = string_tension
         self.hammer_initial_velocity = hammer_initial_velocity

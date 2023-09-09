@@ -2,16 +2,16 @@
   <div class="accordion" id="editorSettings">
     <div class="accordion-item">
       <h2 class="accordion-header">
-        <button class="accordion-button" type="button" data-bs-toggle="collapse"
-          data-bs-target="#editorCollapse" aria-expanded="true" aria-controls="editorCollapse">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#editorCollapse"
+          aria-expanded="true" aria-controls="editorCollapse">
           Editor Settings
         </button>
       </h2>
       <div id="editorCollapse" class="accordion-collapse collapse show">
         <div class="accordion-body">
-          <div class="row">
-            <!-- Checkbox group for parameters editing options -->
-            <!-- <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+          <!-- <div class="row"> -->
+          <!-- Checkbox group for parameters editing options -->
+          <!-- <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
               <input type="checkbox" class="btn-check" id="piano-mode" autocomplete="off" (click)="togglePianoView()"
                 checked="showPianoKeyboard">
               <label class="btn btn-outline-primary" for="piano-mode">Piano Keyboard</label>
@@ -20,31 +20,97 @@
                 checked="showPianoKeyboard">
               <label class="btn btn-outline-primary" for="pro-mode">Pro Mode</label>
             </div> -->
-          </div>
-          <!-- Piano Keyboard component, shown on condition -->
+          <!-- </div> -->
+          <!-- Piano Keyboard component -->
           <div class="row">
             <div class="col-sm-12 col-lg-6">
+              <h4>Piano Keyboard</h4>
               <app-piano-keyboard *ngIf="showPianoKeyboard"
                 (selectedKeyEvent)="setWDPianoKeyParams($event)"></app-piano-keyboard>
             </div>
+            <!-- General params -->
             <div class="col-sm-12 col-lg-6">
-              <!-- TODO move piano keyboard related parameters here -->
-              <!-- <app-video-player [videoUrl]="videoUrl" *ngIf="isRendered"></app-video-player> -->
-              
+              <div class="col-sm-12">
+                <h4>General parameters</h4>
+              </div>
+              <!-- Iterations TODO convert to duration -->
+              <div class="col-sm-12">
+                <label for="{{this.wdParams[0].name}}" class="form-label">{{this.wdParams[0].name |
+                  camelcaseToWords}}<span class='unit-of-measure'>[{{this.wdParams[0].unit}}]</span></label>
+                <input type="number" min={{this.wdParams[0].min}} max={{this.wdParams[0].max}} class="form-control"
+                  id="{{this.wdParams[0].name}}" [(ngModel)]="this.wdParams[0].value">
+              </div>
+              <!-- Sampling frequency -->
+              <div class="col-sm-12">
+                <label for="{{this.wdParams[1].name}}" class="form-label">{{this.wdParams[1].name |
+                  camelcaseToWords}}<span class='unit-of-measure'>[{{this.wdParams[1].unit}}]</span></label>
+                <select #fs class="form-select" aria-label="Sampling Frequency select" (change)="selectFs(fs.value)"
+                  id="{{this.wdParams[1].name}}">
+                  <option>22050</option>
+                  <option selected>44100</option>
+                  <option>48000</option>
+                  <option>96000</option>
+                </select>
+              </div>
+              <!-- Soundboard reflection coefficient -->
+              <div class="col-sm-12">
+                <label for="{{this.wdParams[7].name}}" class="form-label">{{this.wdParams[7].name |
+                  camelcaseToWords}}<span class='unit-of-measure'>[{{this.wdParams[7].unit}}]</span></label>
+                <input type="number" min={{this.wdParams[7].min}} max={{this.wdParams[7].max}} class="form-control"
+                  id="{{this.wdParams[7].name}}" [(ngModel)]="this.wdParams[7].value">
+              </div>
+
             </div>
           </div>
           <div class="row">
-            <!-- TODO move away -->
-            <div class="col-lg-4" *ngFor="let param of wdParams">
+            <div class="col-sm-12">
+              <h4>Waveguide length parameters</h4>
+            </div>
+            <div class="col-sm-12">
+              <div class="btn-group" role="group" aria-label="Waveguide length parameters toggle">
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked (change)="toggleSetWGLengthMode(0)">
+                <label class="btn btn-outline-primary" for="btnradio1">Method 1: set string fundamental frequency</label>
+              
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" (change)="toggleSetWGLengthMode(1)">
+                <label class="btn btn-outline-primary" for="btnradio2">Method 2: set string length and sound speed</label>
+              </div>
+            </div>
+            <!-- String fundamental frequency -->
+            <div class="col-sm-12 col-lg-4">
+              <label for="{{this.wdParams[3].name}}" class="form-label">{{this.wdParams[3].name |
+                camelcaseToWords}}<span class='unit-of-measure'>[{{this.wdParams[3].unit}}]</span></label>
+              <input type="number" min={{this.wdParams[3].min}} max={{this.wdParams[3].max}} class="form-control"
+                id="{{this.wdParams[3].name}}" [(ngModel)]="this.wdParams[3].value" [disabled]="setWgLengthMode == 1">
+            </div>
+            <!-- String length -->
+            <div class="col-sm-12 col-lg-4">
+              <label for="{{this.wdParams[4].name}}" class="form-label">{{this.wdParams[4].name |
+                camelcaseToWords}}<span class='unit-of-measure'>[{{this.wdParams[4].unit}}]</span></label>
+              <input type="number" min={{this.wdParams[4].min}} max={{this.wdParams[4].max}} class="form-control"
+                id="{{this.wdParams[4].name}}" [(ngModel)]="this.wdParams[4].value" [disabled]="setWgLengthMode == 0">
+            </div>
+            <!-- Sound speed -->
+            <div class="col-sm-12 col-lg-4">
+              <label for="{{this.wdParams[2].name}}" class="form-label">{{this.wdParams[2].name |
+                camelcaseToWords}}<span class='unit-of-measure'>[{{this.wdParams[2].unit}}]</span></label>
+              <input type="number" min={{this.wdParams[2].min}} max={{this.wdParams[2].max}} class="form-control"
+                id="{{this.wdParams[2].name}}" [(ngModel)]="this.wdParams[2].value" [disabled]="setWgLengthMode == 0">
+            </div>
+
+
+
+
+
+            <!-- <div class="col-lg-4" *ngFor="let param of wdParams">
               <label for="{{param.name}}" class="form-label">{{param.name | camelcaseToWords}}<span
                   class='unit-of-measure'>[{{param.unit}}]</span></label>
               <input type="number" min={{param.min}} max={{param.max}} class="form-control" id="{{param.name}}"
                 [(ngModel)]="param.value">
-            </div>
+            </div> -->
           </div>
           <div clas="row">
             <div class="col-lg-12 text-center start-button">
-              <button type="submit" class="btn btn-primary" (click)="runSimulation()">START WD-PIANO</button>
+              <button type="submit" class="btn btn-primary" (click)="runWDPiano()">START WD-PIANO</button>
             </div>
           </div>
           <!-- prova ritorno grafico da server -->
