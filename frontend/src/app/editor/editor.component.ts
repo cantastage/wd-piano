@@ -43,11 +43,12 @@ export class EditorComponent {
       tonnetz:'tonnetz-C4-default.png'
     }));
     this.wdParams = WDPARAMS; // retrieves from model the default parameters for the simulation
-    // this.wdParamsContainer = new Map<string, WDParam>();
-    this.initWDParams();
   }
 
   // TODO complete method with error management
+  /**
+   * Run WD-Piano algorithm
+   */
   public runWDPiano(): void {
     this.isRendered = false;
     this.apiService.runWDPiano(this.parseWDParams())
@@ -59,7 +60,11 @@ export class EditorComponent {
       });
   }
 
-  selectFs(value: string) {
+  /**
+   * Binds 
+   * @param value 
+   */
+  public selectFs(value: string) {
     this.wdParams[1].value = parseInt(value);
     console.log('Selected Fs: ', this.wdParams[1].value);
   }
@@ -98,22 +103,6 @@ export class EditorComponent {
     }
   }
 
-
-  // /** 
-  //  * Toggles piano keyboard view
-  //  */
-  // public togglePianoView() {
-  //   this.showPianoKeyboard = !this.showPianoKeyboard;
-  // }
-
-  // /**
-  //  * Toggles expert mode parameters editing view
-  //  */
-  // public toggleProMode() {
-  //   this.showProMode = !this.showProMode;
-  // }
-
-  // TODO change according to new model of simulation parameters
   private parseWDParams(): Object {
     this.wdParams[0].value = this.wdParams[0].value * this.wdParams[1].value; // iterations = (duration in seconds) * samplingFrequency
     let jsonParams: Object[] = Object.assign(this.wdParams.map(key => ({ [key.name]: key.value })));
@@ -145,14 +134,5 @@ export class EditorComponent {
       pianoKeys.push(pianoKey);
     }
     return pianoKeys;
-  }
-
-
-
-  private initWDParams(): void {
-    // this.paramsContainer = new Map<string, WDParam>(); // già nel costruttore
-    for (let i = 0; i < this.wdParams.length; i++) {
-      // this.wdParamsContainer.set(this.wdParams[i].name, this.wdParams[i]);
-    }
   }
 }

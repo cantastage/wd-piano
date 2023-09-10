@@ -19,10 +19,6 @@ export interface SimpleWDParam {
     unit: string;
 }
 
-// export class WDParamsContainer {
-//     private iterations: 
-// }
-
 // TODO add step to define granularity and decimals
 // NOTE: default params refer to C4 note, unwrapped string
 export const WDPARAMS: WDParam[] = [
