@@ -106,6 +106,7 @@ export class EditorComponent {
 
   // TODO change according to new model of simulation parameters
   private parseWDParams(): Object {
+    this.wdParams[0].value = this.wdParams[0].value * this.wdParams[1].value; // iterations = (duration in seconds) * samplingFrequency
     let jsonParams: Object[] = Object.assign(this.wdParams.map(key => ({ [key.name]: key.value })));
     let finalObj = {};
     jsonParams.forEach(obj => { Object.assign(finalObj, obj) });

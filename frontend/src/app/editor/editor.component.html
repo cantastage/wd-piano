@@ -35,10 +35,9 @@
               </div>
               <!-- Iterations TODO convert to duration -->
               <div class="col-sm-12">
-                <label for="{{this.wdParams[0].name}}" class="form-label">{{this.wdParams[0].name |
-                  camelcaseToWords}}<span class='unit-of-measure'>[{{this.wdParams[0].unit}}]</span></label>
-                <input type="number" min={{this.wdParams[0].min}} max={{this.wdParams[0].max}} class="form-control"
-                  id="{{this.wdParams[0].name}}" [(ngModel)]="this.wdParams[0].value">
+                <label for="duration" class="form-label">Duration<span class='unit-of-measure'>[sec]</span></label>
+                <input type="number" min=1 max=5 class="form-control"
+                  id="duration" [(ngModel)]="this.wdParams[0].value">
               </div>
               <!-- Sampling frequency -->
               <div class="col-sm-12">
