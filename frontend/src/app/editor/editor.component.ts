@@ -27,7 +27,8 @@ export class EditorComponent {
   }
 
   constructor(private apiService: ApiService) {
-    this.wdResults.push(new WDResult('C4-Default.mp4', [], { 
+    this.wdParams = WDPARAMS; // retrieves from model the default parameters for the simulation
+    this.wdResults.push(new WDResult('C4-Default.mp4', this.wdParams, { 
       mfccs: 'mfccs-C4-default.png', 
       spectralCentroid: 'spectralCentroid-C4-default.png', 
       spectralBandwidth: 'spectralBandwidth-C4-default.png', 
@@ -35,7 +36,6 @@ export class EditorComponent {
       spectralRollOff: 'spectralRollOff-C4-default.png', 
       tonnetz:'tonnetz-C4-default.png'
     }));
-    this.wdParams = WDPARAMS; // retrieves from model the default parameters for the simulation
   }
 
   // TODO complete method with error management
@@ -44,11 +44,13 @@ export class EditorComponent {
    */
   public runWDPiano(): void {
     this.isRendered = false;
+    let summary = this.wdParams;
     let parsedParams = this.parseWDParams();
     this.apiService.runWDPiano(parsedParams)
       .subscribe((data: WDResult) => {
         console.log('Arrived from server:');
         console.log(data);
+        data.paramSummary = summary;
         this.wdResults.push(data);
         this.isRendered = true;
       });
