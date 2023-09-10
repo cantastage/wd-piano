@@ -11,20 +11,13 @@ import { WDResult } from '../model/wd-result';
   styleUrls: ['./editor.component.scss']
 })
 export class EditorComponent {
-
-  // UI flags to show parameters panel
-  showPianoKeyboard: boolean = true;
-  showProMode: boolean = true;
+  // UI related fields
   isRendered: boolean = true; //true if the simulation video has been rendered
   currentWgLengthMode: number = 0; // 0 = set f0, 1 = set length and sound speed
-
   // Parameters related fields
   wdParams: WDParam[]; //contains all the parameters for the simulation
-  // wdParamsContainer: Map<string, WDParam>; // contains all the parameters for the simulation
-  pianoKeys: Array<PianoKey> = []; // TODO maybe add getter and make field private
-  // wdParamsContainer: Map<string, SimpleWDParam>;
-
-  wdResults: Array<WDResult> = [];
+  pianoKeys: Array<PianoKey> = []; // contains all the piano keys data
+  wdResults: Array<WDResult> = []; // contains all runs of the algorithm
 
   ngOnInit() {
     this.apiService.getPianoKeys().subscribe((data) => {
@@ -51,7 +44,8 @@ export class EditorComponent {
    */
   public runWDPiano(): void {
     this.isRendered = false;
-    this.apiService.runWDPiano(this.parseWDParams())
+    let parsedParams = this.parseWDParams();
+    this.apiService.runWDPiano(parsedParams)
       .subscribe((data: WDResult) => {
         console.log('Arrived from server:');
         console.log(data);
@@ -61,15 +55,19 @@ export class EditorComponent {
   }
 
   /**
-   * Binds 
+   * Binds fs to model and parses int value
    * @param value 
    */
-  public selectFs(value: string) {
+  public selectFs(value: string): void {
     this.wdParams[1].value = parseInt(value);
     console.log('Selected Fs: ', this.wdParams[1].value);
   }
 
-  toggleSetWGLengthMode(wgLengthMode: number) {
+  /**
+   * Toggles the way wgLength is calculated
+   * @param wgLengthMode wgLength calculation mode
+   */
+  public toggleSetWGLengthMode(wgLengthMode: number): void {
     this.currentWgLengthMode = wgLengthMode;
   }
 
@@ -77,12 +75,12 @@ export class EditorComponent {
    * Sets the parameters related to a particular piano key
    * @param keyLabel name label of the piano key
    */
-  setWDPianoKeyParams(keyLabel: string): void {
+  public setWDPianoKeyParams(keyLabel: string): void {
     let translatedLabel = keyLabel;
     if (keyLabel.includes("#", 1)) {
       translatedLabel = keyLabel.replace("#", "d");
     }
-    console.log('key label: ', keyLabel);
+    // console.log('key label: ', keyLabel);
     let selectedKey: PianoKey | undefined = this.pianoKeys.find(key => key.getNoteLabel() == translatedLabel);
     if (selectedKey !== undefined) {
       this.wdParams[3].value = selectedKey.getCenterFrequency();
@@ -91,7 +89,7 @@ export class EditorComponent {
       this.wdParams[6].value = selectedKey.getStringTension();
       this.wdParams[8].value = selectedKey.getHammerMass();
       this.wdParams[9].value = parseFloat((selectedKey.getHammerImpactPosition() / selectedKey.getStringLength() * 100).toFixed(2)); // we need to display it in %
-      console.log('calculated relative striking point: ', this.wdParams[9].value);
+      // console.log('calculated relative striking point: ', this.wdParams[9].value);
     }
   }
 
