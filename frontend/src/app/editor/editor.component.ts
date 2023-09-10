@@ -16,12 +16,13 @@ export class EditorComponent {
   showPianoKeyboard: boolean = true;
   showProMode: boolean = true;
   isRendered: boolean = true; //true if the simulation video has been rendered
-  setWgLengthMode = 0; // 0 = set f0, 1 = set length and sound speed
+  currentWgLengthMode: number = 0; // 0 = set f0, 1 = set length and sound speed
 
   // Parameters related fields
   wdParams: WDParam[]; //contains all the parameters for the simulation
+  // wdParamsContainer: Map<string, WDParam>; // contains all the parameters for the simulation
   pianoKeys: Array<PianoKey> = []; // TODO maybe add getter and make field private
-  paramsContainer: Map<string, SimpleWDParam>;
+  // wdParamsContainer: Map<string, SimpleWDParam>;
 
   wdResults: Array<WDResult> = [];
 
@@ -42,7 +43,7 @@ export class EditorComponent {
       tonnetz:'tonnetz-C4-default.png'
     }));
     this.wdParams = WDPARAMS; // retrieves from model the default parameters for the simulation
-    this.paramsContainer = new Map<string, WDParam>();
+    // this.wdParamsContainer = new Map<string, WDParam>();
     this.initWDParams();
   }
 
@@ -63,8 +64,8 @@ export class EditorComponent {
     console.log('Selected Fs: ', this.wdParams[1].value);
   }
 
-  toggleSetWGLengthMode(modeIndex: number) {
-    this.setWgLengthMode = modeIndex;
+  toggleSetWGLengthMode(wgLengthMode: number) {
+    this.currentWgLengthMode = wgLengthMode;
   }
 
   /**
@@ -89,20 +90,28 @@ export class EditorComponent {
     }
   }
 
-
-  /** 
-   * Toggles piano keyboard view
-   */
-  public togglePianoView() {
-    this.showPianoKeyboard = !this.showPianoKeyboard;
+  public updateWgLengthParams(wgLengthMode: number): void {
+    if(wgLengthMode === 0) {
+      this.wdParams[4].value = (this.wdParams[2].value / (2*this.wdParams[3].value)); // L = c/(2*f0) [cm]
+    } else {
+      this.wdParams[3].value = 100*(this.wdParams[2].value / (2*this.wdParams[4].value)); // f0 = c/(2*L) [Hz]
+    }
   }
 
-  /**
-   * Toggles expert mode parameters editing view
-   */
-  public toggleProMode() {
-    this.showProMode = !this.showProMode;
-  }
+
+  // /** 
+  //  * Toggles piano keyboard view
+  //  */
+  // public togglePianoView() {
+  //   this.showPianoKeyboard = !this.showPianoKeyboard;
+  // }
+
+  // /**
+  //  * Toggles expert mode parameters editing view
+  //  */
+  // public toggleProMode() {
+  //   this.showProMode = !this.showProMode;
+  // }
 
   // TODO change according to new model of simulation parameters
   private parseWDParams(): Object {
@@ -124,7 +133,7 @@ export class EditorComponent {
       let pianoKey = new PianoKey(
         splitted[0], // noteLabel
         parseFloat(splitted[1]), // centerFrequency,
-        parseFloat(splitted[2]), // stringLength,
+        parseFloat(splitted[2])*100, // stringLength in cm,
         parseFloat(splitted[3]), // stringDiameter,
         parseFloat(splitted[4]), // stringVolumetricDensity,
         parseInt(splitted[5]), // stringTension,
@@ -143,7 +152,7 @@ export class EditorComponent {
   private initWDParams(): void {
     // this.paramsContainer = new Map<string, WDParam>(); // già nel costruttore
     for (let i = 0; i < this.wdParams.length; i++) {
-      this.paramsContainer.set(this.wdParams[i].name, this.wdParams[i]);
+      // this.wdParamsContainer.set(this.wdParams[i].name, this.wdParams[i]);
     }
   }
 }

@@ -48,9 +48,14 @@ export class ApiService {
       );
   }
 
-  runWDPiano(simulationParams: Object): Observable<any> {
+  /**
+   * Run WdPiano algorith
+   * @param wdParams 
+   * @returns 
+   */
+  public runWDPiano(wdParams: Object): Observable<any> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    const body = JSON.stringify(simulationParams);
+    const body = JSON.stringify(wdParams);
     return this.http.post<any>(API_URL + '/simulation', body, { 'headers': headers })
   }
 

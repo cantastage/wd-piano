@@ -9,7 +9,7 @@ export interface WDParam {
     unit: string;
 }
 
-// export const WDPARAMETERS: Map<string, WDParam> = new Map<string, WDParam>();
+export const WDPARAMETERS: Map<string, WDParam> = new Map<string, WDParam>();
 
 /**
  * Simple WDParam for summary description purposes
@@ -19,16 +19,16 @@ export interface SimpleWDParam {
     unit: string;
 }
 
-export class WDParamsContainer {
-    
-}
+// export class WDParamsContainer {
+//     private iterations: 
+// }
 
 // TODO add step to define granularity and decimals
 // NOTE: default params refer to C4 note, unwrapped string
 export const WDPARAMS: WDParam[] = [
     { name: 'iterations', value: 2, min: 1, max: 5, unit: 'steps' },
     { name: 'samplingFrequency', value: 44100, min: 1, max: 200000, unit: 'Hz' },
-    { name: 'soundSpeed', value: 331, min: 300, max: 400, unit: 'm/s'},  // in m/s
+    { name: 'soundSpeed', value: 343.43, min: 300, max: 400, unit: 'm/s'},  // in m/s
     { name: 'stringFundamentalFrequency', value: 262.22, min: 20, max: 20000, unit: 'Hz' },
     { name: 'stringLength', value: 65.7, min: 5, max: 500, unit: 'cm' },
     { name: 'stringDiameter', value: 1.064, min: 0.5, max: 2, unit: 'mm' },
