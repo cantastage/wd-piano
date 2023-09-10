@@ -11,17 +11,20 @@
                 <div class="accordion-body">
                     <div class="row">
                         <div class="col-sm-12 col-md-6">
-                            <h4>Video player</h4>
+                            <h4>Video Player: Hammer-String Interaction</h4>
                             <!-- Video player -->
                             <app-video-player [videoUrl]="getVideoUrl(i)"></app-video-player>
                         </div>
                         <div class="col-sm-12 col-md-6">
                             <!-- Summary --> 
-                            <h4>Summary</h4>
+                            <h4>Parameters Summary</h4>
                             <app-summary [params]="this.results[i].paramSummary"></app-summary>
                         </div>
                     </div>
                     <div class="row">
+                        <div class="col-sm-12">
+                            <h4>Audio Spectral Features</h4>
+                        </div>
                         <!-- TODO use *ngFor if no custom controls for every different audio feature -->
                         <div class="col-sm-12 col-md-6">
                             <img src={{getPlotUrl(this.results[i].daapFeatures.mfccs)}} class="img-fluid" alt="mfccs-plot">
