@@ -4,6 +4,7 @@ import { SimpleWDParam, WDParam, WDPARAMS } from '../model/wd-settings';
 import { API_URL } from 'src/env';
 import { PianoKey } from '../model/piano-key';
 import { WDResult } from '../model/wd-result';
+import { DEFAULT_SPECTRAL_ANALYSIS_PARAMETERS } from '../model/daap-features';
 
 @Component({
   selector: 'app-editor',
@@ -46,7 +47,7 @@ export class EditorComponent {
     this.isRendered = false;
     let summary = this.wdParams;
     let parsedParams = this.parseWDParams();
-    this.apiService.runWDPiano(parsedParams)
+    this.apiService.runWDPiano(parsedParams, DEFAULT_SPECTRAL_ANALYSIS_PARAMETERS)
       .subscribe((data: WDResult) => {
         console.log('Arrived from server:');
         console.log(data);
@@ -91,7 +92,7 @@ export class EditorComponent {
       this.wdParams[6].value = selectedKey.getStringTension();
       this.wdParams[8].value = selectedKey.getHammerMass();
       this.wdParams[9].value = parseFloat((selectedKey.getHammerImpactPosition() / selectedKey.getStringLength() * 100).toFixed(2)); // we need to display it in %
-      // console.log('calculated relative striking point: ', this.wdParams[9].value);
+      console.log('calculated relative striking point: ', this.wdParams[9].value);
     }
   }
 

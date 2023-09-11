@@ -65,9 +65,9 @@ export class ApiService {
    * @param wdParams 
    * @returns 
    */
-  public runWDPiano(wdParams: Object): Observable<any> {
+  public runWDPiano(wdParams: Object, spectralParameters: SpectralAnalysisParameters): Observable<any> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    const body = JSON.stringify(wdParams);
+    const body = JSON.stringify({wdParameters: wdParams, spectralParameters: spectralParameters});
     return this.http.post<any>(API_URL + '/simulation', body, { 'headers': headers });
   }
 
