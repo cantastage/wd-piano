@@ -16,7 +16,7 @@
                             <app-video-player [videoUrl]="getVideoUrl(i)"></app-video-player>
                         </div>
                         <div class="col-sm-12 col-md-6">
-                            <!-- Summary --> 
+                            <!-- Summary -->
                             <h4>Parameters Summary</h4>
                             <app-summary [params]="this.results[i].paramSummary"></app-summary>
                         </div>
@@ -25,27 +25,66 @@
                         <div class="col-sm-12">
                             <h4>Audio Spectral Features</h4>
                         </div>
-                        <!-- TODO use *ngFor if no custom controls for every different audio feature -->
+                        <!-- <div class="row">
+                            <div class="col-sm-12">
+
+                            </div>
+                        </div> -->
+
+                        <!-- <div class="col-sm-12 col-lg-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    MFCCs
+                                </div>
+                                <img src={{getPlotUrl(this.results[i].daapFeatures.mfccs)}} class="card-img-top"
+                                    alt="mfccs-plot">
+                                <div class="card-body">
+                                    <h5 class="card-title">Settings</h5>
+                                    <div class="col-sm-4">
+                                        <div class="d-inline-flex align-items-center">
+                                            <label for="n_mfcc" class="form-label">n_mfccs</label>
+                                            <input type="number" min="1" max="40" class="form-control" id="n_mfcc">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="d-inline-flex align-items-center">
+                                            <label for="mfcc-n_fft" class="form-label">n_fft</label>
+                                            <input type="number" min="64" max="8192" class="form-control" id="mfcc-n_fft">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <button class="btn btn-primary">Update plot</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div> -->
                         <div class="col-sm-12 col-md-6">
-                            <img src={{getPlotUrl(this.results[i].daapFeatures.mfccs)}} class="img-fluid" alt="mfccs-plot">
+                            <img src={{getPlotUrl(this.results[i].daapFeatures.mfccs)}} class="img-fluid"
+                                alt="mfccs-plot">
                         </div>
                         <div class="col-sm-12 col-md-6">
-                            <img src={{getPlotUrl(this.results[i].daapFeatures.tonnetz)}} class="img-fluid" alt="tonnetz-plot">
+                            <img src={{getPlotUrl(this.results[i].daapFeatures.tonnetz)}} class="img-fluid"
+                                alt="tonnetz-plot">
                         </div>
                         <div class="col-sm-12 col-md-6">
-                            <img src={{getPlotUrl(this.results[i].daapFeatures.spectralCentroid)}} class="img-fluid" alt="spectral-centroid-plot">
+                            <img src={{getPlotUrl(this.results[i].daapFeatures.spectralCentroid)}} class="img-fluid"
+                                alt="spectral-centroid-plot">
                         </div>
                         <div class="col-sm-12 col-md-6">
-                            <img src={{getPlotUrl(this.results[i].daapFeatures.spectralBandwidth)}} class="img-fluid" alt="spectral-bandwidth-plot">
+                            <img src={{getPlotUrl(this.results[i].daapFeatures.spectralBandwidth)}} class="img-fluid"
+                                alt="spectral-bandwidth-plot">
                         </div>
                         <div class="col-sm-12 col-md-6">
-                            <img src={{getPlotUrl(this.results[i].daapFeatures.spectralContrast)}} class="img-fluid" alt="spectral-contrast-plot">
+                            <img src={{getPlotUrl(this.results[i].daapFeatures.spectralContrast)}} class="img-fluid"
+                                alt="spectral-contrast-plot">
                         </div>
                         <div class="col-sm-12 col-md-6">
-                            <img src={{getPlotUrl(this.results[i].daapFeatures.spectralRollOff)}} class="img-fluid" alt="spectral-roll-off-plot">
+                            <img src={{getPlotUrl(this.results[i].daapFeatures.spectralRollOff)}} class="img-fluid"
+                                alt="spectral-roll-off-plot">
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
         </div>

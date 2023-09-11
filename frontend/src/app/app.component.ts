@@ -19,4 +19,8 @@ export class AppComponent {
   ngOnInit() {
     // this.apiService.downloadVideo().subscribe(blob => this.fileSaver.save(blob, 'wdf-piano-example.mp4'));
   }
+  
+  // Call for video, audio and plot destruction
+  ngOnDestroy() {
+  }
 }
