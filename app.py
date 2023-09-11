@@ -43,6 +43,18 @@ def get_strings():
     return make_response(strings, 200)
 
 
+@app.route('/plots', methods=['POST'])
+def update_plots():
+    """
+    Updates spectral feature plots
+    :return: updated spectral feature plot urls
+    """
+    spectral_params = request.json
+    base_filename = spectral_params['baseFilename']
+    spectral_features = AudioFeatureExtractor.extract_features(base_filename + ".wav", spectral_params)
+    return make_response(jsonify({'daapFeatures': spectral_features}), 200)
+
+
 @app.route('/simulation', methods=['POST'])
 def run_simulation():
     """
@@ -85,7 +97,7 @@ def run_simulation():
     set_visualizer_config({"output_file": video_filename})
     visualizer = Visualizer()  # create Visualizer instance
     visualizer.render()
-    return make_response(jsonify({'videoFilename': video_filename, 'paramSummary': [], 'daapFeatures': extracted_features}), 200)
+    return make_response(jsonify({'baseFilename': Settings.get_base_filename(), 'videoFilename': video_filename, 'paramSummary': [], 'daapFeatures': extracted_features}), 200)
 
 
 if __name__ == '__main__':

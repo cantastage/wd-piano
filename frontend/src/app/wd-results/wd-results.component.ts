@@ -1,6 +1,8 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { WDResult } from '../model/wd-result';
 import { API_URL } from 'src/env';
+import { DEFAULT_SPECTRAL_ANALYSIS_PARAMETERS, SpectralAnalysisParameters } from '../model/daap-features';
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'app-wd-results',
@@ -9,15 +11,22 @@ import { API_URL } from 'src/env';
 })
 export class WdResultsComponent {
   @Input() results: Array<WDResult> = [];
+  spectralParameters: SpectralAnalysisParameters;
+  isUpdating = false;
 
-  constructor() {
-    // this.results.push(new WDResult('C4-Default', [], {mfccs: 'mfccs-C4-default', spectralCentroid: 'spectralCentroid-C4-default'}));
-   }
+  constructor(private apiService: ApiService) {
+    this.spectralParameters = DEFAULT_SPECTRAL_ANALYSIS_PARAMETERS;
+  }
 
-  // ngOnChanges(changes: SimpleChanges) {
-  //   console.log("Arrived new results: ", changes);
-  //   this.results = changes['results'].currentValue;
-  // }
+
+  public updatePlots(resultIndex: number): void {
+    this.isUpdating = true;
+    // call to serviceAPI
+    this.spectralParameters.baseFilename = this.results[resultIndex].videoFilename;
+    this.apiService.updatePlots(this.spectralParameters);
+    this.isUpdating = false;
+  }
+
 
   public getPlotUrl(plotName: string): string {
     return API_URL + '/plot/' + plotName;

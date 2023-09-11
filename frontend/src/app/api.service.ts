@@ -5,6 +5,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { VideoUrlObject } from './videoUrlObject';
 import { WDParam } from './model/wd-settings';
+import { SpectralAnalysisParameters, SpectralFeatures } from './model/daap-features';
 
 @Injectable({
   providedIn: 'root'
@@ -49,6 +50,17 @@ export class ApiService {
   }
 
   /**
+   * Update spectral feature plots
+   * @param spectralParams spectral analysis parameters
+   * @returns updated plot urls
+   */
+  public updatePlots(spectralParams: SpectralAnalysisParameters): Observable<SpectralFeatures> {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    const body = JSON.stringify(spectralParams);
+    return this.http.post<SpectralFeatures>(API_URL + '/plots', body, { 'headers': headers });
+  }
+
+  /**
    * Run WdPiano algorith
    * @param wdParams 
    * @returns 
@@ -56,7 +68,7 @@ export class ApiService {
   public runWDPiano(wdParams: Object): Observable<any> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const body = JSON.stringify(wdParams);
-    return this.http.post<any>(API_URL + '/simulation', body, { 'headers': headers })
+    return this.http.post<any>(API_URL + '/simulation', body, { 'headers': headers });
   }
 
   /**

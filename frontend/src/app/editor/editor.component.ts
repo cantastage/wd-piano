@@ -28,7 +28,7 @@ export class EditorComponent {
 
   constructor(private apiService: ApiService) {
     this.wdParams = WDPARAMS; // retrieves from model the default parameters for the simulation
-    this.wdResults.push(new WDResult('C4-Default.mp4', this.wdParams, { 
+    this.wdResults.push(new WDResult('C4-Default', 'C4-Default.mp4', this.wdParams, { 
       mfccs: 'mfccs-C4-default.png', 
       spectralCentroid: 'spectralCentroid-C4-default.png', 
       spectralBandwidth: 'spectralBandwidth-C4-default.png', 

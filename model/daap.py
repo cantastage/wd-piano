@@ -18,9 +18,9 @@ class AudioFeatureExtractor(object):
 
     # TODO add all the requested features and return dictionary with names so it is easily jsonified
     @classmethod
-    def extract_features(cls, audio_file_name):
+    def extract_features(cls, audio_file_name: str, spectral_parameters: dict) -> dict:
         """
-        Extracts the features from the audio file
+        Extracts spectral features from the audio file
         :param audio_file_name: the audio file
         :return: the extracted features
         """
@@ -96,7 +96,6 @@ class AudioFeatureExtractor(object):
         tonnetz_fig.colorbar(tonnetz_img)
         extracted_features['tonnetz'] = cls.save_feature_plot(tonnetz_fig, 'tonnetz', base_filename)
         return extracted_features
-        # fig.savefig(os.path.join('media', 'images', plot_filename), format="png")
 
     @staticmethod
     def save_feature_plot(fig, feature_name, base_filename) -> str:
