@@ -8,7 +8,6 @@ from model.settings import Settings
 
 
 class AudioFeatureExtractor(object):
-
     _instance = None
 
     def __new__(cls):
@@ -22,20 +21,33 @@ class AudioFeatureExtractor(object):
         """
         Extracts spectral features from the audio file
         :param audio_file_name: the audio file
+        :param spectral_parameters: the parameters for the extraction of the spectral features
         :return: the extracted features
         """
         sr = Settings.get_sampling_freq()
-        base_filename = Settings.get_base_filename()
+        base_filename = spectral_parameters['baseFilename']
+        if base_filename == '':
+            base_filename = Settings.get_base_filename()  # if empty it means it is a new file so we load from settings
         # init variables
         extracted_features = {}  # init dictionary of extracted features
         audio_file_path = os.path.join('media', 'audio', audio_file_name)  # audio file path
         mfccs_fig = Figure()  # init figure container
         mfccs_ax = mfccs_fig.subplots()  # init single plot container
         y, sr = librosa.load(audio_file_path, sr=sr)  # load audio file
+        # S, phase = librosa.magphase(librosa.stft(y=y, n_fft=spectral_parameters['nFFT'],
+        #                                          window=spectral_parameters['windowType'],
+        #                                          win_length=spectral_parameters['winLength'],
+        #                                          hop_length=spectral_parameters[
+        #                                              'hopLength']))  # extract magnitude and phase
         S, phase = librosa.magphase(librosa.stft(y=y))  # extract magnitude and phase
-
         # MFCCs
-        mfccs = librosa.feature.mfcc(y=y, sr=sr)  # extract mfccs
+        # mfccs = librosa.feature.mfcc(y=y, sr=sr,
+        #                              n_mfcc=spectral_parameters['nMFCC'],
+        #                              n_fft=spectral_parameters['nFFT'],
+        #                              window=spectral_parameters['windowType'],
+        #                              win_length=spectral_parameters['winLength'],
+        #                              hop_length=spectral_parameters['hopLength'])  # extract mfccs
+        mfccs = librosa.feature.mfcc(y=y, sr=sr)
         mfccs_img = librosa.display.specshow(mfccs, sr=sr, x_axis='time', ax=mfccs_ax)  # create img for mfccs
         mfccs_fig.colorbar(mfccs_img, ax=mfccs_ax)
         mfccs_ax.set(title='MFCCs')
@@ -47,7 +59,8 @@ class AudioFeatureExtractor(object):
         centroid_ax = centroid_fig.subplots()  # init single plot container
         centroid = librosa.feature.spectral_centroid(S=S, sr=sr)
         cent_times = librosa.times_like(centroid, sr=sr)  # extract times
-        librosa.display.specshow(librosa.amplitude_to_db(S, ref=np.max), sr=sr, y_axis='log', x_axis='time', ax=centroid_ax)
+        librosa.display.specshow(librosa.amplitude_to_db(S, ref=np.max), sr=sr, y_axis='log', x_axis='time',
+                                 ax=centroid_ax)
         centroid_ax.plot(cent_times, centroid.T, label='Spectral centroid', color='w')
         centroid_ax.legend(loc='upper right')
         centroid_ax.set(title='log Power spectrogram')
@@ -58,9 +71,12 @@ class AudioFeatureExtractor(object):
         spec_bw_ax = spec_bw_fig.subplots()
         spectral_bw = librosa.feature.spectral_bandwidth(S=S, sr=sr)
         spec_bw_times = librosa.times_like(spectral_bw, sr=sr)
-        librosa.display.specshow(librosa.amplitude_to_db(S, ref=np.max), sr=sr, y_axis='log', x_axis='time', ax=spec_bw_ax)
+        librosa.display.specshow(librosa.amplitude_to_db(S, ref=np.max), sr=sr, y_axis='log', x_axis='time',
+                                 ax=spec_bw_ax)
         # spec_bw_ax.set(title='Spectral bandwidth')
-        spec_bw_ax.fill_between(spec_bw_times, np.maximum(0, centroid[0] - spectral_bw[0]), np.minimum(centroid[0] + spectral_bw[0], sr/2), alpha=0.5, label='Centroid  +- bandwidth')
+        spec_bw_ax.fill_between(spec_bw_times, np.maximum(0, centroid[0] - spectral_bw[0]),
+                                np.minimum(centroid[0] + spectral_bw[0], sr / 2), alpha=0.5,
+                                label='Centroid  +- bandwidth')
         spec_bw_ax.plot(spec_bw_times, centroid[0], label='Spectral centroid', color='w')
         spec_bw_ax.legend(loc='lower right')
         extracted_features['spectralBandwidth'] = cls.save_feature_plot(spec_bw_fig, 'spectralBandwidth', base_filename)
@@ -79,9 +95,12 @@ class AudioFeatureExtractor(object):
         rolloff_ax = rolloff_fig.subplots()
         spectral_rolloff = librosa.feature.spectral_rolloff(S=S, sr=sr, roll_percent=0.85)
         rolloff_min = librosa.feature.spectral_rolloff(S=S, sr=sr, roll_percent=0.01)
-        librosa.display.specshow(librosa.amplitude_to_db(S, ref=np.max), sr=sr, y_axis='log', x_axis='time', ax=rolloff_ax)
-        rolloff_ax.plot(librosa.times_like(spectral_rolloff, sr=sr), spectral_rolloff[0], label='Roll-off frequency (0.85)')
-        rolloff_ax.plot(librosa.times_like(spectral_rolloff, sr=sr), rolloff_min[0], color='w', label='Roll-off frequency (0.01)')
+        librosa.display.specshow(librosa.amplitude_to_db(S, ref=np.max), sr=sr, y_axis='log', x_axis='time',
+                                 ax=rolloff_ax)
+        rolloff_ax.plot(librosa.times_like(spectral_rolloff, sr=sr), spectral_rolloff[0],
+                        label='Roll-off frequency (0.85)')
+        rolloff_ax.plot(librosa.times_like(spectral_rolloff, sr=sr), rolloff_min[0], color='w',
+                        label='Roll-off frequency (0.01)')
         rolloff_ax.legend(loc='upper right')
         rolloff_ax.set(title='Spectral Roll-off on log power spectrogram')
         extracted_features['spectralRollOff'] = cls.save_feature_plot(rolloff_fig, 'spectralRollOff', base_filename)

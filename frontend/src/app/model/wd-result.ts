@@ -15,6 +15,4 @@ export class WDResult {
         this.daapFeatures = daapFeatures;
         // this.summary = new Array<WDParam>();
     }
-
-    
 }

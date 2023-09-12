@@ -30,8 +30,8 @@
                         </div>
                         <div class="col-sm-12 col-lg-3">
                             <label for="windowType" class="form-label">Window type</label>
-                            <select #fs class="form-select" aria-label="window type select"
-                                [(ngModel)]="this.spectralParameters.windowType" id="windowType">
+                            <select class="form-select" aria-label="window type select"
+                                [(ngModel)]="this.spectralParameters[i].windowType" id="windowType">
                                 <option>boxcar</option>
                                 <option selected>hann</option>
                                 <option>triang</option>
@@ -41,42 +41,51 @@
                         </div>
                         <div class="col-sm-12 col-lg-3">
                             <label for="nFFT" class="form-label">FFT length [samples]</label>
-                            <input type="number" min=1 max=8192 class="form-control" id="nFFT"
-                                [(ngModel)]="this.spectralParameters.nFFT">
+                            <select type="select" class="form-select" id="nFFT"
+                                [(ngModel)]="this.spectralParameters[i].nFFT">
+                                <option *ngFor="let length of fftLengthOptions">{{length}}</option>
+                            </select>
                         </div>
                         <div class="col-sm-12 col-lg-3">
                             <label for="winLength" class="form-label">Window length [samples]</label>
-                            <input type="number" min=1 max=8192 class="form-control" id="winLength"
-                                [(ngModel)]="this.spectralParameters.winLength">
+                            <!-- <select class="form-select" id="winLength" [(ngModel)]="this.spectralParameters.winLength">
+                                <option *ngFor="let length of this.getFFTSelectOptions('winLength')">{{length}}</option>
+                            </select> -->
+                            <input type="number" min=1 max={{this.spectralParameters[i].nFFT}} class="form-control"
+                                id="winLength" [(ngModel)]="this.spectralParameters[i].winLength">
                         </div>
                         <div class="col-sm-12 col-lg-3">
                             <label for="hopLength" class="form-label">Hop length [samples]</label>
                             <input type="number" min=1 max=8192 class="form-control" id="hopLength"
-                                [(ngModel)]="this.spectralParameters.hopLength">
+                                [(ngModel)]="this.spectralParameters[i].hopLength">
                         </div>
                         <div class="col-sm-12 col-lg-3">
                             <label for="nMFCC" class="form-label"><b>MFCC</b>: Number of extracted MFCC</label>
                             <input type="number" min=1 max=40 class="form-control" id="nMFCC"
-                                [(ngModel)]="this.spectralParameters.nMFCC">
+                                [(ngModel)]="this.spectralParameters[i].nMFCC">
                         </div>
                         <div class="col-sm-12 col-lg-3">
-                            <label for="contrastMinFreqCutoff" class="form-label"><b>Spectral Contrast:</b> Min frequency [Hz]</label>
+                            <label for="contrastMinFreqCutoff" class="form-label"><b>Spectral Contrast:</b> Min
+                                frequency [Hz]</label>
                             <input type="number" min=20 max=20000 class="form-control" id="contrastMinFreqCutoff"
-                                [(ngModel)]="this.spectralParameters.contrastMinFreqCutoff">
+                                [(ngModel)]="this.spectralParameters[i].contrastMinFreqCutoff">
                         </div>
                         <div class="col-sm-12 col-lg-3">
-                            <label for="contrastNumBands" class="form-label"><b>Spectral Contrast:</b> Min frequency [Hz]</label>
+                            <label for="contrastNumBands" class="form-label"><b>Spectral Contrast:</b> Number of
+                                frequency bands</label>
                             <input type="number" min=1 max=20 class="form-control" id="contrastNumBands"
-                                [(ngModel)]="this.spectralParameters.contrastNumBands">
+                                [(ngModel)]="this.spectralParameters[i].contrastNumBands">
                         </div>
                         <div class="col-sm-12 col-lg-3">
-                            <label for="rollPercent" class="form-label"><b>Spectral Rolloff:</b> Rolloff percentage [%]</label>
+                            <label for="rollPercent" class="form-label"><b>Spectral Rolloff:</b> Rolloff percentage
+                                [%]</label>
                             <input type="number" min=0.01 max=0.99 class="form-control" id="rollPercent"
-                                [(ngModel)]="this.spectralParameters.rollPercent">
+                                [(ngModel)]="this.spectralParameters[i].rollPercent">
                         </div>
                         <div class="col-lg-12 text-center start-button">
-                            <button type="submit" class="btn btn-primary" (click)="this.updatePlots(i)" [disabled]="this.isUpdating">UPDATE PLOTS</button>
-                          </div>
+                            <button type="submit" class="btn btn-primary" (click)="this.updatePlots(i)"
+                                [disabled]="this.isUpdating">UPDATE PLOTS</button>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12 col-md-6">

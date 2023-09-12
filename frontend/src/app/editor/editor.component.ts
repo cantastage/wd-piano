@@ -4,7 +4,7 @@ import { SimpleWDParam, WDParam, WDPARAMS } from '../model/wd-settings';
 import { API_URL } from 'src/env';
 import { PianoKey } from '../model/piano-key';
 import { WDResult } from '../model/wd-result';
-import { DEFAULT_SPECTRAL_ANALYSIS_PARAMETERS } from '../model/daap-features';
+import { DEFAULT_SPECTRAL_ANALYSIS_PARAMETERS, SpectralAnalysisParameters } from '../model/daap-features';
 
 @Component({
   selector: 'app-editor',
@@ -19,6 +19,7 @@ export class EditorComponent {
   wdParams: WDParam[]; //contains all the parameters for the simulation
   pianoKeys: Array<PianoKey> = []; // contains all the piano keys data
   wdResults: Array<WDResult> = []; // contains all runs of the algorithm
+  spectralParameters: Array<SpectralAnalysisParameters> = [];
 
   ngOnInit() {
     this.apiService.getPianoKeys().subscribe((data) => {
@@ -28,14 +29,18 @@ export class EditorComponent {
   }
 
   constructor(private apiService: ApiService) {
+    this.spectralParameters.push(DEFAULT_SPECTRAL_ANALYSIS_PARAMETERS);
     this.wdParams = WDPARAMS; // retrieves from model the default parameters for the simulation
-    this.wdResults.push(new WDResult('C4-Default', 'C4-Default.mp4', this.wdParams, { 
-      mfccs: 'mfccs-C4-default.png', 
-      spectralCentroid: 'spectralCentroid-C4-default.png', 
-      spectralBandwidth: 'spectralBandwidth-C4-default.png', 
+    this.wdResults.push(new WDResult(
+      'C4-Default',
+      'C4-Default.mp4',
+      this.wdParams, {
+      mfccs: 'mfccs-C4-default.png',
+      spectralCentroid: 'spectralCentroid-C4-default.png',
+      spectralBandwidth: 'spectralBandwidth-C4-default.png',
       spectralContrast: 'spectralContrast-C4-default.png',
-      spectralRollOff: 'spectralRollOff-C4-default.png', 
-      tonnetz:'tonnetz-C4-default.png'
+      spectralRollOff: 'spectralRollOff-C4-default.png',
+      tonnetz: 'tonnetz-C4-default.png'
     }));
   }
 
@@ -53,6 +58,7 @@ export class EditorComponent {
         console.log(data);
         data.paramSummary = summary;
         this.wdResults.push(data);
+        this.spectralParameters.push(DEFAULT_SPECTRAL_ANALYSIS_PARAMETERS);
         this.isRendered = true;
       });
   }
@@ -91,16 +97,19 @@ export class EditorComponent {
       this.wdParams[5].value = selectedKey.getStringDiameter();
       this.wdParams[6].value = selectedKey.getStringTension();
       this.wdParams[8].value = selectedKey.getHammerMass();
-      this.wdParams[9].value = parseFloat((selectedKey.getHammerImpactPosition() / selectedKey.getStringLength() * 100).toFixed(2)); // we need to display it in %
+      // this.wdParams[9].value = parseFloat((selectedKey.getHammerImpactPosition() / selectedKey.getStringLength() * 100).toFixed(2)); // we need to display it in %
+      let hammerImpactPosition = selectedKey.getHammerImpactPosition();
+      let stringLength = selectedKey.getStringLength();
+      this.wdParams[9].value = parseFloat(((hammerImpactPosition / stringLength) * 100).toFixed(2)); // // we need to display it in %
       console.log('calculated relative striking point: ', this.wdParams[9].value);
     }
   }
 
   public updateWgLengthParams(wgLengthMode: number): void {
-    if(wgLengthMode === 0) {
-      this.wdParams[4].value = (this.wdParams[2].value / (2*this.wdParams[3].value)); // L = c/(2*f0) [cm]
+    if (wgLengthMode === 0) {
+      this.wdParams[4].value = (this.wdParams[2].value / (2 * this.wdParams[3].value)); // L = c/(2*f0) [cm]
     } else {
-      this.wdParams[3].value = 100*(this.wdParams[2].value / (2*this.wdParams[4].value)); // f0 = c/(2*L) [Hz]
+      this.wdParams[3].value = 100 * (this.wdParams[2].value / (2 * this.wdParams[4].value)); // f0 = c/(2*L) [Hz]
     }
   }
 
@@ -123,7 +132,7 @@ export class EditorComponent {
       let pianoKey = new PianoKey(
         splitted[0], // noteLabel
         parseFloat(splitted[1]), // centerFrequency,
-        parseFloat(splitted[2])*100, // stringLength in cm,
+        parseFloat(splitted[2]), // stringLength in cm,
         parseFloat(splitted[3]), // stringDiameter,
         parseFloat(splitted[4]), // stringVolumetricDensity,
         parseInt(splitted[5]), // stringTension,

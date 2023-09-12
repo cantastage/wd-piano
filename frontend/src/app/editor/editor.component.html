@@ -129,8 +129,8 @@
             <!-- hammer relative striking point -->
             <div class="col-sm-12 col-lg-3">
               <label for="{{this.wdParams[9].name}}" class="form-label">{{this.wdParams[9].name |
-                camelcaseToWords}}: {{this.wdParams[9].value}} <span class='unit-of-measure'>[{{this.wdParams[9].unit}}]</span></label>
-              <input type="range" min={{this.wdParams[9].min}} max={{this.wdParams[9].max}} class="form-range"
+                camelcaseToWords}}: {{this.wdParams[9].value | number}} <span class='unit-of-measure'>[{{this.wdParams[9].unit}}]</span></label>
+              <input type="range" min={{this.wdParams[9].min}} max={{this.wdParams[9].max}} step="0.01" class="form-range"
                 id="{{this.wdParams[9].name}}" [(ngModel)]="this.wdParams[9].value">
             </div>
             <!-- hammer linear felt stiffness -->
@@ -156,5 +156,5 @@
     <h1>RESULTS</h1>
   </div>
   <!-- WD results container -->
-  <app-wd-results [results]="this.wdResults"></app-wd-results>
+  <app-wd-results [results]="this.wdResults" [spectralParameters]="spectralParameters"></app-wd-results>
 </div>

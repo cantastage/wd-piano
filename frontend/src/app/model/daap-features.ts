@@ -26,11 +26,11 @@ export interface SpectralAnalysisParameters {
 }
 
 export const DEFAULT_SPECTRAL_ANALYSIS_PARAMETERS: SpectralAnalysisParameters = {
-    baseFilename: 'default-C4',
-    nFFT: 512,
+    baseFilename: '',
+    nFFT: 2048,
     windowType: 'hann',
-    hopLength: 128,
-    winLength: 256,
+    winLength: 2048,
+    hopLength: 512,
     nMFCC: 20,
     contrastMinFreqCutoff: 200.0,
     contrastNumBands: 6,
