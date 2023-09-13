@@ -1,7 +1,7 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { WDResult } from '../model/wd-result';
 import { API_URL } from 'src/env';
-import { DEFAULT_SPECTRAL_ANALYSIS_PARAMETERS, SpectralAnalysisParameters } from '../model/daap-features';
+import { DEFAULT_SPECTRAL_ANALYSIS_PARAMETERS, SpectralAnalysisParameters, SpectralFeatures } from '../model/daap-features';
 import { ApiService } from '../api.service';
 
 @Component({
@@ -38,11 +38,22 @@ export class WdResultsComponent {
   // }
 
 
+  /**
+   * Update spectral features plots
+   * @param resultIndex index of the result to update
+   */
   public updatePlots(resultIndex: number): void {
     this.isUpdating = true;
     // call to serviceAPI
-    this.spectralParameters[resultIndex].baseFilename = this.results[resultIndex].baseFilename;
-    this.apiService.updatePlots(this.spectralParameters[resultIndex]);
+    let baseFilename = this.results[resultIndex].baseFilename;
+    // this.spectralParameters[resultIndex].baseFilename = this.results[resultIndex].baseFilename;
+    this.apiService.updatePlots(baseFilename, this.spectralParameters[resultIndex])
+    .subscribe((data: SpectralFeatures) => {
+      console.log('Arrived updated plots names from server:');
+      console.log(data);
+      this.results[resultIndex].daapFeatures = data;
+      this.isUpdating = false;
+    });
     this.isUpdating = false;
   }
 

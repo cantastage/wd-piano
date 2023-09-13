@@ -49,9 +49,11 @@ def update_plots():
     Updates spectral feature plots
     :return: updated spectral feature plot urls
     """
-    spectral_params = request.json
-    base_filename = spectral_params['baseFilename']
-    spectral_features = AudioFeatureExtractor.extract_features(base_filename + ".wav", spectral_params)
+    baseFilename = request.json['baseFilename']
+    audio_filename = baseFilename + ".wav"
+    spectral_params = request.json['spectralParams']
+    isUpdating = request.json['isUpdating']
+    spectral_features = AudioFeatureExtractor.extract_features(audio_filename, spectral_params, isUpdating)
     return make_response(jsonify({'daapFeatures': spectral_features}), 200)
 
 
@@ -62,7 +64,8 @@ def run_simulation():
     """
     print('received request body: ', request.json)
     received_wd_parameters = request.json['wdParameters']
-    # received_spectral_parameters = request.json['spectralParameters']
+    received_spectral_parameters = request.json['spectralParameters']
+    is_updating = request.json['isUpdating']
     # print('received from client: ', received_wd_parameters)
     scaled = Utils.scale_wd_parameters(received_wd_parameters)
     Settings.set_wd_params(scaled['iterations'],
@@ -94,14 +97,16 @@ def run_simulation():
     result = simulator.run_simulation()  # Run simulation
     Settings.set_string(result[0])  # get string matrix
     Settings.set_hammer(result[1])  # get hammer positions vector
-    # extracted_features = AudioFeatureExtractor.extract_features(Settings.get_base_filename() + ".wav", received_spectral_parameters)  # will be an array
-    extracted_features = AudioFeatureExtractor.extract_features(Settings.get_base_filename() + ".wav")  # will be an array
+    extracted_features = AudioFeatureExtractor.extract_features(Settings.get_base_filename() + ".wav",
+                                                                received_spectral_parameters,
+                                                                is_updating)  # will be an array
+    # extracted_features = AudioFeatureExtractor.extract_features(Settings.get_base_filename() + ".wav")  # will be an array
     video_filename = Settings.get_base_filename() + ".mp4"
     set_visualizer_config({"output_file": video_filename})
     visualizer = Visualizer()  # create Visualizer instance
     visualizer.render()
-    # return make_response(jsonify({'baseFilename': Settings.get_base_filename(), 'videoFilename': video_filename, 'paramSummary': [], 'daapFeatures': extracted_features}), 200)
-    return make_response(jsonify({'videoFilename': video_filename, 'paramSummary': [], 'daapFeatures': extracted_features}), 200)
+    return make_response(jsonify({'baseFilename': Settings.get_base_filename(), 'videoFilename': video_filename, 'paramSummary': [], 'daapFeatures': extracted_features}), 200)
+    # return make_response(jsonify({'videoFilename': video_filename, 'paramSummary': [], 'daapFeatures': extracted_features}), 200)
 
 
 if __name__ == '__main__':

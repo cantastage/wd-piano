@@ -43,7 +43,7 @@
                             <label for="nFFT" class="form-label">FFT length [samples]</label>
                             <select type="select" class="form-select" id="nFFT"
                                 [(ngModel)]="this.spectralParameters[i].nFFT">
-                                <option *ngFor="let length of fftLengthOptions">{{length}}</option>
+                                <option *ngFor="let lengthOption of fftLengthOptions" [ngValue]="lengthOption">{{lengthOption}}</option>
                             </select>
                         </div>
                         <div class="col-sm-12 col-lg-3">

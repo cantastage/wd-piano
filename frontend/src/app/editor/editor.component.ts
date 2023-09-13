@@ -52,14 +52,14 @@ export class EditorComponent {
     this.isRendered = false;
     let summary = this.wdParams;
     let parsedParams = this.parseWDParams();
-    // this.apiService.runWDPiano(parsedParams, DEFAULT_SPECTRAL_ANALYSIS_PARAMETERS)
-    this.apiService.runWDPiano(parsedParams)
+    this.apiService.runWDPiano(parsedParams, DEFAULT_SPECTRAL_ANALYSIS_PARAMETERS, false)
+    // this.apiService.runWDPiano(parsedParams)
       .subscribe((data: WDResult) => {
         console.log('Arrived from server:');
         console.log(data);
         data.paramSummary = summary;
         this.wdResults.push(data);
-        this.spectralParameters.push(DEFAULT_SPECTRAL_ANALYSIS_PARAMETERS);
+        this.spectralParameters.push(DEFAULT_SPECTRAL_ANALYSIS_PARAMETERS); // we add mew set of spectral parameters
         this.isRendered = true;
       });
   }

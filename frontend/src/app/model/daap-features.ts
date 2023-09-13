@@ -9,7 +9,7 @@ export interface SpectralFeatures {
 }
 
 export interface SpectralAnalysisParameters {
-    baseFilename: string;
+    // baseFilename: string;
     // "almost" common parameters
     nFFT: number;
     windowType: string;
@@ -26,7 +26,7 @@ export interface SpectralAnalysisParameters {
 }
 
 export const DEFAULT_SPECTRAL_ANALYSIS_PARAMETERS: SpectralAnalysisParameters = {
-    baseFilename: '',
+    // baseFilename: '',
     nFFT: 2048,
     windowType: 'hann',
     winLength: 2048,

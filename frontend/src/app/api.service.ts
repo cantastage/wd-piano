@@ -54,10 +54,22 @@ export class ApiService {
    * @param spectralParams spectral analysis parameters
    * @returns updated plot urls
    */
-  public updatePlots(spectralParams: SpectralAnalysisParameters): Observable<SpectralFeatures> {
+  public updatePlots(baseFilename: string, spectralParams: SpectralAnalysisParameters): Observable<SpectralFeatures> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    const body = JSON.stringify(spectralParams);
+    const body = JSON.stringify({baseFilename, spectralParams, isUpdating: true});
     return this.http.post<SpectralFeatures>(API_URL + '/plots', body, { 'headers': headers });
+  }
+
+  /**
+   * Run WdPiano algorith
+   * @param wdParams 
+   * @param spectralParameters
+   * @returns 
+   */
+  public runWDPiano(wdParams: Object, spectralParameters: SpectralAnalysisParameters, isUpdating: boolean): Observable<any> {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    const body = JSON.stringify({wdParameters: wdParams, spectralParameters: spectralParameters, isUpdating: isUpdating});
+    return this.http.post<any>(API_URL + '/simulation', body, { 'headers': headers });
   }
 
   // /**
@@ -65,22 +77,11 @@ export class ApiService {
   //  * @param wdParams 
   //  * @returns 
   //  */
-  // public runWDPiano(wdParams: Object, spectralParameters: SpectralAnalysisParameters): Observable<any> {
+  // public runWDPiano(wdParams: Object): Observable<any> {
   //   const headers = new HttpHeaders().set('Content-Type', 'application/json');
-  //   const body = JSON.stringify({wdParameters: wdParams, spectralParameters: spectralParameters});
+  //   const body = JSON.stringify({wdParameters: wdParams});
   //   return this.http.post<any>(API_URL + '/simulation', body, { 'headers': headers });
   // }
-
-  /**
-   * Run WdPiano algorith
-   * @param wdParams 
-   * @returns 
-   */
-  public runWDPiano(wdParams: Object): Observable<any> {
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    const body = JSON.stringify({wdParameters: wdParams});
-    return this.http.post<any>(API_URL + '/simulation', body, { 'headers': headers });
-  }
 
   /**
    * Handle Http operation that failed. Taken from Angular Tour of Heroes
