@@ -53,7 +53,8 @@ def get_hammer(hammer_matrix, axes, position_idx):
     :return:
     """
     center_y_coord = hammer_matrix[int(position_idx) - 1]
-    center_x_coord = Settings.get_wg_striking_point()
+    # center_x_coord = Settings.get_wg_striking_point()
+    center_x_coord = 19
     center_point = Dot(axes.c2p(center_x_coord, center_y_coord, 0))
     circle = Circle(color=BLUE, fill_color=BLUE, fill_opacity=1.0).surround(center_point, buffer_factor=2.0)
     circle.move_to(circle.get_bottom())
@@ -74,6 +75,7 @@ class Visualizer(Scene):
         hammer_positions = Settings.get_hammer()  # hammer matrix
 
         string_shape = string.shape  # get string matrix shape to calculate max value
+        print('string_shape = ', string_shape)
         string_max_value = np.max(string)  # add check on negative max value using abs
         print('string_max_value = ', string_max_value)
         hammer_max_value = np.max(hammer_positions)
@@ -88,7 +90,7 @@ class Visualizer(Scene):
         )
         # axes.add_coordinates()
         axes_labels = axes.get_axis_labels()
-        idx_tracker = ValueTracker(0)
+        idx_tracker = ValueTracker(0)  # initialize value tracker
         string_graph = always_redraw(lambda: plot_string_graph(string, axes, idx_tracker.get_value()))
 
         # string_label = axes.get_graph_label(string_graph, label='PIANO STRING')

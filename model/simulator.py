@@ -100,7 +100,7 @@ class Simulator:
         self.wg_length_right = wg_lengths[1]
         print('wg_length_right: ', self.wg_length_right)
         self.wg_length = self.wg_length_left + self.wg_length_right  # NB: formula per wg_length: wg_length = Fs / f0
-        print('Total waveguide length: ', self.wg_length + self.wg_length_right)
+        print('Total waveguide length: ', self.wg_length)
         self.K = soundboard_reflection_coefficient  # set soundboard reflection coefficient
         self.A = linear_felt_stiffness  # set linear felt stiffness
         self.str_length = string_length  # string length in m

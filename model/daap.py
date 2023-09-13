@@ -17,7 +17,7 @@ class AudioFeatureExtractor(object):
 
     # TODO add all the requested features and return dictionary with names so it is easily jsonified
     @classmethod
-    def extract_features(cls, audio_file_name: str, spectral_parameters: dict) -> dict:
+    def extract_features(cls, audio_file_name: str) -> dict:
         """
         Extracts spectral features from the audio file
         :param audio_file_name: the audio file
@@ -25,20 +25,23 @@ class AudioFeatureExtractor(object):
         :return: the extracted features
         """
         sr = Settings.get_sampling_freq()
-        base_filename = spectral_parameters['baseFilename']
-        if base_filename == '':
-            base_filename = Settings.get_base_filename()  # if empty it means it is a new file so we load from settings
+        base_filename = Settings.get_base_filename()
+        # base_filename = spectral_parameters['baseFilename']
+        # if base_filename == '':
+        #     base_filename = Settings.get_base_filename()  # if empty it means it is a new file so we load from settings
         # init variables
         extracted_features = {}  # init dictionary of extracted features
         audio_file_path = os.path.join('media', 'audio', audio_file_name)  # audio file path
         mfccs_fig = Figure()  # init figure container
         mfccs_ax = mfccs_fig.subplots()  # init single plot container
         y, sr = librosa.load(audio_file_path, sr=sr)  # load audio file
+        print('audio file length: ', len(y))
         # S, phase = librosa.magphase(librosa.stft(y=y, n_fft=spectral_parameters['nFFT'],
         #                                          window=spectral_parameters['windowType'],
         #                                          win_length=spectral_parameters['winLength'],
         #                                          hop_length=spectral_parameters[
         #                                              'hopLength']))  # extract magnitude and phase
+
         S, phase = librosa.magphase(librosa.stft(y=y))  # extract magnitude and phase
         # MFCCs
         # mfccs = librosa.feature.mfcc(y=y, sr=sr,

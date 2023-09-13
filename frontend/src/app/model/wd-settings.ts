@@ -22,7 +22,7 @@ export interface SimpleWDParam {
 // TODO add step to define granularity and decimals
 // NOTE: default params refer to C4 note, unwrapped string
 export const WDPARAMS: WDParam[] = [
-    { name: 'iterations', value: 2, min: 1, max: 5, unit: 'steps' },
+    { name: 'iterations', value: 88200, min: 1, max: 200000, unit: 'steps' },
     { name: 'samplingFrequency', value: 44100, min: 1, max: 200000, unit: 'Hz' },
     { name: 'soundSpeed', value: 343.43, min: 300, max: 400, unit: 'm/s'},  // in m/s
     { name: 'stringFundamentalFrequency', value: 262.22, min: 20, max: 20000, unit: 'Hz' },

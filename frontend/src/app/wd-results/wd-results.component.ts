@@ -21,12 +21,12 @@ export class WdResultsComponent {
     // this.spectralParameters.push(DEFAULT_SPECTRAL_ANALYSIS_PARAMETERS);
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    console.log('ENTRA IN ONCHANGES');
-    if (changes['current'] != changes['previous']) {
-      console.log('changes detected in wd-results.component.ts: ', changes);
-    }
-  }
+  // ngOnChanges(changes: SimpleChanges) {
+  //   console.log('ENTRA IN ONCHANGES');
+  //   if (changes['current'] != changes['previous']) {
+  //     console.log('changes detected in wd-results.component.ts: ', changes);
+  //   }
+  // }
 
 
   // public getFFTSelectOptions(spectralParam: string): Array<number> {
