@@ -16,6 +16,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { SummaryComponent } from './summary/summary.component';
 import { HsDataDirective } from './hs-data.directive';
 import { WdResultsComponent } from './wd-results/wd-results.component';
+import { FeaturePlotsComponent } from './feature-plots/feature-plots.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +26,8 @@ import { WdResultsComponent } from './wd-results/wd-results.component';
     VideoPlayerComponent,
     SummaryComponent,
     HsDataDirective,
-    WdResultsComponent
+    WdResultsComponent,
+    FeaturePlotsComponent
   ],
   imports: [
     BrowserModule,

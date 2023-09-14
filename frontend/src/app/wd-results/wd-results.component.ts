@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, SimpleChanges } from '@angular/core';
 import { WDResult } from '../model/wd-result';
 import { API_URL } from 'src/env';
 import { DEFAULT_SPECTRAL_ANALYSIS_PARAMETERS, SpectralAnalysisParameters, SpectralFeatures } from '../model/daap-features';
@@ -15,6 +15,8 @@ export class WdResultsComponent {
   // spectralParameters: SpectralAnalysisParameters;
   isUpdating = false;
   fftLengthOptions: Array<number> = [64, 128, 256, 512, 1024, 2048, 4096, 8192];
+  selectedWinLength: number = 0;
+  showPlots: boolean = true;
 
   constructor(private apiService: ApiService) {
     // this.spectralParameters = DEFAULT_SPECTRAL_ANALYSIS_PARAMETERS;
@@ -29,13 +31,13 @@ export class WdResultsComponent {
   // }
 
 
-  // public getFFTSelectOptions(spectralParam: string): Array<number> {
-  //  switch (spectralParam) {
-  //   case 'winLength':
-  //     return this.fftLengthOptions.filter((value) => value <= this.spectralParameters[].nFFT);
-  //  } 
-  //  return this.fftLengthOptions;
-  // }
+  public getFFTSelectOptions(index: number, spectralParam: string): Array<number> {
+    switch (spectralParam) {
+      case 'winLength':
+        return this.fftLengthOptions.filter((value) => value <= this.spectralParameters[index].nFFT);
+    }
+    return this.fftLengthOptions;
+  }
 
 
   /**
@@ -44,19 +46,31 @@ export class WdResultsComponent {
    */
   public updatePlots(resultIndex: number): void {
     this.isUpdating = true;
+    // this.togglePlots(resultIndex);
+    // this.showPlots = false;
     // call to serviceAPI
     let baseFilename = this.results[resultIndex].baseFilename;
     // this.spectralParameters[resultIndex].baseFilename = this.results[resultIndex].baseFilename;
     this.apiService.updatePlots(baseFilename, this.spectralParameters[resultIndex])
-    .subscribe((data: SpectralFeatures) => {
-      console.log('Arrived updated plots names from server:');
-      console.log(data);
-      this.results[resultIndex].daapFeatures = data;
-      this.isUpdating = false;
-    });
-    this.isUpdating = false;
+      .subscribe((data: SpectralFeatures) => {
+        console.log('Arrived updated plots names from server:');
+        console.log(data);
+        // this.results[resultIndex].daapFeatures = data;
+        // this.triggerFetchPlots(resultIndex);
+        this.isUpdating = false;
+        // this.togglePlots(resultIndex);
+      });
   }
 
+  // private triggerFetchPlots(resultIndex: number): void {
+  //   let mfccUrlBackup = this.results[resultIndex].daapFeatures.mfccs;
+  //   this.results[resultIndex].daapFeatures.mfccs = '';
+  //   this.results[resultIndex].daapFeatures.mfccs = mfccUrlBackup;
+
+  // }
+  public togglePlots(index: number) {
+    this.showPlots = !this.showPlots;
+  }
 
   public getPlotUrl(plotName: string): string {
     return API_URL + '/plot/' + plotName;

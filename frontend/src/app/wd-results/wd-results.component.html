@@ -43,21 +43,31 @@
                             <label for="nFFT" class="form-label">FFT length [samples]</label>
                             <select type="select" class="form-select" id="nFFT"
                                 [(ngModel)]="this.spectralParameters[i].nFFT">
-                                <option *ngFor="let lengthOption of fftLengthOptions" [ngValue]="lengthOption">{{lengthOption}}</option>
+                                <option *ngFor="let lengthOption of fftLengthOptions" [ngValue]="lengthOption">
+                                    {{lengthOption}}</option>
                             </select>
                         </div>
                         <div class="col-sm-12 col-lg-3">
                             <label for="winLength" class="form-label">Window length [samples]</label>
-                            <!-- <select class="form-select" id="winLength" [(ngModel)]="this.spectralParameters.winLength">
-                                <option *ngFor="let length of this.getFFTSelectOptions('winLength')">{{length}}</option>
-                            </select> -->
-                            <input type="number" min=1 max={{this.spectralParameters[i].nFFT}} class="form-control"
-                                id="winLength" [(ngModel)]="this.spectralParameters[i].winLength">
+                            <select class="form-select" id="winLength"
+                                [(ngModel)]="this.spectralParameters[i].winLength">
+                                <option
+                                    *ngFor="let lengthOption of this.getFFTSelectOptions(i, 'winLength'); let first = first; let last = last"
+                                    [ngValue]="lengthOption" [selected]="last">{{lengthOption}}</option>
+                            </select>
+                            <!-- <input type="number" min=1 max={{this.spectralParameters[i].nFFT}} class="form-control"
+                                id="winLength" [(ngModel)]="this.spectralParameters[i].winLength"> -->
                         </div>
                         <div class="col-sm-12 col-lg-3">
                             <label for="hopLength" class="form-label">Hop length [samples]</label>
-                            <input type="number" min=1 max=8192 class="form-control" id="hopLength"
+                            <select class="form-select" id="hopLength"
                                 [(ngModel)]="this.spectralParameters[i].hopLength">
+                                <option
+                                    *ngFor="let lengthOption of fftLengthOptions"
+                                    [ngValue]="lengthOption">{{lengthOption}}</option>
+                            </select>
+                            <!-- <input type="number" min=1 max=8192 class="form-control" id="hopLength"
+                                [(ngModel)]="this.spectralParameters[i].hopLength"> -->
                         </div>
                         <div class="col-sm-12 col-lg-3">
                             <label for="nMFCC" class="form-label"><b>MFCC</b>: Number of extracted MFCC</label>
@@ -85,9 +95,12 @@
                         <div class="col-lg-12 text-center start-button">
                             <button type="submit" class="btn btn-primary" (click)="this.updatePlots(i)"
                                 [disabled]="this.isUpdating">UPDATE PLOTS</button>
+                            <!-- <button type="submit" class="btn btn-primary" (click)="this.togglePlots(i)"
+                                [disabled]="this.isUpdating">TOGGLE PLOTS</button> -->
                         </div>
                     </div>
-                    <div class="row">
+                    <app-feature-plots [daapFeatures]="this.results[i].daapFeatures" *ngIf="!this.isUpdating"></app-feature-plots>
+                    <!-- <div class="row" *ngIf="this.showPlots">
                         <div class="col-sm-12 col-md-6">
                             <img src={{getPlotUrl(this.results[i].daapFeatures.mfccs)}} class="img-fluid"
                                 alt="mfccs-plot">
@@ -112,7 +125,7 @@
                             <img src={{getPlotUrl(this.results[i].daapFeatures.spectralRollOff)}} class="img-fluid"
                                 alt="spectral-roll-off-plot">
                         </div>
-                    </div>
+                    </div> -->
 
                 </div>
             </div>
