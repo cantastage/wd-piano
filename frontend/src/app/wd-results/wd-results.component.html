@@ -47,7 +47,7 @@
                                     {{lengthOption}}</option>
                             </select>
                         </div>
-                        <div class="col-sm-12 col-lg-3">
+                        <!-- <div class="col-sm-12 col-lg-3">
                             <label for="winLength" class="form-label">Window length [samples]</label>
                             <select class="form-select" id="winLength"
                                 [(ngModel)]="this.spectralParameters[i].winLength">
@@ -55,8 +55,14 @@
                                     *ngFor="let lengthOption of this.getFFTSelectOptions(i, 'winLength'); let first = first; let last = last"
                                     [ngValue]="lengthOption" [selected]="last">{{lengthOption}}</option>
                             </select>
-                            <!-- <input type="number" min=1 max={{this.spectralParameters[i].nFFT}} class="form-control"
-                                id="winLength" [(ngModel)]="this.spectralParameters[i].winLength"> -->
+                        </div> -->
+                        <div class="col-sm-12 col-lg-3">
+                            <label for="winLength" class="form-label">Window length [samples]</label>
+                            <select class="form-select" id="winLength"
+                                [(ngModel)]="this.spectralParameters[i].winLength">
+                                <option
+                                    *ngFor="let lengthOption of this.fftLengthOptions" [ngValue]="lengthOption">{{lengthOption}}</option>
+                            </select>
                         </div>
                         <div class="col-sm-12 col-lg-3">
                             <label for="hopLength" class="form-label">Hop length [samples]</label>
@@ -91,6 +97,9 @@
                                 [%]</label>
                             <input type="number" min=0.01 max=0.99 class="form-control" id="rollPercent"
                                 [(ngModel)]="this.spectralParameters[i].rollPercent">
+                        </div>
+                        <div class="col-sm-12" *ngIf="this.showErrorMsg">
+                            <div class="alert alert-warning" role="alert">{{this.errorMsg}}</div>
                         </div>
                         <div class="col-lg-12 text-center start-button">
                             <button type="submit" class="btn btn-primary" (click)="this.updatePlots(i)"

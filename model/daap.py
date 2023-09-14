@@ -30,6 +30,7 @@ class AudioFeatureExtractor(object):
         # base_filename = Settings.get_base_filename()
         if is_updating:
             base_filename = audio_file_name.replace('.wav', '')  # we need to update plots for a specific file
+            base_filename = cls.update_base_filename(base_filename)  # TODO do tests
         else:
             base_filename = Settings.get_base_filename()  # new plots are requested
         # init variables
@@ -166,3 +167,14 @@ class AudioFeatureExtractor(object):
         filename = feature_name + '-' + base_filename + '.png'
         fig.savefig(os.path.join('media', 'images', filename), format="png")
         return filename
+
+    @staticmethod
+    def update_base_filename(base_filename: str) -> str:
+        # separator_occurrences = base_filename.count('-')
+        # if separator_occurrences > 3:
+        name = base_filename.split('-')
+        progressive_index = int(name[len(name)-1]) + 1
+        return '-'.join(name[0:len(name)-2]) + '-' + str(progressive_index)
+
+
+

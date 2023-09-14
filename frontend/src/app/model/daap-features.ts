@@ -36,3 +36,13 @@ export const DEFAULT_SPECTRAL_ANALYSIS_PARAMETERS: SpectralAnalysisParameters = 
     contrastNumBands: 6,
     rollPercent: 0.85
 }
+
+export const EMPTY_SPECTRAL_FEATURES: SpectralFeatures = {
+    mfccs: '',
+    spectralCentroid: '',
+    spectralBandwidth: '',
+    spectralContrast: '',
+    spectralRollOff: '',
+    tonnetz: ''
+}
+    

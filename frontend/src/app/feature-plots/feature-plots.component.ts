@@ -15,11 +15,16 @@ export class FeaturePlotsComponent {
   }
 
   ngOnInit() {
-    console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+    console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');  
     console.log('feature-plots urls: ', this.daapFeatures);
   }
 
+  ngOnDestroy() {
+    console.log('ARMAGEDDON DESTROY IS CALLED');
+  }
+
   public getPlotUrl(plotName: string): string {
+    // let time = new Date().getTime();
     return API_URL + '/plot/' + plotName;
   }
 }
