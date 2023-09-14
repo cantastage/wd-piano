@@ -174,7 +174,7 @@ class AudioFeatureExtractor(object):
         # if separator_occurrences > 3:
         name = base_filename.split('-')
         progressive_index = int(name[len(name)-1]) + 1
-        return '-'.join(name[0:len(name)-2]) + '-' + str(progressive_index)
+        return '-'.join(name[0:len(name)-1]) + '-' + str(progressive_index)
 
 
 
