@@ -9,7 +9,7 @@ export interface WDParam {
     unit: string;
 }
 
-export const WDPARAMETERS: Map<string, WDParam> = new Map<string, WDParam>();
+// export const WDPARAMETERS: Map<string, WDParam> = new Map<string, WDParam>();
 
 /**
  * Simple WDParam for summary description purposes

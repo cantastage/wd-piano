@@ -5,14 +5,14 @@ export class WDResult {
     baseFilename: string;
     videoFilename:string;
     paramSummary: Array<WDParam>;
-    daapFeatures: SpectralFeatures; // TODO assign type once implemented
-    // summary: Array<WDParam>;
+    daapFeatures: SpectralFeatures;
+    plotVersionIndex: number;
 
-    constructor(baseFilename: string, videoFileName:string, summary: Array<WDParam>, daapFeatures: SpectralFeatures) {
+    constructor(baseFilename: string, videoFileName:string, summary: Array<WDParam>, daapFeatures: SpectralFeatures, plotVersionIndex: number) {
         this.baseFilename = baseFilename;
         this.videoFilename = videoFileName;
         this.paramSummary = summary;
         this.daapFeatures = daapFeatures;
-        // this.summary = new Array<WDParam>();
+        this.plotVersionIndex = plotVersionIndex;
     }
 }

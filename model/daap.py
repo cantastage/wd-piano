@@ -1,5 +1,6 @@
 #  Feature richieste: MFCCs, spectral centroid, spectral roll-off, spectral bandwidth, tonnetz, etc.
 import os
+import glob
 import numpy as np
 import librosa
 from matplotlib.figure import Figure
@@ -15,31 +16,27 @@ class AudioFeatureExtractor(object):
             cls._instance = super(AudioFeatureExtractor, cls).__new__(cls)
         return cls._instance
 
-    # TODO add all the requested features and return dictionary with names so it is easily jsonified
     @classmethod
-    def extract_features(cls, audio_file_name: str, spectral_parameters: dict, is_updating: bool) -> dict:
+    def extract_features(cls, base_filename: str, spectral_parameters: dict, plot_version_index) -> dict:
         """
         Extracts spectral features from the audio file
-        :param audio_file_name: the audio file
+        :param base_filename: base filename to retrieve audio data and plots data
         :param spectral_parameters: the parameters for the extraction of the spectral features
-        :param is_updating:
+        :param plot_version_index: progressive index of plot versions
         :return: the extracted features
         """
-        print('Arrived spectral parameters: ', spectral_parameters)
+        # print('Arrived spectral parameters: ', spectral_parameters)
+        if plot_version_index > 0:
+            cls.clear_old_plots(base_filename)  # clear old plot files
         sr = Settings.get_sampling_freq()
-        # base_filename = Settings.get_base_filename()
-        if is_updating:
-            base_filename = audio_file_name.replace('.wav', '')  # we need to update plots for a specific file
-            base_filename = cls.update_base_filename(base_filename)  # TODO do tests
-        else:
-            base_filename = Settings.get_base_filename()  # new plots are requested
+        audio_filename = base_filename + '.wav'
         # init variables
         extracted_features = {}  # init dictionary of extracted features
-        audio_file_path = os.path.join('media', 'audio', audio_file_name)  # audio file path
+        audio_file_path = os.path.join('media', 'audio', audio_filename)  # audio file path
         mfccs_fig = Figure()  # init figure container
         mfccs_ax = mfccs_fig.subplots()  # init single plot container
         y, sr = librosa.load(audio_file_path, sr=sr)  # load audio file
-        print('librosa loaded audio file length: ', len(y))
+        # print('librosa loaded audio file length: ', len(y))
         S, phase = librosa.magphase(librosa.stft(y=y, n_fft=spectral_parameters['nFFT'],
                                                  window=spectral_parameters['windowType'],
                                                  win_length=spectral_parameters['winLength'],
@@ -58,7 +55,7 @@ class AudioFeatureExtractor(object):
         mfccs_img = librosa.display.specshow(mfccs, sr=sr, x_axis='time', ax=mfccs_ax)  # create img for mfccs
         mfccs_fig.colorbar(mfccs_img, ax=mfccs_ax)
         mfccs_ax.set(title='MFCCs')
-        extracted_features['mfccs'] = cls.save_feature_plot(mfccs_fig, 'mfccs', base_filename)
+        extracted_features['mfccs'] = cls.save_feature_plot(mfccs_fig, 'mfccs', base_filename, plot_version_index)
 
         # Spectral centroid
         # cent = librosa.feature.spectral_centroid(y=y, sr=sr)  # extract spectral centroid
@@ -78,7 +75,7 @@ class AudioFeatureExtractor(object):
         centroid_ax.plot(cent_times, centroid.T, label='Spectral centroid', color='w')
         centroid_ax.legend(loc='upper right')
         centroid_ax.set(title='log Power spectrogram')
-        extracted_features['spectralCentroid'] = cls.save_feature_plot(centroid_fig, 'spectralCentroid', base_filename)
+        extracted_features['spectralCentroid'] = cls.save_feature_plot(centroid_fig, 'spectralCentroid', base_filename, plot_version_index)
 
         # Spectral bandwidth
         spec_bw_fig = Figure()
@@ -100,7 +97,7 @@ class AudioFeatureExtractor(object):
                                 label='Centroid  +- bandwidth')
         spec_bw_ax.plot(spec_bw_times, centroid[0], label='Spectral centroid', color='w')
         spec_bw_ax.legend(loc='lower right')
-        extracted_features['spectralBandwidth'] = cls.save_feature_plot(spec_bw_fig, 'spectralBandwidth', base_filename)
+        extracted_features['spectralBandwidth'] = cls.save_feature_plot(spec_bw_fig, 'spectralBandwidth', base_filename, plot_version_index)
 
         # Spectral contrast
         contrast_fig = Figure()
@@ -118,7 +115,7 @@ class AudioFeatureExtractor(object):
         contrast_img = librosa.display.specshow(spectral_contrast, sr=sr, x_axis='time', ax=contrast_ax)
         contrast_fig.colorbar(contrast_img, ax=contrast_ax)
         contrast_ax.set(ylabel='Frequency bands', title='Spectral contrast')
-        extracted_features['spectralContrast'] = cls.save_feature_plot(contrast_fig, 'spectralContrast', base_filename)
+        extracted_features['spectralContrast'] = cls.save_feature_plot(contrast_fig, 'spectralContrast', base_filename, plot_version_index)
 
         # Spectral roll-off
         rolloff_fig = Figure()
@@ -141,7 +138,7 @@ class AudioFeatureExtractor(object):
         #                 label='Roll-off frequency (0.01)')
         rolloff_ax.legend(loc='upper right')
         rolloff_ax.set(title='Spectral Roll-off on log power spectrogram')
-        extracted_features['spectralRollOff'] = cls.save_feature_plot(rolloff_fig, 'spectralRollOff', base_filename)
+        extracted_features['spectralRollOff'] = cls.save_feature_plot(rolloff_fig, 'spectralRollOff', base_filename, plot_version_index)
 
         # Tonnetz
         # NOTA: tonnetz tira un warning sulla n_fft
@@ -152,29 +149,55 @@ class AudioFeatureExtractor(object):
         tonnetz_img = librosa.display.specshow(tonnetz, sr=sr, y_axis='tonnetz', x_axis='time', ax=tonnetz_ax)
         tonnetz_ax.set(title='Tonal centroids (Tonnetz)')
         tonnetz_fig.colorbar(tonnetz_img)
-        extracted_features['tonnetz'] = cls.save_feature_plot(tonnetz_fig, 'tonnetz', base_filename)
+        extracted_features['tonnetz'] = cls.save_feature_plot(tonnetz_fig, 'tonnetz', base_filename, plot_version_index)
         return extracted_features
 
     @staticmethod
-    def save_feature_plot(fig, feature_name, base_filename) -> str:
+    def save_feature_plot(fig, feature_name, base_filename, plot_version_index) -> str:
         """
         Saves the feature plot to a file
         :param fig:
         :param feature_name:
         :param base_filename:
+        :param plot_version_index:
         :return: filename: filename of the saved plot
         """
-        filename = feature_name + '-' + base_filename + '.png'
+        filename = feature_name + '-' + base_filename + '-' + str(plot_version_index) + '.png'
         fig.savefig(os.path.join('media', 'images', filename), format="png")
         return filename
 
     @staticmethod
-    def update_base_filename(base_filename: str) -> str:
-        # separator_occurrences = base_filename.count('-')
-        # if separator_occurrences > 3:
-        name = base_filename.split('-')
-        progressive_index = int(name[len(name)-1]) + 1
-        return '-'.join(name[0:len(name)-1]) + '-' + str(progressive_index)
+    def clear_old_plots(base_filename: str):
+        """
+        Clears old plot files
+        :param base_filename:
+        :return:
+        """
+        # old_plot_index = plot_version_index - 1
+        files = glob.glob(os.path.join('media', 'images', '*' + base_filename + '*'))
+        print('old plot files to be deleted: ', files)
+        for file in files:
+            if os.path.exists(file):
+                os.remove(file)
+
+    # @staticmethod
+    # def update_base_filename(base_filename: str) -> str:
+    #     """
+    #     Updates the base filename to the next progressive index to allow image refreshing
+    #     :param base_filename:
+    #     :return: updated_base_filename: the updated base filename
+    #     """
+    #     # First clear old plot files
+    #     files = glob.glob(os.path.join('media', 'images', '*' + base_filename + '*'))
+    #     for file in files:
+    #         if os.path.exists(file):
+    #             os.remove(file)
+    #     print('retrieved files: ', files)
+    #     # separator_occurrences = base_filename.count('-')
+    #     # if separator_occurrences > 3:
+    #     name = base_filename.split('-')
+    #     progressive_index = int(name[len(name)-1]) + 1  # increase the progressive index of the image
+    #     return '-'.join(name[0:len(name)-1]) + '-' + str(progressive_index)
 
 
 

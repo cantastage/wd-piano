@@ -58,23 +58,16 @@ export class WdResultsComponent {
    */
   public updatePlots(resultIndex: number): void {
     this.isUpdating = true; // disable button
+    this.results[resultIndex].plotVersionIndex++;
     if (this.checkSpectralParams(resultIndex)) {
-      // this.togglePlots(resultIndex);
-      // this.showPlots = false;
       // call to serviceAPI
       let baseFilename = this.results[resultIndex].baseFilename;
-      // this.spectralParameters[resultIndex].baseFilename = this.results[resultIndex].baseFilename;
-      this.apiService.updatePlots(baseFilename, this.spectralParameters[resultIndex])
+      this.apiService.updatePlots(baseFilename, this.spectralParameters[resultIndex], this.results[resultIndex].plotVersionIndex)
         .subscribe((data: any) => {
-          // console.log('Arrived updated plots names from server:');
-          // console.log(data);
-          this.results[resultIndex].daapFeatures = EMPTY_SPECTRAL_FEATURES;
           this.results[resultIndex].daapFeatures = data.daapFeatures;
           console.log('Arrived updated plots names from server:');
           console.log(data.daapFeatures);
-          // this.triggerFetchPlots(resultIndex);
           this.isUpdating = false;
-          // this.togglePlots(resultIndex);
         });
     } else {
       this.isUpdating = false;
@@ -85,7 +78,6 @@ export class WdResultsComponent {
   //   let mfccUrlBackup = this.results[resultIndex].daapFeatures.mfccs;
   //   this.results[resultIndex].daapFeatures.mfccs = '';
   //   this.results[resultIndex].daapFeatures.mfccs = mfccUrlBackup;
-
   // }
   public togglePlots(index: number) {
     this.showPlots = !this.showPlots;
