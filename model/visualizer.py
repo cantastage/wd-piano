@@ -53,8 +53,8 @@ def get_hammer(hammer_matrix, axes, position_idx):
     :return:
     """
     center_y_coord = hammer_matrix[int(position_idx) - 1]
-    # center_x_coord = Settings.get_wg_striking_point()
-    center_x_coord = 19
+    center_x_coord = Settings.get_wg_striking_point()
+    # center_x_coord = 19
     center_point = Dot(axes.c2p(center_x_coord, center_y_coord, 0))
     circle = Circle(color=BLUE, fill_color=BLUE, fill_opacity=1.0).surround(center_point, buffer_factor=2.0)
     circle.move_to(circle.get_bottom())

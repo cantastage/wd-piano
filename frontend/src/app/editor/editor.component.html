@@ -22,8 +22,8 @@
               </div>
               <div class="col-sm-12">
                 <label for="duration" class="form-label">Duration<span class='unit-of-measure'>[sec]</span></label>
-                <input type="number" min=1 max=176400 class="form-control"
-                  id="duration" [(ngModel)]="this.wdParams[0].value">
+                <input type="number" min=1 max=176400 class="form-control" id="duration"
+                  [(ngModel)]="this.wdParams[0].value">
               </div>
               <!-- Sampling frequency -->
               <div class="col-sm-12">
@@ -60,11 +60,15 @@
             </div>
             <div class="col-sm-12 text-center">
               <div class="btn-group" role="group" aria-label="Waveguide length parameters toggle">
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked (change)="toggleSetWGLengthMode(0)">
-                <label class="btn btn-outline-primary" for="btnradio1">Method 1: set string fundamental frequency</label>
-              
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" (change)="toggleSetWGLengthMode(1)">
-                <label class="btn btn-outline-primary" for="btnradio2">Method 2: set string length and sound speed</label>
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked
+                  (change)="toggleSetWGLengthMode(0)">
+                <label class="btn btn-outline-primary" for="btnradio1">Method 1: set string fundamental
+                  frequency</label>
+
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off"
+                  (change)="toggleSetWGLengthMode(1)">
+                <label class="btn btn-outline-primary" for="btnradio2">Method 2: set string length and sound
+                  speed</label>
               </div>
             </div>
             <!-- String fundamental frequency -->
@@ -72,21 +76,24 @@
               <label for="{{this.wdParams[3].name}}" class="form-label">{{this.wdParams[3].name |
                 camelcaseToWords}}<span class='unit-of-measure'>[{{this.wdParams[3].unit}}]</span></label>
               <input type="number" min={{this.wdParams[3].min}} max={{this.wdParams[3].max}} class="form-control"
-                id="{{this.wdParams[3].name}}" [(ngModel)]="this.wdParams[3].value" [disabled]="currentWgLengthMode == 1" (change)="this.updateWgLengthParams(0)">
+                id="{{this.wdParams[3].name}}" [(ngModel)]="this.wdParams[3].value"
+                [disabled]="currentWgLengthMode == 1" (change)="this.updateWgLengthParams(0)">
             </div>
             <!-- String length -->
             <div class="col-sm-12 col-lg-4">
               <label for="{{this.wdParams[4].name}}" class="form-label">{{this.wdParams[4].name |
                 camelcaseToWords}}<span class='unit-of-measure'>[{{this.wdParams[4].unit}}]</span></label>
               <input type="number" min={{this.wdParams[4].min}} max={{this.wdParams[4].max}} class="form-control"
-                id="{{this.wdParams[4].name}}" [(ngModel)]="this.wdParams[4].value" [disabled]="currentWgLengthMode == 0" (change)="this.updateWgLengthParams(1)">
+                id="{{this.wdParams[4].name}}" [(ngModel)]="this.wdParams[4].value"
+                [disabled]="currentWgLengthMode == 0" (change)="this.updateWgLengthParams(1)">
             </div>
             <!-- Sound speed -->
             <div class="col-sm-12 col-lg-4">
               <label for="{{this.wdParams[2].name}}" class="form-label">{{this.wdParams[2].name |
                 camelcaseToWords}}<span class='unit-of-measure'>[{{this.wdParams[2].unit}}]</span></label>
               <input type="number" min={{this.wdParams[2].min}} max={{this.wdParams[2].max}} class="form-control"
-                id="{{this.wdParams[2].name}}" [(ngModel)]="this.wdParams[2].value" [disabled]="currentWgLengthMode == 0" (change)="this.updateWgLengthParams(1)">
+                id="{{this.wdParams[2].name}}" [(ngModel)]="this.wdParams[2].value"
+                [disabled]="currentWgLengthMode == 0" (change)="this.updateWgLengthParams(1)">
             </div>
           </div>
           <div class="row">
@@ -129,9 +136,10 @@
             <!-- hammer relative striking point -->
             <div class="col-sm-12 col-lg-3">
               <label for="{{this.wdParams[9].name}}" class="form-label">{{this.wdParams[9].name |
-                camelcaseToWords}}: {{this.wdParams[9].value | number}} <span class='unit-of-measure'>[{{this.wdParams[9].unit}}]</span></label>
-              <input type="range" min={{this.wdParams[9].min}} max={{this.wdParams[9].max}} step="0.01" class="form-range"
-                id="{{this.wdParams[9].name}}" [(ngModel)]="this.wdParams[9].value">
+                camelcaseToWords}}: {{this.wdParams[9].value | number}} <span
+                  class='unit-of-measure'>[{{this.wdParams[9].unit}}]</span></label>
+              <input type="range" min={{this.wdParams[9].min}} max={{this.wdParams[9].max}} step="0.01"
+                class="form-range" id="{{this.wdParams[9].name}}" [(ngModel)]="this.wdParams[9].value">
             </div>
             <!-- hammer linear felt stiffness -->
             <div class="col-sm-12 col-lg-3">
@@ -143,7 +151,11 @@
           </div>
           <div clas="row">
             <div class="col-lg-12 text-center start-button">
-              <button type="submit" class="btn btn-primary" (click)="runWDPiano()" [disabled]="!this.isRendered">START WD-PIANO</button>
+              <button type="submit" class="btn btn-primary" (click)="runWDPiano()" [disabled]="!this.isRendered">
+                <span class="spinner-border spinner-border-sm" aria-hidden="true" *ngIf="!this.isRendered"></span>
+                <span role="status" *ngIf="!this.isRendered">WORKING...</span>
+                <span role="status" *ngIf="this.isRendered">START WD-PIANO</span>
+              </button>
             </div>
           </div>
         </div>
