@@ -74,11 +74,6 @@ export class WdResultsComponent {
     }
   }
 
-  // private triggerFetchPlots(resultIndex: number): void {
-  //   let mfccUrlBackup = this.results[resultIndex].daapFeatures.mfccs;
-  //   this.results[resultIndex].daapFeatures.mfccs = '';
-  //   this.results[resultIndex].daapFeatures.mfccs = mfccUrlBackup;
-  // }
   public togglePlots(index: number) {
     this.showPlots = !this.showPlots;
   }
