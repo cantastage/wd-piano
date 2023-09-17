@@ -39,7 +39,8 @@ $frontend-theme: mat.define-light-theme((color: (primary: $frontend-primary,
 //   background-color: #faf9f6;
 // }
 
-$primary: #831a1a;
+// $primary: #831a1a;
+$primary: #c0c0c0;
 // $primary: #b71016;
 // $primary: #17171a;
 // $body-bg:#831a1a; // theatre seat red
@@ -50,7 +51,6 @@ $body-bg: #f2f2f2;
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 
 .silver-bg {
-
   // background: linear-gradient(to right, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0)), url(./assets/images/steel-bg.jpg);
   // background: linear-gradient(to right, rgba(113, 121, 126, 0.3), rgba(0, 0, 0, 0));
   // background-image: url(./assets/images/steel-bg.jpg);

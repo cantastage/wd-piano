@@ -1,9 +1,9 @@
 <div class="col-sm-12">
-    <div class="accordion" id="wdResults">
+    <div class="accordion editor-settings" id="wdResults">
         <div *ngFor="let result of results; let i=index" class="accordion-item">
             <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#resultPanel-collapse" aria-expanded="true" aria-controls="resultPanel-collapse">
+                    data-bs-target="this.getDatBsTarget()" aria-expanded="true" aria-controls="resultPanel-collapse">
                     WD-Piano #{{i}}
                 </button>
             </h2>
@@ -97,18 +97,21 @@
                             <input type="number" min=0.01 max=0.99 class="form-control" id="rollPercent"
                                 [(ngModel)]="this.spectralParameters[i].rollPercent">
                         </div>
-                        <div class="col-sm-12" *ngIf="this.showErrorMsg">
-                            <div class="alert alert-warning" role="alert">{{this.errorMsg}}</div>
+                        <div class="row">
+                            <div class="col-sm-12" *ngIf="this.showErrorMsg">
+                                <div class="alert alert-warning" role="alert">{{this.errorMsg}}</div>
+                            </div>
+                            <div class="col-lg-12 text-center start-button">
+                                <button type="submit" class="btn btn-primary update-plots-button" (click)="this.updatePlots(i)"
+                                    [disabled]="this.isUpdating">
+                                    <span class="spinner-border spinner-border-sm" aria-hidden="true"
+                                        *ngIf="this.isUpdating"></span>
+                                    <span role="status" *ngIf="this.isUpdating">WORKING...</span>
+                                    <span role="status" *ngIf="!this.isUpdating">UPDATE PLOTS</span>
+                                </button>
+                            </div>
                         </div>
-                        <div class="col-lg-12 text-center start-button">
-                            <button type="submit" class="btn btn-primary" (click)="this.updatePlots(i)"
-                                [disabled]="this.isUpdating">
-                                <span class="spinner-border spinner-border-sm" aria-hidden="true" *ngIf="this.isUpdating"></span>
-                                <span role="status" *ngIf="this.isUpdating">WORKING...</span>
-                                <span role="status" *ngIf="!this.isUpdating">UPDATE PLOTS</span>
-                            </button>
 
-                        </div>
                     </div>
                     <app-feature-plots [daapFeatures]="this.results[i].daapFeatures"
                         *ngIf="!this.isUpdating"></app-feature-plots>
