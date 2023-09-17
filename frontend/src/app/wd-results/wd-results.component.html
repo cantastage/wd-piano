@@ -3,11 +3,11 @@
         <div *ngFor="let result of results; let i=index" class="accordion-item">
             <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                    data-bs-target="this.getDatBsTarget()" aria-expanded="true" aria-controls="resultPanel-collapse">
+                    [attr.data-bs-target]="this.getDataBsTarget(i)" aria-expanded="true" [attr.aria-controls]="this.getAriaControlsLabel(i)">
                     WD-Piano #{{i}}
                 </button>
             </h2>
-            <div id="resultPanel-collapse" class="accordion-collapse collapse show">
+            <div id="{{result.baseFilename}}" class="accordion-collapse collapse show">
                 <div class="accordion-body">
                     <div class="row">
                         <div class="col-sm-12 col-md-6">
@@ -47,15 +47,6 @@
                                     {{lengthOption}}</option>
                             </select>
                         </div>
-                        <!-- <div class="col-sm-12 col-lg-3">
-                            <label for="winLength" class="form-label">Window length [samples]</label>
-                            <select class="form-select" id="winLength"
-                                [(ngModel)]="this.spectralParameters[i].winLength">
-                                <option
-                                    *ngFor="let lengthOption of this.getFFTSelectOptions(i, 'winLength'); let first = first; let last = last"
-                                    [ngValue]="lengthOption" [selected]="last">{{lengthOption}}</option>
-                            </select>
-                        </div> -->
                         <div class="col-sm-12 col-lg-3">
                             <label for="winLength" class="form-label">Window length [samples]</label>
                             <select class="form-select" id="winLength"
@@ -71,8 +62,6 @@
                                 <option *ngFor="let lengthOption of fftLengthOptions" [ngValue]="lengthOption">
                                     {{lengthOption}}</option>
                             </select>
-                            <!-- <input type="number" min=1 max=8192 class="form-control" id="hopLength"
-                                [(ngModel)]="this.spectralParameters[i].hopLength"> -->
                         </div>
                         <div class="col-sm-12 col-lg-3">
                             <label for="nMFCC" class="form-label"><b>MFCC</b>: Number of extracted MFCC</label>
@@ -102,8 +91,8 @@
                                 <div class="alert alert-warning" role="alert">{{this.errorMsg}}</div>
                             </div>
                             <div class="col-lg-12 text-center start-button">
-                                <button type="submit" class="btn btn-primary update-plots-button" (click)="this.updatePlots(i)"
-                                    [disabled]="this.isUpdating">
+                                <button type="submit" class="btn btn-primary update-plots-button"
+                                    (click)="this.updatePlots(i)" [disabled]="this.isUpdating">
                                     <span class="spinner-border spinner-border-sm" aria-hidden="true"
                                         *ngIf="this.isUpdating"></span>
                                     <span role="status" *ngIf="this.isUpdating">WORKING...</span>

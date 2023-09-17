@@ -74,6 +74,14 @@ export class WdResultsComponent {
     }
   }
 
+  public getDataBsTarget(index: number): string {
+    return '#' + this.results[index].baseFilename;
+  }
+
+  public getAriaControlsLabel(index: number) {
+    return this.results[index].baseFilename;
+  }
+
   public togglePlots(index: number) {
     this.showPlots = !this.showPlots;
   }
