@@ -2,7 +2,7 @@
   <div class="accordion" id="editorSettings">
     <div class="accordion-item">
       <h2 class="accordion-header">
-        <button class="accordion-button silver-bg" type="button" data-bs-toggle="collapse" data-bs-target="#editorCollapse"
+        <button class="accordion-button aluminum-bg" type="button" data-bs-toggle="collapse" data-bs-target="#editorCollapse"
           aria-expanded="true" aria-controls="editorCollapse">
           Editor Settings
         </button>
@@ -151,7 +151,7 @@
           </div>
           <div clas="row">
             <div class="col-sm-12 text-center start-button">
-              <button type="submit" class="btn btn-primary" (click)="runWDPiano()" [disabled]="!this.isRendered">
+              <button type="submit" class="btn btn-info" (click)="runWDPiano()" [disabled]="!this.isRendered">
                 <span class="spinner-border spinner-border-sm" aria-hidden="true" *ngIf="!this.isRendered"></span>
                 <span role="status" *ngIf="!this.isRendered">WORKING...</span>
                 <span role="status" *ngIf="this.isRendered">START WD-PIANO</span>

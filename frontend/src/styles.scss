@@ -39,19 +39,26 @@ $frontend-theme: mat.define-light-theme((color: (primary: $frontend-primary,
 //   background-color: #faf9f6;
 // }
 
+// $primary: #71576e; // pantone
+$primary: #bbbbbf;
+// $info: #831a1a; 
+$info: #71576e;
+// $primary: #cfc0c6; // grigio lilla
 // $primary: #831a1a;
-$primary: #c0c0c0;
+// $primary: #c0c0c0;
 // $primary: #b71016;
 // $primary: #17171a;
 // $body-bg:#831a1a; // theatre seat red
-$body-bg: #f2f2f2;
+$body-bg: #f2f2f2; // ivory
 // $body-bg:#f4e9d7; // ivory
 // $accordion-bg: #f4e9d7;
 // $accordion-button-bg: #c0c0c0;
+$accordion-button-bg: #f2f2f2;
+$accordion-button-active-bg: #bbbbbf;
+$accordion-button-focus-border-color: #831a1a; 
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 
-.silver-bg {
-  // background: linear-gradient(to right, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0)), url(./assets/images/steel-bg.jpg);
-  // background: linear-gradient(to right, rgba(113, 121, 126, 0.3), rgba(0, 0, 0, 0));
-  // background-image: url(./assets/images/steel-bg.jpg);
+
+.aluminum-bg {
+  background-color: #bbbbbf;
 }
