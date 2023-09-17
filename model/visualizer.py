@@ -20,8 +20,8 @@ def set_visualizer_config(config_params: Dict):
     # config.output_file = 'prova-video.mp4'
     # config.renderer = "opengl"
     # config.write_to_movie = True
-    # config.flush_cache = True  # TODO check if this is needed
-    # config.disable_caching = True  # TODO check if this is needed
+    config.flush_cache = True  # TODO check if this is needed
+    config.disable_caching = True  # TODO check if this is needed
     # TODO maybe add consistency checks or let the function accept only the required parameters
     # Unique for to set the config in manim config
     for k, v in config_params.items():
