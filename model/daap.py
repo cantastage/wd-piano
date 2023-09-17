@@ -25,6 +25,7 @@ class AudioFeatureExtractor(object):
         :param plot_version_index: progressive index of plot versions
         :return: the extracted features
         """
+        bg_color = '#f2f2f2'
         # print('Arrived spectral parameters: ', spectral_parameters)
         if plot_version_index > 0:
             cls.clear_old_plots(base_filename)  # clear old plot files
@@ -33,7 +34,7 @@ class AudioFeatureExtractor(object):
         # init variables
         extracted_features = {}  # init dictionary of extracted features
         audio_file_path = os.path.join('media', 'audio', audio_filename)  # audio file path
-        mfccs_fig = Figure()  # init figure container
+        mfccs_fig = Figure(facecolor=bg_color)  # init figure container
         mfccs_ax = mfccs_fig.subplots()  # init single plot container
         y, sr = librosa.load(audio_file_path, sr=sr)  # load audio file
         # print('librosa loaded audio file length: ', len(y))
@@ -55,11 +56,12 @@ class AudioFeatureExtractor(object):
         mfccs_img = librosa.display.specshow(mfccs, sr=sr, x_axis='time', ax=mfccs_ax)  # create img for mfccs
         mfccs_fig.colorbar(mfccs_img, ax=mfccs_ax)
         mfccs_ax.set(title='MFCCs')
+        # mfccs_ax.set_facecolor('yellow')
         extracted_features['mfccs'] = cls.save_feature_plot(mfccs_fig, 'mfccs', base_filename, plot_version_index)
 
         # Spectral centroid
         # cent = librosa.feature.spectral_centroid(y=y, sr=sr)  # extract spectral centroid
-        centroid_fig = Figure()  # init figure container
+        centroid_fig = Figure(facecolor=bg_color)  # init figure container
         centroid_ax = centroid_fig.subplots()  # init single plot container
         # centroid = librosa.feature.spectral_centroid(S=S, sr=sr)
         centroid = librosa.feature.spectral_centroid(S=S,
@@ -78,7 +80,7 @@ class AudioFeatureExtractor(object):
         extracted_features['spectralCentroid'] = cls.save_feature_plot(centroid_fig, 'spectralCentroid', base_filename, plot_version_index)
 
         # Spectral bandwidth
-        spec_bw_fig = Figure()
+        spec_bw_fig = Figure(facecolor=bg_color)
         spec_bw_ax = spec_bw_fig.subplots()
         # spectral_bw = librosa.feature.spectral_bandwidth(S=S, sr=sr)
         spectral_bw = librosa.feature.spectral_bandwidth(S=S,
@@ -100,7 +102,7 @@ class AudioFeatureExtractor(object):
         extracted_features['spectralBandwidth'] = cls.save_feature_plot(spec_bw_fig, 'spectralBandwidth', base_filename, plot_version_index)
 
         # Spectral contrast
-        contrast_fig = Figure()
+        contrast_fig = Figure(facecolor=bg_color)
         contrast_ax = contrast_fig.subplots()
         # spectral_contrast = librosa.feature.spectral_contrast(S=S, sr=sr)
         spectral_contrast = librosa.feature.spectral_contrast(S=S,
@@ -118,7 +120,7 @@ class AudioFeatureExtractor(object):
         extracted_features['spectralContrast'] = cls.save_feature_plot(contrast_fig, 'spectralContrast', base_filename, plot_version_index)
 
         # Spectral roll-off
-        rolloff_fig = Figure()
+        rolloff_fig = Figure(facecolor=bg_color)
         rolloff_ax = rolloff_fig.subplots()
         # spectral_rolloff = librosa.feature.spectral_rolloff(S=S, sr=sr, roll_percent=0.85)
         spectral_rolloff = librosa.feature.spectral_rolloff(S=S,
@@ -142,7 +144,7 @@ class AudioFeatureExtractor(object):
 
         # Tonnetz
         # NOTA: tonnetz tira un warning sulla n_fft
-        tonnetz_fig = Figure()
+        tonnetz_fig = Figure(facecolor=bg_color)
         tonnetz_ax = tonnetz_fig.subplots()
         harmonic_component = librosa.effects.harmonic(y)
         tonnetz = librosa.feature.tonnetz(y=harmonic_component, sr=sr)
