@@ -40,8 +40,9 @@ $frontend-theme: mat.define-light-theme((color: (primary: $frontend-primary,
 // }
 
 // $primary: #71576e; // pantone
-$primary: #bbbbbf;
-// $info: #831a1a; 
+// $primary: #bbbbbf;
+// $primary: #bf9b30;
+$primary: #831a1a; 
 $info: #71576e;
 // $primary: #cfc0c6; // grigio lilla
 // $primary: #831a1a;
@@ -55,10 +56,14 @@ $body-bg: #f2f2f2; // ivory
 // $accordion-button-bg: #c0c0c0;
 $accordion-button-bg: #f2f2f2;
 $accordion-button-active-bg: #bbbbbf;
-$accordion-button-focus-border-color: #831a1a; 
+// $accordion-button-focus-border-color: #831a1a; 
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 
 
-.aluminum-bg {
-  background-color: #bbbbbf;
-}
+// .aluminum-bg {
+//   background-color: #bbbbbf;
+// }
+
+// body {
+//   background-image: url(./assets/images/sfondo-metallico-con-graffi-e-macchie.jpg);
+// }

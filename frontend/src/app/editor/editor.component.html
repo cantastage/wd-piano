@@ -2,7 +2,7 @@
   <div class="accordion" id="editorSettings">
     <div class="accordion-item">
       <h2 class="accordion-header">
-        <button class="accordion-button aluminum-bg" type="button" data-bs-toggle="collapse" data-bs-target="#editorCollapse"
+        <button class="accordion-button wd-accordion" type="button" data-bs-toggle="collapse" data-bs-target="#editorCollapse"
           aria-expanded="true" aria-controls="editorCollapse">
           Editor Settings
         </button>
@@ -21,7 +21,7 @@
                 <h4>General Parameters</h4>
               </div>
               <div class="col-sm-12">
-                <label for="duration" class="form-label">Duration<span class='unit-of-measure'>[sec]</span></label>
+                <label for="duration" class="form-label">Duration<span class='unit-of-measure'>[steps]</span></label>
                 <input type="number" min=1 max=176400 class="form-control" id="duration"
                   [(ngModel)]="this.wdParams[0].value">
               </div>
@@ -39,10 +39,11 @@
               </div>
               <!-- Soundboard reflection coefficient -->
               <div class="col-sm-12">
-                <label for="{{this.wdParams[7].name}}" class="form-label">{{this.wdParams[7].name |
-                  camelcaseToWords}}<span class='unit-of-measure'>[{{this.wdParams[7].unit}}]</span></label>
-                <input type="number" min={{this.wdParams[7].min}} max={{this.wdParams[7].max}} class="form-control"
-                  id="{{this.wdParams[7].name}}" [(ngModel)]="this.wdParams[7].value">
+                  <label for="{{this.wdParams[7].name}}" class="form-label">{{this.wdParams[7].name |
+                    camelcaseToWords}}: {{this.wdParams[7].value | number}} <span
+                      class='unit-of-measure'>[{{this.wdParams[7].unit}}]</span></label>
+                  <input type="range" min={{this.wdParams[7].min}} max={{this.wdParams[7].max}} step="1"
+                    class="form-range" id="{{this.wdParams[7].name}}" [(ngModel)]="this.wdParams[7].value">
               </div>
               <!-- Hammer-string distance -->
               <div class="col-sm-12">
@@ -62,12 +63,12 @@
               <div class="btn-group" role="group" aria-label="Waveguide length parameters toggle">
                 <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked
                   (change)="toggleSetWGLengthMode(0)">
-                <label class="btn" for="btnradio1">Method 1: set string fundamental
+                <label class="btn btn-outline-primary" for="btnradio1">Method 1: set string fundamental
                   frequency</label>
 
                 <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off"
                   (change)="toggleSetWGLengthMode(1)">
-                <label class="btn" for="btnradio2">Method 2: set string length and sound
+                <label class="btn btn-outline-primary" for="btnradio2">Method 2: set string length and sound
                   speed</label>
               </div>
             </div>
@@ -151,7 +152,7 @@
           </div>
           <div clas="row">
             <div class="col-sm-12 text-center start-button">
-              <button type="submit" class="btn btn-info" (click)="runWDPiano()" [disabled]="!this.isRendered">
+              <button type="submit" class="btn btn-primary" (click)="runWDPiano()" [disabled]="!this.isRendered">
                 <span class="spinner-border spinner-border-sm" aria-hidden="true" *ngIf="!this.isRendered"></span>
                 <span role="status" *ngIf="!this.isRendered">WORKING...</span>
                 <span role="status" *ngIf="this.isRendered">START WD-PIANO</span>
