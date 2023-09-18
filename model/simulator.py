@@ -260,8 +260,7 @@ class Simulator:
         Settings.set_wg_striking_point(wg_striking_point)
         print('striking point in waveguide is ', wg_striking_point)
 
-        # TODO add milliseconds or microseconds to guarantee pseudo-name-uniqueness
-        base_filename = ("WD-Piano-" + datetime.now().strftime("%Y%m%d-%H%M%S"))
+        base_filename = ("WD-Piano-" + datetime.now().strftime("%Y%m%d-%H%M%S.%f"))
         Settings.set_base_filename(base_filename)  # set base filename in settings
         audio_file_name = base_filename + '.wav'  # append .wav extension
         audiofile_save_path = os.path.join('media', 'audio', audio_file_name)
