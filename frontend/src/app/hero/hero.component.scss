@@ -1,0 +1,53 @@
+.hero-left {
+    background-color: #fdc57a;
+}
+
+.hero-right {
+    background-color: #1b1a19;
+
+}
+
+.keys {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.key {
+    // position:relative;
+    // overflow: hidden;
+    margin: 0.3em 0;
+    padding: 1.7em;
+    border-top-left-radius: 0.7em;
+    border-top-right-radius: 0.7em;
+    background-color: #91c3ce;
+}
+
+.w-inline-block {
+    max-width: 100%;
+    display: inline-block;
+}
+
+// Method 2
+// .hero-container {
+//     // padding: 120px 15px;
+//     text-align: center;
+//     color: #FFFFFF;
+//     background-image: url(../../assets/images/piano-bg-black.jpg);
+//     background-size: cover;
+//     background-position: center;
+//     background-repeat: no-repeat;
+// }
+
+.hero-container {
+    position: relative;
+}
+
+.text-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    text-align: center;
+    transform: translate(-50%, -50%);
+    color: #FFFFFF;
+}

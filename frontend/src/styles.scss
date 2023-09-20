@@ -39,23 +39,35 @@ $frontend-theme: mat.define-light-theme((color: (primary: $frontend-primary,
 //   background-color: #faf9f6;
 // }
 
+// body {
+//   font-family: Suisseintl, sans-serif;
+// }
+
 // $primary: #71576e; // pantone
 // $primary: #bbbbbf;
 // $primary: #bf9b30;
-$primary: #831a1a; 
-$info: #71576e;
+$primary: #9DD9D2; 
+// $info: #71576e;
 // $primary: #cfc0c6; // grigio lilla
 // $primary: #831a1a;
 // $primary: #c0c0c0;
 // $primary: #b71016;
 // $primary: #17171a;
 // $body-bg:#831a1a; // theatre seat red
-$body-bg: #f2f2f2; // ivory
+// $body-bg: #f2f2f2; // ivory
+// $body-bg: #c8cac9; // grigio
+// $body-bg: #CA895F; // persian orange
+$body-bg: #fdc57a; // mubasic
 // $body-bg:#f4e9d7; // ivory
 // $accordion-bg: #f4e9d7;
 // $accordion-button-bg: #c0c0c0;
-$accordion-button-bg: #f2f2f2;
-$accordion-button-active-bg: #bbbbbf;
+// $accordion-button-bg: #f2f2f2;
+$accordion-button-bg: #A15E49;
+// $accordion-button-active-bg: #bbbbbf;
+// $accordion-button-active-bg: #A15E49;
+$accordion-button-active-bg: #A15E49;
+$accordion-button-active-color: black;
+$accordion-button-color: black;
 // $accordion-button-focus-border-color: #831a1a; 
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 
@@ -67,3 +79,8 @@ $accordion-button-active-bg: #bbbbbf;
 // body {
 //   background-image: url(./assets/images/sfondo-metallico-con-graffi-e-macchie.jpg);
 // }
+
+.acc-button {
+  font-size: 18px;
+  font-weight: bold;
+}

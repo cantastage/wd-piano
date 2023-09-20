@@ -1,10 +1,9 @@
 <div class="row">
   <nav class="navbar navbar-expand-lg app-navbar" data-bs-theme="dark">
     <div class="container-fluid">
-      <a class="navbar-brand d-flex align-items-center" href="#">
+      <a routerLink="/home" routerLinkActive="active" class="navbar-brand d-flex align-items-center" href="#">
         <span class="material-icons piano-icon">piano</span>
         {{appTitle}}
-        <!-- <img src="assets/images/piano-icon-png-27.jpg" alt="piano" width="30" height="24" class="d-inline-block align-text-top"> -->
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -14,10 +13,13 @@
         <!-- Collapsable content -->
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li nav class="nav-item">
-            <a class="nav-link" aria-current="page" href="#">Save</a>
+            <a routerLink="/editor" routerLinkActive="active" ariaCurrentWhenActive="page" class="nav-link" aria-current="page">Editor</a>
+          </li>
+          <li nav class="nav-item">
+            <a class="nav-link" aria-current="page">Save</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="#">Load</a>
+            <a class="nav-link" aria-current="page">Load</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Help</a>
@@ -27,7 +29,5 @@
     </div>
   </nav>  
 </div>
-<div class="row">
-  <!-- Editor component TODO associate with angular router route -->
-  <app-editor></app-editor>
-</div>
+<!-- Router outlet to render routes -->
+<router-outlet></router-outlet>

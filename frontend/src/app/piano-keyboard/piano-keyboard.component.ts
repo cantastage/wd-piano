@@ -48,7 +48,11 @@ export class PianoKeyboardComponent {
   // }
 
 
-
+  /**
+   * Selects class for keyboard key based on the note label
+   * @param pianoKeyIndex 
+   * @returns 
+   */
   public getPianoKeyStyle(pianoKeyIndex: number): string {
     let noteLabel = this.keyLabels[pianoKeyIndex];
     // TODO check if it can be optimized
@@ -59,7 +63,7 @@ export class PianoKeyboardComponent {
     } else {
       styleClass = "white " + noteLabel[0].toLowerCase();
     }
-    // console.log("styleClass: ", styleClass);
+    console.log("piano-key styleClass: ", styleClass);
     return styleClass;
   }
 
