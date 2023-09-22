@@ -165,9 +165,12 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-sm-12">
+  <div class="col-sm-12 text-center">
     <h1>RESULTS</h1>
   </div>
   <!-- WD results container -->
-  <app-wd-results [results]="this.wdResults" [spectralParameters]="spectralParameters"></app-wd-results>
+  <div class="col-sm-12 text-center" *ngIf="this.wdResults.length < 1">
+    <p>Nothing to show yet. Let's run WD-Piano!</p>
+  </div>
+  <app-wd-results [results]="this.wdResults" [spectralParameters]="spectralParameters" *ngIf="this.wdResults.length > 0"></app-wd-results>
 </div>

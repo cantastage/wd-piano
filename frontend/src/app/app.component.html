@@ -1,33 +1,37 @@
-<div class="row">
-  <nav class="navbar navbar-expand-lg app-navbar" data-bs-theme="dark">
-    <div class="container-fluid">
-      <a routerLink="/home" routerLinkActive="active" class="navbar-brand d-flex align-items-center" href="#">
-        <span class="material-icons piano-icon">piano</span>
-        {{appTitle}}
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <!-- Collapsable content -->
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li nav class="nav-item">
-            <a routerLink="/editor" routerLinkActive="active" ariaCurrentWhenActive="page" class="nav-link" aria-current="page">Editor</a>
-          </li>
-          <li nav class="nav-item">
-            <a class="nav-link" aria-current="page">Save</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" aria-current="page">Load</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Help</a>
-          </li>
-        </ul>
+<div class="container-fluid">
+  <div class="row">
+    <nav class="navbar navbar-expand-lg app-navbar" data-bs-theme="dark">
+      <div class="container-fluid">
+        <a routerLink="/home" routerLinkActive="active" class="navbar-brand d-flex align-items-center" href="#">
+          <span class="material-icons piano-icon">piano</span>
+          {{appTitle}}
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <!-- Collapsable content -->
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li nav class="nav-item">
+              <a routerLink="/editor" routerLinkActive="active" ariaCurrentWhenActive="page" class="nav-link"
+                aria-current="page">Editor</a>
+            </li>
+            <li nav class="nav-item">
+              <a class="nav-link" aria-current="page">Save</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page">Load</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Help</a>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
-  </nav>  
+    </nav>
+  </div>
+  <!-- Router outlet to render routes -->
+  <router-outlet></router-outlet>
+
 </div>
-<!-- Router outlet to render routes -->
-<router-outlet></router-outlet>
