@@ -24,7 +24,7 @@ export interface SimpleWDParam {
 export const WDPARAMS: WDParam[] = [
     { name: 'iterations', value: 88200, min: 1, max: 200000, unit: 'steps' },
     { name: 'samplingFrequency', value: 44100, min: 1, max: 200000, unit: 'Hz' },
-    { name: 'soundSpeed', value: 343.43, min: 300, max: 400, unit: 'm/s'},  // in m/s
+    { name: 'soundSpeed', value: 343.43, min: 300, max: 400, unit: 'm/s' },  // in m/s
     { name: 'stringFundamentalFrequency', value: 262.22, min: 20, max: 20000, unit: 'Hz' },
     { name: 'stringLength', value: 0.657, min: 0.05, max: 5.00, unit: 'm' },
     { name: 'stringDiameter', value: 1.064, min: 0.5, max: 2, unit: 'mm' },
@@ -35,4 +35,5 @@ export const WDPARAMS: WDParam[] = [
     { name: 'hammerInitialVelocity', value: 7, min: 0, max: 10, unit: 'm/s' },
     { name: 'hammerStringDistance', value: 10, min: 0, max: 30, unit: 'cm' },
     { name: 'linearFeltStiffness', value: 1000, min: 0, max: 10000, unit: 'N/m' },
+    { name: 'duration', value: 2, min: 1, max: 5, unit: 'sec' }
 ];

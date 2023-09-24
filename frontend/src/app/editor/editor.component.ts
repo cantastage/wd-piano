@@ -30,18 +30,18 @@ export class EditorComponent {
   constructor(private apiService: ApiService) {
     this.spectralParameters.push(DEFAULT_SPECTRAL_ANALYSIS_PARAMETERS);
     this.wdParams = WDPARAMS; // retrieves from model the default parameters for the simulation
-    // this.wdResults.push(new WDResult(
-    //   'C4-Default',
-    //   'C4-Default.mp4',
-    //   this.wdParams, {
-    //   mfccs: 'mfccs-C4-default-0.png',
-    //   spectralCentroid: 'spectralCentroid-C4-default-0.png',
-    //   spectralBandwidth: 'spectralBandwidth-C4-default-0.png',
-    //   spectralContrast: 'spectralContrast-C4-default-0.png',
-    //   spectralRollOff: 'spectralRollOff-C4-default-0.png',
-    //   tonnetz: 'tonnetz-C4-default-0.png'
-    // },
-    //   0));
+    this.wdResults.push(new WDResult(
+      'C4-Default',
+      'C4-Default.mp4',
+      this.wdParams, {
+      mfccs: 'mfccs-C4-default-0.png',
+      spectralCentroid: 'spectralCentroid-C4-default-0.png',
+      spectralBandwidth: 'spectralBandwidth-C4-default-0.png',
+      spectralContrast: 'spectralContrast-C4-default-0.png',
+      spectralRollOff: 'spectralRollOff-C4-default-0.png',
+      tonnetz: 'tonnetz-C4-default-0.png'
+    },
+      0));
   }
 
   // TODO complete method with error management
@@ -53,7 +53,6 @@ export class EditorComponent {
     let summary = this.wdParams;
     let parsedParams = this.parseWDParams();
     this.apiService.runWDPiano(parsedParams, DEFAULT_SPECTRAL_ANALYSIS_PARAMETERS)
-      // this.apiService.runWDPiano(parsedParams)
       .subscribe((data: WDResult) => {
         console.log('Arrived from server:');
         console.log(data);
@@ -98,11 +97,10 @@ export class EditorComponent {
       this.wdParams[5].value = selectedKey.getStringDiameter();
       this.wdParams[6].value = selectedKey.getStringTension();
       this.wdParams[8].value = selectedKey.getHammerMass();
-      // this.wdParams[9].value = parseFloat((selectedKey.getHammerImpactPosition() / selectedKey.getStringLength() * 100).toFixed(2)); // we need to display it in %
       let hammerImpactPosition = selectedKey.getHammerImpactPosition();
       let stringLength = selectedKey.getStringLength();
       this.wdParams[9].value = parseFloat(((hammerImpactPosition / stringLength) * 100).toFixed(2)); // // we need to display it in %
-      console.log('calculated relative striking point: ', this.wdParams[9].value);
+      // console.log('calculated relative striking point: ', this.wdParams[9].value);
     }
   }
 
@@ -115,7 +113,7 @@ export class EditorComponent {
   }
 
   private parseWDParams(): Object {
-    // this.wdParams[0].value = this.wdParams[0].value * this.wdParams[1].value; // iterations = (duration in seconds) * samplingFrequency
+    this.wdParams[0].value = this.wdParams[13].value * this.wdParams[1].value; // iterations = duration * samplingFrequency
     let jsonParams: Object[] = Object.assign(this.wdParams.map(key => ({ [key.name]: key.value })));
     let finalObj = {};
     jsonParams.forEach(obj => { Object.assign(finalObj, obj) });

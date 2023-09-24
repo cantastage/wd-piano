@@ -20,11 +20,17 @@
               <div class="col-sm-12">
                 <h4>General Parameters</h4>
               </div>
-              <div class="col-sm-12">
-                <label for="duration" class="form-label">Duration<span class='unit-of-measure'>[steps]</span></label>
+              <!-- Duration -->
+              <!-- <div class="col-sm-12">
+                <label for="duration" class="form-label">Duration<span class='unit-of-measure'>[sec]</span></label>
                 <input type="number" min=1 max=176400 class="form-control" id="duration"
-                  [(ngModel)]="this.wdParams[0].value">
-              </div>
+                  [(ngModel)]="this.wdParams[13].value">
+              </div> -->
+              <label for="{{this.wdParams[13].name}}" class="form-label">{{this.wdParams[13].name |
+                camelcaseToWords}}: {{this.wdParams[13].value | number}} <span
+                  class='unit-of-measure'>[{{this.wdParams[13].unit}}]</span></label>
+              <input type="range" min={{this.wdParams[13].min}} max={{this.wdParams[13].max}} step="1"
+                class="form-range" id="{{this.wdParams[13].name}}" [(ngModel)]="this.wdParams[13].value">
               <!-- Sampling frequency -->
               <div class="col-sm-12">
                 <label for="{{this.wdParams[1].name}}" class="form-label">{{this.wdParams[1].name |
