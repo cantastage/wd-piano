@@ -1,16 +1,18 @@
 // Method 1
-.hero-container {
-    position: relative;
-}
+// .hero-container {
+//     position: relative;
+//     margin-top: 10px;
+//     background-color: #c2c1a5;
+// }
 
-.text-container {
-    position: absolute;
-    top: 40%;
-    left: 70%;
-    text-align: center;
-    transform: translate(-50%, -50%);
+// .text-container {
+//     position: absolute;
+//     top: 40%;
+//     left: 70%;
+//     text-align: center;
+//     transform: translate(-50%, -50%);
     
-}
+// }
 
 // Method 2
 // .hero-container {
@@ -22,3 +24,12 @@
 //     background-repeat: no-repeat;
 //     // transform: translate(-20%, 0);
 // }
+
+// Method 3, using bootstrap for responsive design
+.hero-image {
+    margin-top: 10px;
+}
+
+.hero-text {
+    text-align: center;
+}
