@@ -1,3 +1,8 @@
+img {
+    width: 68px;
+    height: 30px;
+}
+
 .app-navbar {
     background-color: #17171a;
     // background-color: #4E3822; // cafe noir
@@ -5,5 +10,11 @@
     
 }
 
-// .piano-icon {
-// }
+.app-title {
+    margin-left: 5px;
+    margin-right:0px;
+}
+
+.navbar-brand {
+    margin-right: 0px;
+}
