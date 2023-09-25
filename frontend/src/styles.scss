@@ -43,6 +43,10 @@ $frontend-theme: mat.define-light-theme((color: (primary: $frontend-primary,
 //   font-family: Suisseintl, sans-serif;
 // }
 
+body {
+  min-height: 100vh;
+}
+
 $primary: #776871; 
 $body-bg: #EDF2F4; // mubasic
 // $accordion-button-bg: #B4C4AE;

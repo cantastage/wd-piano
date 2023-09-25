@@ -3,6 +3,11 @@ img {
     height: 30px;
 }
 
+.sticky-footer {
+    position: sticky;
+    top: 100%;
+}
+
 .app-navbar {
     background-color: #17171a;
     // background-color: #4E3822; // cafe noir
