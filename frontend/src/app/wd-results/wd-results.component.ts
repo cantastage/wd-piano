@@ -14,7 +14,9 @@ export class WdResultsComponent {
   @Input() spectralParameters: Array<SpectralAnalysisParameters> = [];
   // spectralParameters: SpectralAnalysisParameters;
   isUpdating = false;
-  fftLengthOptions: Array<number> = [64, 128, 256, 512, 1024, 2048, 4096, 8192];
+  windowLengthOptions: Array<number> = [64, 128, 256, 512, 1024, 2048, 4096, 8192];
+  hopLengthOptions: Array<number> = [64, 128, 256, 512, 1024, 2048, 4096, 8192];
+  fftLengthOptions: Array<number> = [256, 512, 1024, 2048, 4096, 8192];
   selectedWinLength: number = 0;
   showPlots: boolean = true;
   errorMsg: string = '';
@@ -38,6 +40,7 @@ export class WdResultsComponent {
       this.showErrorMsg = true;
       return false;
     } else {
+      this.showErrorMsg = false;
       return true;
     }
   }
@@ -75,13 +78,19 @@ export class WdResultsComponent {
   }
 
   public getDataBsTarget(index: number): string {
-    return '#' + this.results[index].baseFilename;
+    // return '#' + this.results[index].baseFilename;
+    return '#' + index.toString();
   }
 
-  public getAriaControlsLabel(index: number) {
-    return this.results[index].baseFilename;
+  public getAriaControlsLabel(index: number): string {
+    // return this.results[index].baseFilename;
+    return index.toString();
   }
 
+  public getAttrDataId(resultIndex: number): string {
+    return resultIndex.toString();
+  }
+  
   public togglePlots(index: number) {
     this.showPlots = !this.showPlots;
   }

@@ -19,7 +19,6 @@ export interface SimpleWDParam {
     unit: string;
 }
 
-// TODO add step to define granularity and decimals
 // NOTE: default params refer to C4 note, unwrapped string
 export const WDPARAMS: WDParam[] = [
     { name: 'iterations', value: 88200, min: 1, max: 200000, unit: 'steps' },
@@ -32,8 +31,9 @@ export const WDPARAMS: WDParam[] = [
     { name: 'soundboardReflectionCoefficient', value: 98, min: 0, max: 100, unit: '%' },
     { name: 'hammerMass', value: 8.71, min: 5, max: 11, unit: 'g' },
     { name: 'hammerRelativeStrikingPoint', value: 12, min: 0, max: 100, unit: '%' },
-    { name: 'hammerInitialVelocity', value: 7, min: 0, max: 10, unit: 'm/s' },
-    { name: 'hammerStringDistance', value: 10, min: 0, max: 30, unit: 'cm' },
+    { name: 'hammerInitialVelocity', value: 7, min: 0.01, max: 10, unit: 'm/s' },
+    { name: 'hammerStringDistance', value: 10, min: 0.01, max: 20, unit: 'cm' },
     { name: 'linearFeltStiffness', value: 1000, min: 0, max: 10000, unit: 'N/m' },
-    { name: 'duration', value: 2, min: 1, max: 5, unit: 'sec' }
+    { name: 'duration', value: 2, min: 1, max: 5, unit: 'sec' },
+    { name: 'wgLengthMode', value: 0, min: 0, max: 1, unit: '' },
 ];

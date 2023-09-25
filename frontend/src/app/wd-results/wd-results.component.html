@@ -3,11 +3,11 @@
         <div *ngFor="let result of results; let i=index" class="accordion-item">
             <h2 class="accordion-header">
                 <button class="accordion-button wd-accordion" type="button" data-bs-toggle="collapse"
-                    [attr.data-bs-target]="this.getDataBsTarget(i)" aria-expanded="true" [attr.aria-controls]="this.getAriaControlsLabel(i)">
+                    [attr.data-bs-target]="'#collapse'+i" aria-expanded="true" [attr.aria-controls]="'collapse'+i">
                     {{result.baseFilename}}
                 </button>
             </h2>
-            <div id="{{result.baseFilename}}" class="accordion-collapse collapse show">
+            <div [id]="'collapse'+i" class="accordion-collapse collapse show">
                 <div class="accordion-body">
                     <div class="row">
                         <div class="col-sm-12 col-md-6">
@@ -51,7 +51,7 @@
                             <label for="winLength" class="form-label">Window length [samples]</label>
                             <select class="form-select" id="winLength"
                                 [(ngModel)]="this.spectralParameters[i].winLength">
-                                <option *ngFor="let lengthOption of this.fftLengthOptions" [ngValue]="lengthOption">
+                                <option *ngFor="let lengthOption of this.windowLengthOptions" [ngValue]="lengthOption">
                                     {{lengthOption}}</option>
                             </select>
                         </div>
@@ -59,7 +59,7 @@
                             <label for="hopLength" class="form-label">Hop length [samples]</label>
                             <select class="form-select" id="hopLength"
                                 [(ngModel)]="this.spectralParameters[i].hopLength">
-                                <option *ngFor="let lengthOption of fftLengthOptions" [ngValue]="lengthOption">
+                                <option *ngFor="let lengthOption of hopLengthOptions" [ngValue]="lengthOption">
                                     {{lengthOption}}</option>
                             </select>
                         </div>

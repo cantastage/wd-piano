@@ -38,23 +38,34 @@ def nl_felt(val, k):
     return out
 
 
-def get_wg_lengths(f0: float, sampling_freq: int, relative_hammer_position: float) -> (int, int):
+def get_wg_lengths(length_calc_mode: int,
+                   f0: float,
+                   sampling_freq: int,
+                   relative_hammer_position: float,
+                   string_length: float,
+                   sound_speed: float) -> (int, int):
     """
     Calculates the length of the left and right part of the waveguide given:
 
+    :param length_calc_mode: wg_length calculation mode
     :param f0: fundamental frequency of the string
     :param sampling_freq: sampling frequency
     :param relative_hammer_position: relative position of the hammer on the string
+    :param string_length: length of the string
+    :param sound_speed: speed of sound in the medium
     :return: length of the left and right part of the waveguide
     """
-    # v3 optimized version
-    effective_wg_length = round(sampling_freq / (2*f0))  # it is the folded wg length
+    if length_calc_mode == 0:
+        effective_wg_length = round(sampling_freq / (2*f0))  # it is the folded wg length
+    else:
+        # wg_length = L/X_s = L/(c/fs) = fs*L/c
+        effective_wg_length = round((string_length / sound_speed) * sampling_freq)
     print('effective wg length (folded) is: ', effective_wg_length)
     effective_left_length = round(effective_wg_length * relative_hammer_position)
     effective_right_length = effective_wg_length - effective_left_length
-    wg_left_length = effective_left_length*2
+    wg_left_length = effective_left_length * 2
     print('calculated left length: ', wg_left_length)
-    wg_right_length = effective_right_length*2
+    wg_right_length = effective_right_length * 2
     print('calculated right length: ', wg_right_length)
     return wg_left_length, wg_right_length
 
@@ -62,6 +73,7 @@ def get_wg_lengths(f0: float, sampling_freq: int, relative_hammer_position: floa
 def get_string_impedance(string_tension: float, string_diameter: float, string_volumetric_density: float) -> float:
     """
     Calculates the characteristic impedance of the string
+
     :param string_tension: the tension of the string in N
     :param string_diameter: the diameter of the string in m
     :param string_volumetric_density: the linear mass density of the string in kg/m
@@ -90,11 +102,17 @@ class Simulator:
                  hammer_relative_striking_point: float,
                  hammer_initial_velocity: float,
                  hammer_string_distance: float,
-                 linear_felt_stiffness: float):
+                 linear_felt_stiffness: float,
+                 wg_length_calc_mode: int):
         self.iterations = iterations  # set number of iterations
         self.Fs = sampling_freq  # set sampling frequency
         self.Ts = np.double(1 / self.Fs)  # sampling period calculated from sampling frequency
-        wg_lengths = get_wg_lengths(string_frequency, sampling_freq, hammer_relative_striking_point)
+        wg_lengths = get_wg_lengths(wg_length_calc_mode,
+                                    string_frequency,
+                                    sampling_freq,
+                                    hammer_relative_striking_point,
+                                    string_length,
+                                    sound_speed)
         self.wg_length_left = wg_lengths[0]
         print('wg_length_left: ', self.wg_length_left)
         self.wg_length_right = wg_lengths[1]

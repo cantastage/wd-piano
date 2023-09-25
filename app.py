@@ -91,7 +91,8 @@ def run_simulation():
                           scaled['hammerRelativeStrikingPoint'],
                           scaled['hammerInitialVelocity'],
                           scaled['hammerStringDistance'],
-                          scaled['linearFeltStiffness'])
+                          scaled['linearFeltStiffness'],
+                          scaled['wgLengthMode'])
     result = simulator.run_simulation()  # Run simulation
     Settings.set_string(result[0])  # get string matrix
     Settings.set_hammer(result[1])  # get hammer positions vector
@@ -112,4 +113,5 @@ def run_simulation():
 
 
 if __name__ == '__main__':
+    # app.run(host='172:20:10:3', port=5000, debug=True)
     app.run()

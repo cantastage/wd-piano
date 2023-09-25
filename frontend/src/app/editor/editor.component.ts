@@ -30,18 +30,18 @@ export class EditorComponent {
   constructor(private apiService: ApiService) {
     this.spectralParameters.push(DEFAULT_SPECTRAL_ANALYSIS_PARAMETERS);
     this.wdParams = WDPARAMS; // retrieves from model the default parameters for the simulation
-    this.wdResults.push(new WDResult(
-      'C4-Default',
-      'C4-Default.mp4',
-      this.wdParams, {
-      mfccs: 'mfccs-C4-default-0.png',
-      spectralCentroid: 'spectralCentroid-C4-default-0.png',
-      spectralBandwidth: 'spectralBandwidth-C4-default-0.png',
-      spectralContrast: 'spectralContrast-C4-default-0.png',
-      spectralRollOff: 'spectralRollOff-C4-default-0.png',
-      tonnetz: 'tonnetz-C4-default-0.png'
-    },
-      0));
+    // this.wdResults.push(new WDResult(
+    //   'C4-Default',
+    //   'C4-Default.mp4',
+    //   this.wdParams, {
+    //   mfccs: 'mfccs-C4-Default-0.png',
+    //   spectralCentroid: 'spectralCentroid-C4-Default-0.png',
+    //   spectralBandwidth: 'spectralBandwidth-C4-Default-0.png',
+    //   spectralContrast: 'spectralContrast-C4-Default-0.png',
+    //   spectralRollOff: 'spectralRollOff-C4-Default-0.png',
+    //   tonnetz: 'tonnetz-C4-Default-0.png'
+    // },
+    //   0));
   }
 
   // TODO complete method with error management
@@ -104,6 +104,10 @@ export class EditorComponent {
     }
   }
 
+  /**
+   * Updates parameters to calculate wg length
+   * @param wgLengthMode 
+   */
   public updateWgLengthParams(wgLengthMode: number): void {
     if (wgLengthMode === 0) {
       this.wdParams[4].value = (this.wdParams[2].value / (2 * this.wdParams[3].value)); // L = c/(2*f0) [cm]
@@ -113,6 +117,7 @@ export class EditorComponent {
   }
 
   private parseWDParams(): Object {
+    this.wdParams[14].value = this.currentWgLengthMode; // wgLengthMode to choose how to calculate wg length
     this.wdParams[0].value = this.wdParams[13].value * this.wdParams[1].value; // iterations = duration * samplingFrequency
     let jsonParams: Object[] = Object.assign(this.wdParams.map(key => ({ [key.name]: key.value })));
     let finalObj = {};

@@ -49,10 +49,11 @@
               <!-- Hammer-string distance -->
               <div class="col-sm-12">
                 <label for="{{this.wdParams[11].name}}" class="form-label">{{this.wdParams[11].name |
-                  camelcaseToWords}}<span class='unit-of-measure'>[{{this.wdParams[11].unit}}]</span></label>
-                <input type="number" min={{this.wdParams[11].min}} max={{this.wdParams[11].max}} class="form-control"
-                  id="{{this.wdParams[11].name}}" [(ngModel)]="this.wdParams[11].value">
-              </div>
+                  camelcaseToWords}}: {{this.wdParams[11].value | number}} <span
+                    class='unit-of-measure'>[{{this.wdParams[11].unit}}]</span></label>
+                <input type="range" min={{this.wdParams[11].min}} max={{this.wdParams[11].max}} step="0.01"
+                  class="form-range" id="{{this.wdParams[11].name}}" [(ngModel)]="this.wdParams[11].value">
+            </div>
 
             </div>
           </div>
@@ -64,12 +65,11 @@
               <div class="btn-group" role="group" aria-label="Waveguide length parameters toggle">
                 <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked
                   (change)="toggleSetWGLengthMode(0)">
-                <label class="btn btn-outline-primary" for="btnradio1">Method 1: set string fundamental
-                  frequency</label>
+                <label class="btn btn-outline-primary" for="btnradio1">Method 1: From String fundamental frequency</label>
 
                 <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off"
                   (change)="toggleSetWGLengthMode(1)">
-                <label class="btn btn-outline-primary" for="btnradio2">Method 2: set string length and sound
+                <label class="btn btn-outline-primary" for="btnradio2">Method 2: From string length and sound
                   speed</label>
               </div>
             </div>
@@ -105,16 +105,18 @@
             <!-- string diameter -->
             <div class="col-sm-12 col-lg-6">
               <label for="{{this.wdParams[5].name}}" class="form-label">{{this.wdParams[5].name |
-                camelcaseToWords}}<span class='unit-of-measure'>[{{this.wdParams[5].unit}}]</span></label>
-              <input type="number" min={{this.wdParams[5].min}} max={{this.wdParams[5].max}} class="form-control"
-                id="{{this.wdParams[5].name}}" [(ngModel)]="this.wdParams[5].value">
+                camelcaseToWords}}: {{this.wdParams[5].value | number}} <span
+                  class='unit-of-measure'>[{{this.wdParams[5].unit}}]</span></label>
+              <input type="range" min={{this.wdParams[5].min}} max={{this.wdParams[5].max}} step="0.001"
+                class="form-range" id="{{this.wdParams[5].name}}" [(ngModel)]="this.wdParams[5].value">
             </div>
             <!-- string tension -->
             <div class="col-sm-12 col-lg-6">
               <label for="{{this.wdParams[6].name}}" class="form-label">{{this.wdParams[6].name |
-                camelcaseToWords}}<span class='unit-of-measure'>[{{this.wdParams[6].unit}}]</span></label>
-              <input type="number" min={{this.wdParams[6].min}} max={{this.wdParams[6].max}} class="form-control"
-                id="{{this.wdParams[6].name}}" [(ngModel)]="this.wdParams[6].value">
+                camelcaseToWords}}: {{this.wdParams[6].value | number}} <span
+                  class='unit-of-measure'>[{{this.wdParams[6].unit}}]</span></label>
+              <input type="range" min={{this.wdParams[6].min}} max={{this.wdParams[6].max}} step="1"
+                class="form-range" id="{{this.wdParams[6].name}}" [(ngModel)]="this.wdParams[6].value">
             </div>
           </div>
           <div class="row">
@@ -122,31 +124,22 @@
               <h4>Hammer Parameters</h4>
             </div>
             <!-- hammer mass -->
-            <!-- <div class="col-sm-12 col-lg-3">
-              <label for="{{this.wdParams[8].name}}" class="form-label">{{this.wdParams[8].name |
-                camelcaseToWords}}<span class='unit-of-measure'>[{{this.wdParams[8].unit}}]</span></label>
-              <input type="number" min={{this.wdParams[8].min}} max={{this.wdParams[8].max}} class="form-control"
-                id="{{this.wdParams[8].name}}" [(ngModel)]="this.wdParams[8].value">
-            </div> -->
             <div class="col-sm-12 col-lg-3">
-              <label for="{{this.wdParams[8].name}}" class="form-label">{{this.wdParams[8].name |
-                camelcaseToWords}}: {{this.wdParams[8].value | number}} <span
+              <label for="{{this.wdParams[8].name}}" class="form-label">Mass: {{this.wdParams[8].value | number}} <span
                   class='unit-of-measure'>[{{this.wdParams[8].unit}}]</span></label>
               <input type="range" min={{this.wdParams[8].min}} max={{this.wdParams[8].max}} step="0.01"
                 class="form-range" id="{{this.wdParams[8].name}}" [(ngModel)]="this.wdParams[8].value">
             </div>
-            
             <!-- hammer initial velocity -->
             <div class="col-sm-12 col-lg-3">
-              <label for="{{this.wdParams[10].name}}" class="form-label">{{this.wdParams[10].name |
-                camelcaseToWords}}<span class='unit-of-measure'>[{{this.wdParams[10].unit}}]</span></label>
-              <input type="number" min={{this.wdParams[10].min}} max={{this.wdParams[10].max}} class="form-control"
-                id="{{this.wdParams[10].name}}" [(ngModel)]="this.wdParams[10].value">
+              <label for="{{this.wdParams[10].name}}" class="form-label">Initial Velocity: {{this.wdParams[10].value | number}} <span
+                  class='unit-of-measure'>[{{this.wdParams[10].unit}}]</span></label>
+              <input type="range" min={{this.wdParams[10].min}} max={{this.wdParams[10].max}} step="0.01"
+                class="form-range" id="{{this.wdParams[10].name}}" [(ngModel)]="this.wdParams[10].value">
             </div>
             <!-- hammer relative striking point -->
             <div class="col-sm-12 col-lg-3">
-              <label for="{{this.wdParams[9].name}}" class="form-label">{{this.wdParams[9].name |
-                camelcaseToWords}}: {{this.wdParams[9].value | number}} <span
+              <label for="{{this.wdParams[9].name}}" class="form-label">Relative Striking Point: {{this.wdParams[9].value | number}} <span
                   class='unit-of-measure'>[{{this.wdParams[9].unit}}]</span></label>
               <input type="range" min={{this.wdParams[9].min}} max={{this.wdParams[9].max}} step="0.01"
                 class="form-range" id="{{this.wdParams[9].name}}" [(ngModel)]="this.wdParams[9].value">
@@ -154,9 +147,10 @@
             <!-- hammer linear felt stiffness -->
             <div class="col-sm-12 col-lg-3">
               <label for="{{this.wdParams[12].name}}" class="form-label">{{this.wdParams[12].name |
-                camelcaseToWords}}<span class='unit-of-measure'>[{{this.wdParams[12].unit}}]</span></label>
-              <input type="number" min={{this.wdParams[12].min}} max={{this.wdParams[12].max}} class="form-control"
-                id="{{this.wdParams[12].name}}" [(ngModel)]="this.wdParams[12].value">
+                camelcaseToWords}}: {{this.wdParams[12].value | number}} <span
+                  class='unit-of-measure'>[{{this.wdParams[12].unit}}]</span></label>
+              <input type="range" min={{this.wdParams[12].min}} max={{this.wdParams[12].max}} step="1"
+                class="form-range" id="{{this.wdParams[12].name}}" [(ngModel)]="this.wdParams[12].value">
             </div>
           </div>
           <div clas="row">
