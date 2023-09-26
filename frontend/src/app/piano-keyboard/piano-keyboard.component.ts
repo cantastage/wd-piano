@@ -63,7 +63,7 @@ export class PianoKeyboardComponent {
     } else {
       styleClass = "white " + noteLabel[0].toLowerCase();
     }
-    console.log("piano-key styleClass: ", styleClass);
+    // console.log("piano-key styleClass: ", styleClass);
     return styleClass;
   }
 
