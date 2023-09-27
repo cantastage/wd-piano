@@ -141,8 +141,7 @@ class Simulator:
         self.Z7 = self.Z6
 
         self.felt_slope = (self.A * self.C - 1) / (self.A * self.C + 1)
-        self.Knl = self.C * self.A  # TODO uncomment to return to previous condition
-        # self.Knl = 1.347e9
+        self.Knl = self.C * self.A
 
         # Init waves
         self.wg_left = np.zeros(self.wg_length_left)
