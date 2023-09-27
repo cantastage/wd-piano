@@ -26,10 +26,18 @@
 // }
 
 // Method 3, using bootstrap for responsive design
+.hero-container {
+    background-color: #c2c1a5;
+}
+
 .hero-image {
     margin-top: 10px;
 }
 
 .hero-text {
     text-align: center;
+}
+
+.hero-button {
+    margin-bottom: 10px;
 }
