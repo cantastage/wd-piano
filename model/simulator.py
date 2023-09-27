@@ -145,13 +145,9 @@ class Simulator:
 
         # Init waves
         self.wg_left = np.zeros(self.wg_length_left)
-        # print('init wg_left shape is: ', self.wg_left.shape)
         self.wg_right = np.zeros(self.wg_length_right)
-        # print('init wg_right_shape is: ', self.wg_right.shape)
         self.string = np.zeros(self.iterations)  # store values of string @ contact pt for audio file creation
-        # print('init string shape is: ', self.string.shape)
         self.hammer = np.zeros(self.iterations)
-        # print('init hammer shape is ', self.hammer.shape)
 
         # Init incident waves for strings
         self.a1 = 0
@@ -207,6 +203,7 @@ class Simulator:
             self.a1 = dwg_shift(-self.b1, self.wg_left, n)
             self.a2 = dwg_shift(self.K * self.b2, self.wg_right, n)
 
+            # Previous values
             self.wave_integrator_delay_old = self.wave_integrator_delay
             self.string_velocity_old = self.string_velocity
             self.string_position_old = self.string_position
@@ -238,31 +235,17 @@ class Simulator:
                     self.hammer_velocity + self.hammer_velocity_old) * self.Ts / 2
             self.hammer[n] = self.hammer_position  # Store hammer position at current iteration
 
-            # Fill string_matrix TODO verify array indexing is correct
+            # Fill string_matrix
             half_wg_left_length = self.wg_length_left // 2
             l1 = self.wg_left[0:half_wg_left_length]
-            # print('self.wg_length_left // 2 is: ', self.wg_length_left // 2)
-            # print('l1 size is: ', l1.size)
             l2 = self.wg_left[half_wg_left_length:self.wg_length_left]
-            # print('l2 size is: ', l2.size)
             left = np.add(np.flip(l2), l1)
-            # print('left size is: ', left.size)
             half_wg_right_length = self.wg_length_right // 2
             r1 = self.wg_right[0:half_wg_right_length]
-            # print('r1 size is: ', r1.size)
-            # print('self.wg_length_right // 2 is: ', self.wg_length_right // 2)
             r2 = self.wg_right[half_wg_right_length: self.wg_length_right]
-            # print('r2 size is: ', r2.size)
             right = np.add(np.flip(r2), r1)
-            # print('right size is: ', right.size)
             new_row = np.concatenate((left, right), axis=0)
-            # self.string_matrix[n, :] = np.concatenate((left, right), axis=0)
             self.string_matrix[n, :] = new_row
-            # print('new row @ step ', n, ' is: ', new_row)
-            # print('string_matrix[', n, '] is: ', self.string_matrix[n, :])
-            # self.string_matrix[n, 0:left.size] = left
-            # self.string_matrix[n, left.size: self.string_matrix.shape[1]] = right
-            # print('string_matrix[', n, '] size is: ', self.string_matrix[n].size)
 
         print('Ended WDF-Piano algorithm')
         # Creates a .mat file containing the string matrix
@@ -287,6 +270,4 @@ class Simulator:
         scaled_string = self.string / np.max(np.abs(self.string))*32767
         sio.wavfile.write(audiofile_save_path, self.Fs, scaled_string.astype(np.int16))
 
-        # sio.wavfile.write(audiofile_save_path, self.Fs, self.string)
-        # print('Saved audio file to: ', audiofile_save_path)
         return self.string_matrix, self.hammer

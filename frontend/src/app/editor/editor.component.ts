@@ -22,14 +22,15 @@ export class EditorComponent {
   spectralParameters: Array<SpectralAnalysisParameters> = []; // spectral analysis parameters container
 
   ngOnInit() {
+    // get piano keys
     this.apiService.getPianoKeys().subscribe((data) => {
       this.pianoKeys = this.parsePianoKeys(data);
     });
   }
 
   constructor(private apiService: ApiService) {
-    this.spectralParameters.push(DEFAULT_SPECTRAL_ANALYSIS_PARAMETERS);
     this.wdParams = WDPARAMS; // retrieves from model the default parameters for the simulation
+    // this.spectralParameters.push(DEFAULT_SPECTRAL_ANALYSIS_PARAMETERS);
     // this.wdResults.push(new WDResult(
     //   'C4-Default',
     //   'C4-Default.mp4',
@@ -50,7 +51,8 @@ export class EditorComponent {
    */
   public runWDPiano(): void {
     this.isRendered = false;
-    let summary = this.wdParams;
+    // let summary = this.wdParams;
+    let summary = JSON.parse(JSON.stringify(this.wdParams)) as WDParam[];
     let parsedParams = this.parseWDParams();
     this.apiService.runWDPiano(parsedParams, DEFAULT_SPECTRAL_ANALYSIS_PARAMETERS)
       .subscribe((data: WDResult) => {
