@@ -77,7 +77,7 @@
             <div class="col-sm-12 col-lg-4">
               <label for="{{this.wdParams[3].name}}" class="form-label">{{this.wdParams[3].name |
                 camelcaseToWords}}<span class='unit-of-measure'>[{{this.wdParams[3].unit}}]</span></label>
-              <input type="number" min={{this.wdParams[3].min}} max={{this.wdParams[3].max}} class="form-control"
+              <input type="number" min={{this.wdParams[3].min}} max={{this.wdParams[3].max}} step="0.01" class="form-control"
                 id="{{this.wdParams[3].name}}" [(ngModel)]="this.wdParams[3].value"
                 [disabled]="currentWgLengthMode == 1" (change)="this.updateWgLengthParams(0)">
             </div>
@@ -85,7 +85,7 @@
             <div class="col-sm-12 col-lg-4">
               <label for="{{this.wdParams[4].name}}" class="form-label">{{this.wdParams[4].name |
                 camelcaseToWords}}<span class='unit-of-measure'>[{{this.wdParams[4].unit}}]</span></label>
-              <input type="number" min={{this.wdParams[4].min}} max={{this.wdParams[4].max}} class="form-control"
+              <input type="number" min={{this.wdParams[4].min}} max={{this.wdParams[4].max}} step="0.01" class="form-control"
                 id="{{this.wdParams[4].name}}" [(ngModel)]="this.wdParams[4].value"
                 [disabled]="currentWgLengthMode == 0" (change)="this.updateWgLengthParams(1)">
             </div>
@@ -93,7 +93,7 @@
             <div class="col-sm-12 col-lg-4">
               <label for="{{this.wdParams[2].name}}" class="form-label">{{this.wdParams[2].name |
                 camelcaseToWords}}<span class='unit-of-measure'>[{{this.wdParams[2].unit}}]</span></label>
-              <input type="number" min={{this.wdParams[2].min}} max={{this.wdParams[2].max}} class="form-control"
+              <input type="number" min={{this.wdParams[2].min}} max={{this.wdParams[2].max}} step="0.01" class="form-control"
                 id="{{this.wdParams[2].name}}" [(ngModel)]="this.wdParams[2].value"
                 [disabled]="currentWgLengthMode == 0" (change)="this.updateWgLengthParams(1)">
             </div>

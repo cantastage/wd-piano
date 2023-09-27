@@ -112,9 +112,9 @@ export class EditorComponent {
    */
   public updateWgLengthParams(wgLengthMode: number): void {
     if (wgLengthMode === 0) {
-      this.wdParams[4].value = (this.wdParams[2].value / (2 * this.wdParams[3].value)); // L = c/(2*f0) [cm]
+      this.wdParams[4].value = parseFloat((this.wdParams[2].value / (2 * this.wdParams[3].value)).toFixed(2)); // L = c/(2*f0) [cm]
     } else {
-      this.wdParams[3].value = 100 * (this.wdParams[2].value / (2 * this.wdParams[4].value)); // f0 = c/(2*L) [Hz]
+      this.wdParams[3].value = parseFloat((this.wdParams[2].value / (2 * this.wdParams[4].value)).toFixed(2)); // f0 = c/(2*L) [Hz]
     }
   }
 
