@@ -18,8 +18,8 @@ def set_visualizer_config(config_params: Dict):
     # config.custom_folders = True
     # config.media_dir = './static'
     # config.output_file = 'prova-video.mp4'
-    # config.renderer = "opengl"
-    # config.write_to_movie = True
+    config.renderer = 'opengl'
+    config.write_to_movie = True
     config.flush_cache = True  # TODO check if this is needed
     config.disable_caching = True  # TODO check if this is needed
     # TODO maybe add consistency checks or let the function accept only the required parameters
@@ -108,7 +108,9 @@ class Visualizer(Scene):
         audio_file_path = os.path.join('media', 'audio', Settings.get_base_filename() + '.wav')
         self.add_sound(audio_file_path, time_offset=1, gain=1)  # TODO check time_offset to align sound to vid
         self.wait()
-        # TODO check se la duration dell'animazione deve essere di string_shape[0] o string_shape[0] - 1
+        # animation_run_time = 5  # TODO set to fs*duration
         self.play(ApplyMethod(idx_tracker.increment_value, (string_shape[0] - 1)),
                   run_time=period * (string_shape[0] - 1))
+        # self.play(ApplyMethod(idx_tracker.increment_value, (string_shape[0] - 1)),
+        #           run_time=animation_run_time)
         self.wait()
