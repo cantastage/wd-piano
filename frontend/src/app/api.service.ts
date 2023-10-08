@@ -56,8 +56,14 @@ export class ApiService {
    */
   public updatePlots(baseFilename: string, spectralParams: SpectralAnalysisParameters, plotVersionIndex: number): Observable<SpectralFeatures> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    const body = JSON.stringify({baseFilename, spectralParams, plotVersionIndex: plotVersionIndex});
+    const body = JSON.stringify({ baseFilename, spectralParams, plotVersionIndex: plotVersionIndex });
     return this.http.post<SpectralFeatures>(API_URL + '/plots', body, { 'headers': headers });
+  }
+
+  public batchPlotUpdate(filenames: Array<string>, spectralParams: SpectralAnalysisParameters, plotVersionIndex: number) {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    const body = JSON.stringify({ filenames, spectralParams, plotVersionIndex });
+    return this.http.post<SpectralFeatures>(API_URL + '/spectral-features', body, { 'headers': headers })
   }
 
   /**
@@ -68,7 +74,7 @@ export class ApiService {
    */
   public runWDPiano(wdParams: Object, spectralParameters: SpectralAnalysisParameters): Observable<any> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    const body = JSON.stringify({wdParameters: wdParams, spectralParameters: spectralParameters,});
+    const body = JSON.stringify({ wdParameters: wdParams, spectralParameters: spectralParameters, });
     return this.http.post<any>(API_URL + '/simulation', body, { 'headers': headers });
   }
 

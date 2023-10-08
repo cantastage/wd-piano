@@ -18,6 +18,7 @@ import { HsDataDirective } from './hs-data.directive';
 import { WdResultsComponent } from './wd-results/wd-results.component';
 import { FeaturePlotsComponent } from './feature-plots/feature-plots.component';
 import { HeroComponent } from './hero/hero.component';
+import { CompareComponent } from './compare/compare.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { HeroComponent } from './hero/hero.component';
     HsDataDirective,
     WdResultsComponent,
     FeaturePlotsComponent,
-    HeroComponent
+    HeroComponent,
+    CompareComponent
   ],
   imports: [
     BrowserModule,

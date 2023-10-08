@@ -1,6 +1,6 @@
-import pandas as pd
 from flask import Flask, send_from_directory, request, make_response, jsonify
 from flask_cors import CORS
+import pandas as pd
 
 from model.daap import AudioFeatureExtractor
 from model.settings import Settings
@@ -8,6 +8,7 @@ from model.simulator import Simulator
 from model.utils import Utils
 from model.visualizer import Visualizer
 from model.visualizer import set_visualizer_config
+from model.static_visualizer import StaticVisualizer
 
 app = Flask(__name__)
 CORS(app)
@@ -102,11 +103,15 @@ def run_simulation():
                                                                 0)
     video_filename = Settings.get_base_filename() + ".mp4"
     set_visualizer_config({"output_file": video_filename})
-    visualizer = Visualizer()  # create Visualizer instance
-    visualizer.render()  # render visualizer scene
+    # visualizer = Visualizer()  # create Visualizer instance
+    # visualizer.render()  # render visualizer scene
+    # static_visualizer = StaticVisualizer(result[0], result[1])
+    # hs_frames_b64 = static_visualizer.render_hs_plots()
     return make_response(jsonify({
         'baseFilename': Settings.get_base_filename(),
-        'videoFilename': video_filename, 'paramSummary': [],
+        'videoFilename': video_filename,
+        # 'hsFrames': hs_frames_b64,
+        'paramSummary': [],
         'daapFeatures': extracted_features,
         'plotVersionIndex': 0
     }), 200)

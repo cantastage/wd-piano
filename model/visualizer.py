@@ -40,6 +40,11 @@ def plot_string_graph(string_matrix, axes, row_idx):
 
     # print("plotting row: ", int(row_idx))
     # NOTA: per le colonne si conta x - 1 poichè le coordinate dell'asse sono indicizzate a partire da 1
+    # if (row_idx % 2 != 0) and (row_idx > 0):
+    #     # since we doubled the length of animation it means we have real frames in even idxs while odd ones
+    #     return axes.plot(lambda x: string_matrix[int(row_idx)][int(x) - 2], color=RED)
+    # else:
+    #     return axes.plot(lambda x: string_matrix[int(row_idx)][int(x) - 1], color=RED)
     return axes.plot(lambda x: string_matrix[int(row_idx)][int(x) - 1], color=RED)
 
 
@@ -103,14 +108,20 @@ class Visualizer(Scene):
 
         # self.add(string_graph, hammer, hammer_center_point)
         self.add(string_graph, hammer)
+        print('Visualizer: string shape:', Settings.get_string().shape)
+        print('Visualizer: hammer shape:', Settings.get_hammer().shape)
+        # print('Visualizer: string sj:', np.max(Settings.get_string()))
 
         # add sound
         audio_file_path = os.path.join('media', 'audio', Settings.get_base_filename() + '.wav')
         self.add_sound(audio_file_path, time_offset=1, gain=1)  # TODO check time_offset to align sound to vid
         self.wait()
         # animation_run_time = 5  # TODO set to fs*duration
-        self.play(ApplyMethod(idx_tracker.increment_value, (string_shape[0] - 1)),
-                  run_time=period * (string_shape[0] - 1))
         # self.play(ApplyMethod(idx_tracker.increment_value, (string_shape[0] - 1)),
-        #           run_time=animation_run_time)
+        #           run_time=period * (string_shape[0] - 1))
+        scaling_factor = 160
+        duration = (Settings.get_iterations() / Settings.get_sampling_freq() * scaling_factor)/100*4
+        iterations_value_tracker = (string_shape[0])/100*25
+        print('iterations value tracker:  ', iterations_value_tracker)
+        self.play(ApplyMethod(idx_tracker.increment_value, iterations_value_tracker), run_time=duration)
         self.wait()

@@ -24,6 +24,7 @@ class AudioFeatureExtractor(object):
         :param plot_version_index: progressive index of plot versions
         :return: the extracted features
         """
+        print('Starting extraction of spectral features...')
         bg_color = '#f2f2f2'
         # print('Arrived spectral parameters: ', spectral_parameters)
         if plot_version_index > 0:
@@ -179,6 +180,7 @@ class AudioFeatureExtractor(object):
                                                               'tonnetz',
                                                               base_filename,
                                                               plot_version_index)
+        print('Finished extraction of spectral features')
         return extracted_features
 
     @staticmethod

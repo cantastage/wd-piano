@@ -5,6 +5,7 @@ import os
 from datetime import datetime
 from model.settings import Settings
 import soundfile as sf
+from matplotlib.figure import Figure
 
 
 def dwg_shift(val: float, wg, n: int):
@@ -248,17 +249,29 @@ class Simulator:
             self.string_matrix[n, :] = new_row
 
         print('Ended WDF-Piano algorithm')
+        # TODO remove after debugging
+        fig = Figure()
+        ax = fig.subplots()
+        x = np.arange(0, self.iterations, 1)
+        ax.plot(x, self.hammer)
+        ax.set(xlabel='steps', ylabel='hammer position (m)')
+        ax.set_title('Hammer positions')
+        filename = 'hammer_positions.png'
+        fig.savefig(os.path.join('media', 'images', filename))
+        print('Hammer positions: ', self.hammer)
+
+        print('Saved hammer matrix for debug purposes')
         # Creates a .mat file containing the string matrix
         # file_name = 'python_string_matrix.mat'
         # print('Saving simulation output to: ', file_name)
         # sio.savemat(file_name, {'python_string_matrix': self.string_matrix})
 
         # Create audio file with the string @ contact point
-        print('Relative striking point:', Settings.get_hammer_relative_striking_point())
-        print('string wg length is: ', self.wg_length)
+        # print('Relative striking point:', Settings.get_hammer_relative_striking_point())
+        # print('string wg length is: ', self.wg_length)
         wg_striking_point = round((self.wg_length/2)*Settings.get_hammer_relative_striking_point())
         Settings.set_wg_striking_point(wg_striking_point)
-        print('striking point in waveguide is ', wg_striking_point)
+        # print('striking point in waveguide is ', wg_striking_point)
 
         base_filename = ("WD-Piano-" + datetime.now().strftime("%Y%m%d-%H%M%S.%f"))
         Settings.set_base_filename(base_filename)  # set base filename in settings
@@ -270,4 +283,9 @@ class Simulator:
         scaled_string = self.string / np.max(np.abs(self.string))*32767
         sio.wavfile.write(audiofile_save_path, self.Fs, scaled_string.astype(np.int16))
 
-        return self.string_matrix, self.hammer
+        visualization_scaling_factor = 160
+        # Scale string matrix and hammer for visualization purposes
+        visualization_string = np.repeat(self.string_matrix, repeats=visualization_scaling_factor, axis=0)
+        visualization_hammer = np.repeat(self.hammer, repeats=visualization_scaling_factor, axis=0)
+        # return self.string_matrix, self.hammer
+        return visualization_string, visualization_hammer

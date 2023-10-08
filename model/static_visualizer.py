@@ -23,17 +23,25 @@ class StaticVisualizer:
         Renders the hammer-string interaction plots for slow-speed visualization
         :return hs_frames_b64: array containing base64 encoding of plots
         """
-        hs_frames_b64 = np.empty(self._piano_string_matrix.shape[0])
-        for i in range(0, self._piano_string_matrix.shape[0]):
-            print('Starting rendering of hammer-string interaction')
-            x = np.linspace(0, self._piano_string_matrix.shape[1], self._piano_string_matrix.shape[1])
+        hs_frames_b64 = np.empty(self._piano_string_matrix.shape[0], dtype=str)
+        print('Starting rendering of hammer-string interaction...')
+        # x = np.linspace(0, self._piano_string_matrix.shape[1], self._piano_string_matrix.shape[1])
+        x = range(0, self._piano_string_matrix.shape[1])
+        fig = Figure()
+        ax = fig.subplots()
+        buf = BytesIO()  # preallocate buffer to store images of frames
+        # for i in range(0, self._piano_string_matrix.shape[0]):
+        for i in range(0, 10):
+            print('Rendering frame ', i)
             y = self._piano_string_matrix[i, :]
-            fig = Figure()
-            ax = fig.subplots()
             ax.plot(x, y)
             # TODO add axes and titles
-            buf = BytesIO()
             fig.savefig(buf, format="png")
+            # TODO check if decode is needed or is made by client
             data = base64.b64encode(buf.getbuffer()).decode("ascii")
-            np.append(hs_frames_b64, data)  # Add new base64 image to array
-        return hs_frames_b64
+            # data = base64.b64encode(buf.getbuffer())
+            hs_frames_b64[i] = data  # Add new base64 image to array
+            ax.cla()  # Clear axes
+            buf.flush()  # Flush buffer
+        print('Finished rendering hammer-string interaction')
+        return hs_frames_b64.tolist()

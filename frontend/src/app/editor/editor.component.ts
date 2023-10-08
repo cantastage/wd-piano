@@ -5,6 +5,7 @@ import { API_URL } from 'src/env';
 import { PianoKey } from '../model/piano-key';
 import { WDResult } from '../model/wd-result';
 import { DEFAULT_SPECTRAL_ANALYSIS_PARAMETERS, SpectralAnalysisParameters } from '../model/daap-features';
+import { LocalDataService } from '../local-data.service';
 
 @Component({
   selector: 'app-editor',
@@ -28,21 +29,17 @@ export class EditorComponent {
     });
   }
 
-  constructor(private apiService: ApiService) {
+  ngOnDestroy() {
+    // Save data to allow 
+    this.dataService.saveWDResults(this.wdResults);
+    this.dataService.saveSpectralParameters(this.spectralParameters);
+  }
+
+  constructor(private apiService: ApiService, private dataService: LocalDataService) {
     this.wdParams = WDPARAMS; // retrieves from model the default parameters for the simulation
-    // this.spectralParameters.push(DEFAULT_SPECTRAL_ANALYSIS_PARAMETERS);
-    // this.wdResults.push(new WDResult(
-    //   'C4-Default',
-    //   'C4-Default.mp4',
-    //   this.wdParams, {
-    //   mfccs: 'mfccs-C4-Default-0.png',
-    //   spectralCentroid: 'spectralCentroid-C4-Default-0.png',
-    //   spectralBandwidth: 'spectralBandwidth-C4-Default-0.png',
-    //   spectralContrast: 'spectralContrast-C4-Default-0.png',
-    //   spectralRollOff: 'spectralRollOff-C4-Default-0.png',
-    //   tonnetz: 'tonnetz-C4-Default-0.png'
-    // },
-    //   0));
+    // Load saved data, if present, otherwise get empty arrays
+    this.wdResults = this.dataService.getSavedWDResults();
+    this.spectralParameters = this.dataService.getSavedSpectralParameters();
   }
 
   // TODO complete method with error management
