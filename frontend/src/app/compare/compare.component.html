@@ -1,1 +1,12 @@
-<p *ngFor="let result of wdResults">compare works!</p>
+<div class="row text-center" *ngIf="wdResults.length == 0">
+    <div class="col-sm-12">
+        <h1>Nothing to compare</h1>
+    </div>
+    <div class="col-sm-12">
+        <p>There are no results to compare. Add simulations for comparison from the editor</p>
+    </div>
+</div>
+<div class="col-sm-12" *ngIf="wdResults.length > 0">
+    <p  *ngFor="let result of wdResults">compare works!</p>
+</div>
+
