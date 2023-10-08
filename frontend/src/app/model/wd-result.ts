@@ -8,6 +8,7 @@ export class WDResult {
     paramSummary: Array<WDParam>;
     daapFeatures: SpectralFeatures;
     plotVersionIndex: number;
+    compare: boolean = false;
 
     constructor(baseFilename: string, videoFileName: string, summary: Array<WDParam>, daapFeatures: SpectralFeatures, plotVersionIndex: number) {
         this.baseFilename = baseFilename;

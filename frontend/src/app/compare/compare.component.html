@@ -6,7 +6,12 @@
         <p>There are no results to compare. Add simulations for comparison from the editor</p>
     </div>
 </div>
-<div class="col-sm-12" *ngIf="wdResults.length > 0">
-    <p  *ngFor="let result of wdResults">compare works!</p>
+<div class="row" *ngIf="wdResults.length > 0">
+    <!-- Comparison summary-->
+    <app-summary *ngFor="let result of this.wdResults" [params]="result.paramSummary"></app-summary>
+    <!-- Spectral editor -->
+    <div class="col-sm-12">
+        <app-spectral-editor [filenames]="this.getCompareFilenames()"></app-spectral-editor>
+    </div>
 </div>
 

@@ -13,8 +13,17 @@ export class CompareComponent {
   wdResults: Array<WDResult>;
   spectralParameters: SpectralAnalysisParameters;
 
+  ngOnInit() {
+    this.wdResults = this.wdResults.filter(wdResult => wdResult.compare); // selects only results that are checked for comparison
+  }
+
   constructor(private apiService: ApiService, private dataService: LocalDataService) { 
     this.wdResults = this.dataService.getSavedWDResults();
     this.spectralParameters = DEFAULT_SPECTRAL_ANALYSIS_PARAMETERS;
   }
+
+  public getCompareFilenames(): Array<string> {
+    return this.wdResults.map(wdResult => wdResult.baseFilename);
+  }
+
 }

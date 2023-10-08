@@ -19,6 +19,7 @@ import { WdResultsComponent } from './wd-results/wd-results.component';
 import { FeaturePlotsComponent } from './feature-plots/feature-plots.component';
 import { HeroComponent } from './hero/hero.component';
 import { CompareComponent } from './compare/compare.component';
+import { SpectralEditorComponent } from './spectral-editor/spectral-editor.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { CompareComponent } from './compare/compare.component';
     WdResultsComponent,
     FeaturePlotsComponent,
     HeroComponent,
-    CompareComponent
+    CompareComponent,
+    SpectralEditorComponent
   ],
   imports: [
     BrowserModule,

@@ -21,19 +21,13 @@ export class WdResultsComponent {
   showPlots: boolean = true;
   errorMsg: string = '';
   showErrorMsg: boolean = false;
+  compareCounter: number = 0;
+  
 
   constructor(private apiService: ApiService) {
     // this.spectralParameters = DEFAULT_SPECTRAL_ANALYSIS_PARAMETERS;
     // this.spectralParameters.push(DEFAULT_SPECTRAL_ANALYSIS_PARAMETERS);
   }
-
-  // ngOnChanges(changes: SimpleChanges) {
-  //   console.log('ENTRA IN ONCHANGES');
-  //   if (changes['current'] != changes['previous']) {
-  //     console.log('changes detected in wd-results.component.ts: ', changes);
-  //   }
-  // }
-
   private checkSpectralParams(resultIndex: number): boolean {
     if (this.spectralParameters[resultIndex].winLength > this.spectralParameters[resultIndex].nFFT) {
       this.errorMsg = 'NOTE: Window length cannot be greater than FFT length';
@@ -45,6 +39,11 @@ export class WdResultsComponent {
     }
   }
 
+
+  public toggleComparison(resultIndex: number) {
+    this.results[resultIndex].compare = !this.results[resultIndex].compare;
+    console.log('compare: ' + this.results[resultIndex].compare);
+  }
 
   public getFFTSelectOptions(index: number, spectralParam: string): Array<number> {
     switch (spectralParam) {

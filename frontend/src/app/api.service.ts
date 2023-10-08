@@ -60,11 +60,24 @@ export class ApiService {
     return this.http.post<SpectralFeatures>(API_URL + '/plots', body, { 'headers': headers });
   }
 
-  public batchPlotUpdate(filenames: Array<string>, spectralParams: SpectralAnalysisParameters, plotVersionIndex: number) {
+  /**
+   * Updates comparison plots
+   * @param filenames 
+   * @param spectralParams 
+   * @param plotVersionIndex 
+   * @returns 
+   */
+  public updateComparisonPlots(filenames: Array<string>, spectralParams: SpectralAnalysisParameters, plotVersionIndex: number): Observable<SpectralFeatures> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    const body = JSON.stringify({ filenames, spectralParams, plotVersionIndex });
-    return this.http.post<SpectralFeatures>(API_URL + '/spectral-features', body, { 'headers': headers })
+    const body = JSON.stringify({ filenames, spectralParams, plotVersionIndex: plotVersionIndex });
+    return this.http.post<SpectralFeatures>(API_URL + '/plots', body, { 'headers': headers });
   }
+
+  // public batchPlotUpdate(filenames: Array<string>, spectralParams: SpectralAnalysisParameters, plotVersionIndex: number) {
+  //   const headers = new HttpHeaders().set('Content-Type', 'application/json');
+  //   const body = JSON.stringify({ filenames, spectralParams, plotVersionIndex });
+  //   return this.http.post<SpectralFeatures>(API_URL + '/spectral-features', body, { 'headers': headers })
+  // }
 
   /**
    * Run WdPiano algorith
