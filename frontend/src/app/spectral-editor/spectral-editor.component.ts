@@ -49,16 +49,6 @@ export class SpectralEditorComponent {
     }
   }
 
-  // public getFFTSelectOptions(index: number, spectralParam: string): Array<number> {
-  //   switch (spectralParam) {
-  //     case 'winLength':
-  //       return this.fftLengthOptions.filter((value) => value <= this.spectralParameters.nFFT);
-  //   }
-  //   return this.fftLengthOptions;
-  // }
-
-
-
   private checkSpectralParams(): boolean {
     if (this.spectralParameters.winLength > this.spectralParameters.nFFT) {
       this.errorMsg = 'NOTE: Window length cannot be greater than FFT length';

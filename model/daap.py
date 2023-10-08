@@ -47,7 +47,8 @@ class AudioFeatureExtractor(object):
                                                  n_fft=n_fft,
                                                  window=window_type,
                                                  win_length=win_length,
-                                                 hop_length=hop_length))  # extract magnitude and phase
+                                                 hop_length=hop_length,
+                                                 center=False))  # extract magnitude and phase
 
         # MFCCs
         mfccs_fig = Figure(facecolor=bg_color)  # init figure container
@@ -75,7 +76,7 @@ class AudioFeatureExtractor(object):
                                                      n_fft=n_fft,
                                                      window=window_type,
                                                      win_length=win_length,
-                                                     hop_length=hop_length
+                                                     hop_length=hop_length,
                                                      )
         cent_times = librosa.times_like(centroid, sr=sr, hop_length=hop_length)  # extract times
         librosa.display.specshow(librosa.amplitude_to_db(S, ref=np.max),
