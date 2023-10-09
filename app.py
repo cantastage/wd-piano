@@ -116,8 +116,8 @@ def run_simulation():
                                                                 0)
     video_filename = Settings.get_base_filename() + ".mp4"
     set_visualizer_config({"output_file": video_filename})
-    # visualizer = Visualizer()  # create Visualizer instance
-    # visualizer.render()  # render visualizer scene
+    visualizer = Visualizer()  # create Visualizer instance
+    visualizer.render()  # render visualizer scene
     # static_visualizer = StaticVisualizer(result[0], result[1])
     # hs_frames_b64 = static_visualizer.render_hs_plots()
     return make_response(jsonify({

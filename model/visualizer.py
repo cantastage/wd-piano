@@ -37,14 +37,7 @@ def plot_string_graph(string_matrix, axes, row_idx):
     :param row_idx:
     :return:
     """
-
-    # print("plotting row: ", int(row_idx))
     # NOTA: per le colonne si conta x - 1 poichè le coordinate dell'asse sono indicizzate a partire da 1
-    # if (row_idx % 2 != 0) and (row_idx > 0):
-    #     # since we doubled the length of animation it means we have real frames in even idxs while odd ones
-    #     return axes.plot(lambda x: string_matrix[int(row_idx)][int(x) - 2], color=RED)
-    # else:
-    #     return axes.plot(lambda x: string_matrix[int(row_idx)][int(x) - 1], color=RED)
     return axes.plot(lambda x: string_matrix[int(row_idx)][int(x) - 1], color=RED)
 
 
@@ -57,7 +50,7 @@ def get_hammer(hammer_matrix, axes, position_idx):
     :param position_idx: index of the hammer position array
     :return:
     """
-    center_y_coord = hammer_matrix[int(position_idx) - 1]
+    center_y_coord = hammer_matrix[int(position_idx) - 1]*100
     center_x_coord = Settings.get_wg_striking_point()
     # center_x_coord = 19
     center_point = Dot(axes.c2p(center_x_coord, center_y_coord, 0))
@@ -120,8 +113,8 @@ class Visualizer(Scene):
         # self.play(ApplyMethod(idx_tracker.increment_value, (string_shape[0] - 1)),
         #           run_time=period * (string_shape[0] - 1))
         scaling_factor = 160
-        duration = (Settings.get_iterations() / Settings.get_sampling_freq() * scaling_factor)/100*4
-        iterations_value_tracker = (string_shape[0])/100*25
+        duration = (Settings.get_iterations() / Settings.get_sampling_freq() * scaling_factor)/100*2
+        iterations_value_tracker = (string_shape[0])/100*4
         print('iterations value tracker:  ', iterations_value_tracker)
         self.play(ApplyMethod(idx_tracker.increment_value, iterations_value_tracker), run_time=duration)
         self.wait()

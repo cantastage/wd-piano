@@ -250,17 +250,17 @@ class Simulator:
 
         print('Ended WDF-Piano algorithm')
         # TODO remove after debugging
-        fig = Figure()
-        ax = fig.subplots()
-        x = np.arange(0, self.iterations, 1)
-        ax.plot(x, self.hammer)
-        ax.set(xlabel='steps', ylabel='hammer position (m)')
-        ax.set_title('Hammer positions')
-        filename = 'hammer_positions.png'
-        fig.savefig(os.path.join('media', 'images', filename))
-        print('Hammer positions: ', self.hammer)
+        # fig = Figure()
+        # ax = fig.subplots()
+        # x = np.arange(0, self.iterations, 1)
+        # ax.plot(x, self.hammer)
+        # ax.set(xlabel='steps', ylabel='hammer position (m)')
+        # ax.set_title('Hammer positions')
+        # filename = 'hammer_positions.png'
+        # fig.savefig(os.path.join('media', 'images', filename))
+        # print('Hammer positions: ', self.hammer)
+        # print('Saved hammer matrix for debug purposes')
 
-        print('Saved hammer matrix for debug purposes')
         # Creates a .mat file containing the string matrix
         # file_name = 'python_string_matrix.mat'
         # print('Saving simulation output to: ', file_name)
