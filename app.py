@@ -57,6 +57,19 @@ def update_plots():
     return make_response(jsonify({'daapFeatures': spectral_features}), 200)
 
 
+@app.route('/compare-plots', methods=['POST'])
+def update_compare_plots():
+    base_filename = request.json['baseFilename']
+    filenames = request.json['filenames']
+    spectral_params = request.json['spectralParams']
+    plot_version_index = request.json['plotVersionIndex']
+    extracted_features = AudioFeatureExtractor.batch_extract_features(base_filename,
+                                                                      filenames,
+                                                                      spectral_params,
+                                                                      plot_version_index)
+    return make_response(jsonify({'daapFeatures': extracted_features}), 200)
+
+
 @app.route('/simulation', methods=['POST'])
 def run_simulation():
     """

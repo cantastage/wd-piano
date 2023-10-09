@@ -26,4 +26,5 @@ export class CompareComponent {
     return this.wdResults.map(wdResult => wdResult.baseFilename);
   }
 
+
 }

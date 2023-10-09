@@ -8,7 +8,11 @@
 </div>
 <div class="row" *ngIf="wdResults.length > 0">
     <!-- Comparison summary-->
-    <app-summary *ngFor="let result of this.wdResults" [params]="result.paramSummary"></app-summary>
+    <div class="col-sm-12" *ngFor="let result of this.wdResults">
+        <h4>{{result.baseFilename}}</h4>
+        <app-summary [params]="result.paramSummary"></app-summary>
+    </div>
+    
     <!-- Spectral editor -->
     <div class="col-sm-12">
         <app-spectral-editor [filenames]="this.getCompareFilenames()"></app-spectral-editor>

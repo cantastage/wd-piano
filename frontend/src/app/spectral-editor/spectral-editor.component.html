@@ -7,8 +7,8 @@
     </div>
     <div class="col-sm-12 col-lg-3">
         <label for="windowType" class="form-label">Window type</label>
-        <select class="form-select" aria-label="window type select"
-            [(ngModel)]="this.spectralParameters.windowType" id="windowType">
+        <select class="form-select" aria-label="window type select" [(ngModel)]="this.spectralParameters.windowType"
+            id="windowType">
             <option>boxcar</option>
             <option selected>hann</option>
             <option>triang</option>
@@ -18,32 +18,28 @@
     </div>
     <div class="col-sm-12 col-lg-3">
         <label for="nFFT" class="form-label">FFT length [samples]</label>
-        <select type="select" class="form-select" id="nFFT"
-            [(ngModel)]="this.spectralParameters.nFFT">
+        <select type="select" class="form-select" id="nFFT" [(ngModel)]="this.spectralParameters.nFFT">
             <option *ngFor="let lengthOption of fftLengthOptions" [ngValue]="lengthOption">
                 {{lengthOption}}</option>
         </select>
     </div>
     <div class="col-sm-12 col-lg-3">
         <label for="winLength" class="form-label">Window length [samples]</label>
-        <select class="form-select" id="winLength"
-            [(ngModel)]="this.spectralParameters.winLength">
+        <select class="form-select" id="winLength" [(ngModel)]="this.spectralParameters.winLength">
             <option *ngFor="let lengthOption of this.windowLengthOptions" [ngValue]="lengthOption">
                 {{lengthOption}}</option>
         </select>
     </div>
     <div class="col-sm-12 col-lg-3">
         <label for="hopLength" class="form-label">Hop length [samples]</label>
-        <select class="form-select" id="hopLength"
-            [(ngModel)]="this.spectralParameters.hopLength">
+        <select class="form-select" id="hopLength" [(ngModel)]="this.spectralParameters.hopLength">
             <option *ngFor="let lengthOption of hopLengthOptions" [ngValue]="lengthOption">
                 {{lengthOption}}</option>
         </select>
     </div>
     <div class="col-sm-12 col-lg-3">
         <label for="nMFCC" class="form-label"><b>MFCC</b>: Number of extracted MFCC</label>
-        <input type="number" min=1 max=40 class="form-control" id="nMFCC"
-            [(ngModel)]="this.spectralParameters.nMFCC">
+        <input type="number" min=1 max=40 class="form-control" id="nMFCC" [(ngModel)]="this.spectralParameters.nMFCC">
     </div>
     <div class="col-sm-12 col-lg-3">
         <label for="contrastMinFreqCutoff" class="form-label"><b>Spectral Contrast:</b> Min
@@ -68,15 +64,33 @@
             <div class="alert alert-warning" role="alert">{{this.errorMsg}}</div>
         </div>
         <div class="col-lg-12 text-center start-button">
-            <button type="submit" class="btn btn-primary update-plots-button"
-                (click)="this.updateComparisonPlots()" [disabled]="this.isUpdating">
-                <span class="spinner-border spinner-border-sm" aria-hidden="true"
-                    *ngIf="this.isUpdating"></span>
+            <button type="submit" class="btn btn-primary update-plots-button" (click)="this.updateComparisonPlots()"
+                [disabled]="this.isUpdating">
+                <span class="spinner-border spinner-border-sm" aria-hidden="true" *ngIf="this.isUpdating"></span>
                 <span role="status" *ngIf="this.isUpdating">UPDATING...</span>
                 <span role="status" *ngIf="!this.isUpdating">UPDATE COMPARISON</span>
             </button>
         </div>
     </div>
 
-<app-feature-plots [daapFeatures]="this.spectralFeatures"
-    *ngIf="!this.isUpdating"></app-feature-plots>
+    <div class="row">
+        <div class="col-sm-12">
+            <img src={{getPlotUrl(this.spectralFeatures.mfccs)}} class="img-fluid" alt="mfccs-plot">
+        </div>
+        <div class="col-sm-12">
+            <img src={{getPlotUrl(this.spectralFeatures.tonnetz)}} class="img-fluid" alt="tonnetz-plot">
+        </div>
+        <div class="col-sm-12">
+            <img src={{getPlotUrl(this.spectralFeatures.spectralCentroid)}} class="img-fluid" alt="spectral-centroid-plot">
+        </div>
+        <div class="col-sm-12">
+            <img src={{getPlotUrl(this.spectralFeatures.spectralBandwidth)}} class="img-fluid"
+                alt="spectral-bandwidth-plot">
+        </div>
+        <div class="col-sm-12">
+            <img src={{getPlotUrl(this.spectralFeatures.spectralContrast)}} class="img-fluid" alt="spectral-contrast-plot">
+        </div>
+        <div class="col-sm-12">
+            <img src={{getPlotUrl(this.spectralFeatures.spectralRollOff)}} class="img-fluid" alt="spectral-roll-off-plot">
+        </div>
+    </div>

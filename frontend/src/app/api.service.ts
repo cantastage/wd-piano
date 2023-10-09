@@ -67,10 +67,10 @@ export class ApiService {
    * @param plotVersionIndex 
    * @returns 
    */
-  public updateComparisonPlots(filenames: Array<string>, spectralParams: SpectralAnalysisParameters, plotVersionIndex: number): Observable<SpectralFeatures> {
+  public updateComparisonPlots(baseFilename: string, filenames: Array<string>, spectralParams: SpectralAnalysisParameters, plotVersionIndex: number): Observable<SpectralFeatures> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    const body = JSON.stringify({ filenames, spectralParams, plotVersionIndex: plotVersionIndex });
-    return this.http.post<SpectralFeatures>(API_URL + '/plots', body, { 'headers': headers });
+    const body = JSON.stringify({ baseFilename, filenames, spectralParams, plotVersionIndex });
+    return this.http.post<SpectralFeatures>(API_URL + '/compare-plots', body, { 'headers': headers });
   }
 
   // public batchPlotUpdate(filenames: Array<string>, spectralParams: SpectralAnalysisParameters, plotVersionIndex: number) {
