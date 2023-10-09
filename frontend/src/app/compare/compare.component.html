@@ -8,14 +8,44 @@
 </div>
 <div class="row" *ngIf="wdResults.length > 0">
     <!-- Comparison summary-->
-    <div class="col-sm-12" *ngFor="let result of this.wdResults">
-        <h4>{{result.baseFilename}}</h4>
-        <app-summary [params]="result.paramSummary"></app-summary>
-    </div>
-    
-    <!-- Spectral editor -->
-    <div class="col-sm-12">
-        <app-spectral-editor [filenames]="this.getCompareFilenames()"></app-spectral-editor>
-    </div>
-</div>
+    <div class="col-sm-4" *ngFor="let result of this.wdResults">
+        <div class="row">
+            <div class="col-sm-12">
+                <h4>{{result.baseFilename}}</h4>
+                <app-summary [params]="result.paramSummary"></app-summary>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <img src={{getPlotUrl(result.daapFeatures.mfccs)}} class="img-fluid" alt="mfccs-plot">
+                    </div>
+                    <div class="col-sm-12">
+                        <img src={{getPlotUrl(result.daapFeatures.tonnetz)}} class="img-fluid" alt="tonnetz-plot">
+                    </div>
+                    <div class="col-sm-12">
+                        <img src={{getPlotUrl(result.daapFeatures.spectralCentroid)}} class="img-fluid"
+                            alt="spectral-centroid-plot">
+                    </div>
+                    <div class="col-sm-12">
+                        <img src={{getPlotUrl(result.daapFeatures.spectralBandwidth)}} class="img-fluid"
+                            alt="spectral-bandwidth-plot">
+                    </div>
+                    <div class="col-sm-12">
+                        <img src={{getPlotUrl(result.daapFeatures.spectralContrast)}} class="img-fluid"
+                            alt="spectral-contrast-plot">
+                    </div>
+                    <div class="col-sm-12">
+                        <img src={{getPlotUrl(result.daapFeatures.spectralRollOff)}} class="img-fluid"
+                            alt="spectral-roll-off-plot">
+                    </div>
+                </div>
+            </div>
 
+        </div>
+
+
+
+
+        <!-- Spectral editor -->
+        <!-- <div class="col-sm-12">
+        <app-spectral-editor [filenames]="this.getCompareFilenames()"></app-spectral-editor>
+    </div> -->
+    </div>
