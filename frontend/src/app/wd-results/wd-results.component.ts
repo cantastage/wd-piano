@@ -1,7 +1,7 @@
-import { ChangeDetectorRef, Component, Input, SimpleChanges } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { WDResult } from '../model/wd-result';
 import { API_URL } from 'src/env';
-import { DEFAULT_SPECTRAL_ANALYSIS_PARAMETERS, EMPTY_SPECTRAL_FEATURES, SpectralAnalysisParameters, SpectralFeatures } from '../model/daap-features';
+import { SpectralAnalysisParameters } from '../model/daap-features';
 import { ApiService } from '../api.service';
 
 @Component({
@@ -12,7 +12,6 @@ import { ApiService } from '../api.service';
 export class WdResultsComponent {
   @Input() results: Array<WDResult> = [];
   @Input() spectralParameters: Array<SpectralAnalysisParameters> = [];
-  // spectralParameters: SpectralAnalysisParameters;
   isUpdating = false;
   windowLengthOptions: Array<number> = [64, 128, 256, 512, 1024, 2048, 4096, 8192];
   hopLengthOptions: Array<number> = [64, 128, 256, 512, 1024, 2048, 4096, 8192];
@@ -25,8 +24,6 @@ export class WdResultsComponent {
   
 
   constructor(private apiService: ApiService) {
-    // this.spectralParameters = DEFAULT_SPECTRAL_ANALYSIS_PARAMETERS;
-    // this.spectralParameters.push(DEFAULT_SPECTRAL_ANALYSIS_PARAMETERS);
   }
   private checkSpectralParams(resultIndex: number): boolean {
     if (this.spectralParameters[resultIndex].winLength > this.spectralParameters[resultIndex].nFFT) {
@@ -53,7 +50,7 @@ export class WdResultsComponent {
     return this.fftLengthOptions;
   }
 
-  // TODO maybe add error management
+
   /**
    * Update spectral features plots
    * @param resultIndex index of the result to update
@@ -77,12 +74,10 @@ export class WdResultsComponent {
   }
 
   public getDataBsTarget(index: number): string {
-    // return '#' + this.results[index].baseFilename;
     return '#' + index.toString();
   }
 
   public getAriaControlsLabel(index: number): string {
-    // return this.results[index].baseFilename;
     return index.toString();
   }
 

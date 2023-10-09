@@ -10,12 +10,7 @@ import { SpectralFeatures } from '../model/daap-features';
 export class FeaturePlotsComponent {
   @Input() daapFeatures: SpectralFeatures = {mfccs:'', spectralCentroid:'', spectralBandwidth:'', spectralContrast:'', spectralRollOff:'', tonnetz:''};
 
-  // ngOnInit() {
-  //   console.log('feature-plots urls: ', this.daapFeatures);
-  // }
-
   public getPlotUrl(plotName: string): string {
-    // let time = new Date().getTime();
     return API_URL + '/plot/' + plotName;
   }
 }

@@ -1,7 +1,3 @@
-// * {
-//   box-sizing: border-box
-// }
-
 .keyboard-group {
   display:flex;
   flex-direction: column;
@@ -12,7 +8,6 @@
   padding: 3em 2em 0.5em 1em;
   border: 1px solid #160801;
   border-radius: 1em;
-  // background:linear-gradient(to bottom right,rgba(0,0,0,0.3),rgba(0,0,0,0)),url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/187/vwood.png);
   background: linear-gradient(to bottom right, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0)), url(../../assets/images/black_wood.jpg);
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.5) inset, 0 1px rgba(212, 152, 125, 0.2) inset, 0 5px 15px rgba(0, 0, 0, 0.5)
 }
@@ -20,10 +15,7 @@
 .octave-controls {
   max-width: 32px;
   max-height: 40px;
-  // margin: 0 auto;
   margin: 0.5em 0 0.5em 1em;
-  // padding: 0 0 0 3em;
-
 }
 
 ul {
@@ -53,7 +45,6 @@ ul .white {
   border-bottom: 1px solid #bbb;
   border-radius: 0 0 5px 5px;
   box-shadow: -1px 0 0 rgba(255, 255, 255, 0.8) inset, 0 0 5px #ccc inset, 0 0 3px rgba(0, 0, 0, 0.2);
-  // background: linear-gradient(to bottom, #eee 0%, #fff 100%)
 }
 
 li .white-note-label {
@@ -71,7 +62,6 @@ ul .white:active {
   border-left: 1px solid #999;
   border-bottom: 1px solid #999;
   box-shadow: 2px 0 3px rgba(0, 0, 0, 0.1) inset, -5px 5px 20px rgba(0, 0, 0, 0.2) inset, 0 0 3px rgba(0, 0, 0, 0.2);
-  // background: linear-gradient(to bottom, #fff 0%, #e9e9e9 100%)
 }
 
 ul .black {
@@ -117,7 +107,6 @@ ul .black:active {
 }
 
 .f {
-  // background-color: #f77936;
   background-color: #DB9065;
 }
 

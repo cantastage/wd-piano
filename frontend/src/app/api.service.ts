@@ -18,7 +18,6 @@ export class ApiService {
     'responseType': 'blob' as 'json'
   }
 
-  // public url: Observable<VideoUrlObject> = of({ 'videoURL': ''});
 
   constructor(private http: HttpClient) { }
 

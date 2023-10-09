@@ -5,7 +5,6 @@ export interface SpectralFeatures {
     spectralContrast: string;
     spectralRollOff: string;
     tonnetz: string;
-    // TODO add all other features when implemented
 }
 
 export interface SpectralAnalysisParameters {

@@ -9,44 +9,12 @@ import { style } from '@angular/animations';
   styleUrls: ['./piano-keyboard.component.scss']
 })
 export class PianoKeyboardComponent {
-  // private pianoToMidiOffset = 20; // 20 is the offset from piano key to corresponding midi note number
-  // private numKeys = 88; // 88 keys on a piano
-  // unwrappedStringKeys: Array<PianoKey> = []; // TODO maybe add getter and make field private
   keyLabels: Array<string> = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
   currentOctaveIndex: number = 4; // octave index of the keyboard
   @Output() selectedKeyEvent = new EventEmitter<string>(); // selected key in the piano keyboard
 
-  // ngOnInit() {
-  //   this.apiService.getStrings().subscribe((data) => {
-  //     // console.log("ARRIVED FROM SERVER: ", data);
-  //     this.unwrappedStringKeys = this.parsePianoKeys(data);
-  //   });
-  // }
-
   constructor(private apiService: ApiService) {
   }
-
-  // /**
-  //  * Calculates the center frequency of the piano keyboard note
-  //  * @param pianoKeyIndex 
-  //  * @returns 
-  //  */
-  // public getKeyCenterFrequency(pianoKeyIndex: number): number {
-  //   let centerFreq = 440 * Math.pow(2, (pianoKeyIndex - 49) / 12);
-  //   return centerFreq;
-  // }
-
-  // /**
-  //  * Calculates the name of the piano keyboard MIDI note
-  //  * @param pianoKeyIndex 
-  //  * @returns 
-  //  */
-  // public getMidiNoteLabel(pianoKeyIndex: number): string {
-
-  //   let midiNote = pianoKeyIndex + this.pianoToMidiOffset;
-  //   return midiNote.toString();
-  // }
-
 
   /**
    * Selects class for keyboard key based on the note label
