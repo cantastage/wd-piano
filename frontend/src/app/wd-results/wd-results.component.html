@@ -12,7 +12,8 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheck{{i}}" [checked]="result.compare" (change)="this.toggleComparison(i)">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheck{{i}}"
+                                    [checked]="result.compare" (change)="this.toggleComparison(i)">
                                 <label class="form-check-label" for="flexCheck{{i}}">
                                     Add to comparison
                                 </label>
@@ -21,9 +22,16 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-12 col-md-6">
-                            <h3>Video Player: Hammer-String Interaction</h3>
+                            <h3>Media player: Hammer-String Interaction</h3>
                             <!-- Video player -->
-                            <app-video-player [videoUrl]="getVideoUrl(i)"></app-video-player>
+                            <app-video-player [videoUrl]="getVideoUrl(i)"
+                                *ngIf="results[i].showVideo"></app-video-player>
+                            <!-- Audio player -->
+                            <h3>Audio</h3>
+                            <audio controls>
+                                <source [src]="this.getAudioUrl(i)" type="audio/wav">
+                                Your browser does not support the audio element.
+                            </audio>
                         </div>
                         <div class="col-sm-12 col-md-6">
                             <!-- Summary -->

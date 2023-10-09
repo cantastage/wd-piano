@@ -98,6 +98,10 @@ export class WdResultsComponent {
     return API_URL + '/plot/' + plotName;
   }
 
+  public getAudioUrl(resultIndex: number): string {
+    return API_URL + '/audio/' + this.results[resultIndex].baseFilename + '.wav';
+  }
+
   public getVideoUrl(videoIndex: number): string {
     let videoName = this.results[videoIndex].videoFilename;
     return API_URL + '/video/' + videoName;

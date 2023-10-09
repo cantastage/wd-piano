@@ -154,6 +154,14 @@
             </div>
           </div>
           <div clas="row">
+            <div class="col-sm-12">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="showVideoCheck" [checked]="createVideo == true" (change)="this.createVideo = !this.createVideo">
+                <label class="form-check-label" for="showVideoCheck">
+                    Create video for the simulation NOTE: experimental feature, may require a lot of time to render.
+                </label>
+            </div>
+            </div>
             <div class="col-sm-12 text-center start-button">
               <button type="submit" class="btn btn-primary" (click)="runWDPiano()" [disabled]="!this.isRendered">
                 <span class="spinner-border spinner-border-sm" aria-hidden="true" *ngIf="!this.isRendered"></span>

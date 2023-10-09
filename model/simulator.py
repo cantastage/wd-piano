@@ -4,8 +4,6 @@ import math
 import os
 from datetime import datetime
 from model.settings import Settings
-import soundfile as sf
-from matplotlib.figure import Figure
 
 
 def dwg_shift(val: float, wg, n: int):
@@ -17,7 +15,6 @@ def dwg_shift(val: float, wg, n: int):
     :param n: index of the current step
     :return: last updated value of the waveguide
     """
-    # m = np.remainder(n, wg.size)
     m = n % wg.size
     out = wg[m]
     wg[m] = val
@@ -118,7 +115,7 @@ class Simulator:
         print('wg_length_left: ', self.wg_length_left)
         self.wg_length_right = wg_lengths[1]
         print('wg_length_right: ', self.wg_length_right)
-        self.wg_length = self.wg_length_left + self.wg_length_right  # NB: formula per wg_length: wg_length = Fs / f0
+        self.wg_length = self.wg_length_left + self.wg_length_right  # NB wg_length formula: wg_length = Fs / f0
         print('Total waveguide length: ', self.wg_length)
         self.K = soundboard_reflection_coefficient  # set soundboard reflection coefficient
         self.A = linear_felt_stiffness  # set linear felt stiffness
@@ -173,7 +170,6 @@ class Simulator:
         self.hammer_velocity = (self.a5 - self.b5) / self.Z5
         self.hammer_position = (self.b8 - self.a8) * self.C
         self.hammer_initial_position = self.hammer_position
-        # Settings.set_hammer_initial_position(self.hammer_initial_position)
         self.string_velocity = (self.a1 - self.b1) / self.Z1
         self.string_position = np.double(0)
 
@@ -249,43 +245,20 @@ class Simulator:
             self.string_matrix[n, :] = new_row
 
         print('Ended WDF-Piano algorithm')
-        # TODO remove after debugging
-        # fig = Figure()
-        # ax = fig.subplots()
-        # x = np.arange(0, self.iterations, 1)
-        # ax.plot(x, self.hammer)
-        # ax.set(xlabel='steps', ylabel='hammer position (m)')
-        # ax.set_title('Hammer positions')
-        # filename = 'hammer_positions.png'
-        # fig.savefig(os.path.join('media', 'images', filename))
-        # print('Hammer positions: ', self.hammer)
-        # print('Saved hammer matrix for debug purposes')
-
-        # Creates a .mat file containing the string matrix
-        # file_name = 'python_string_matrix.mat'
-        # print('Saving simulation output to: ', file_name)
-        # sio.savemat(file_name, {'python_string_matrix': self.string_matrix})
 
         # Create audio file with the string @ contact point
-        # print('Relative striking point:', Settings.get_hammer_relative_striking_point())
-        # print('string wg length is: ', self.wg_length)
         wg_striking_point = round((self.wg_length/2)*Settings.get_hammer_relative_striking_point())
         Settings.set_wg_striking_point(wg_striking_point)
-        # print('striking point in waveguide is ', wg_striking_point)
-
         base_filename = ("WD-Piano-" + datetime.now().strftime("%Y%m%d-%H%M%S.%f"))
         Settings.set_base_filename(base_filename)  # set base filename in settings
         audio_file_name = base_filename + '.wav'  # append .wav extension
         audiofile_save_path = os.path.join('media', 'audio', audio_file_name)
-        # SAVE AUDIO FILE WITH SOUNDFILE
-        # sf.write(audiofile_save_path, self.string, samplerate=44100, subtype='PCM_24')  # we use soundfile
-        # scaled_string = np.int16(self.string / np.max(np.abs(self.string)) * 32767)
+
         scaled_string = self.string / np.max(np.abs(self.string))*32767
         sio.wavfile.write(audiofile_save_path, self.Fs, scaled_string.astype(np.int16))
 
+        # Scale string and hammer data for low-speed visualization
         visualization_scaling_factor = 160
-        # Scale string matrix and hammer for visualization purposes
         visualization_string = np.repeat(self.string_matrix, repeats=visualization_scaling_factor, axis=0)
         visualization_hammer = np.repeat(self.hammer, repeats=visualization_scaling_factor, axis=0)
-        # return self.string_matrix, self.hammer
         return visualization_string, visualization_hammer

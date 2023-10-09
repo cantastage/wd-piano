@@ -1,8 +1,5 @@
 import math
 from typing import Dict
-import os
-
-import manim
 from manim import *
 from model.settings import Settings
 
@@ -14,15 +11,13 @@ def set_visualizer_config(config_params: Dict):
     :param config_params: the config parameters
     :return:
     """
-    # Useful Config settings #TODO remove after finished
+    # Useful Config settings
     # config.custom_folders = True
     # config.media_dir = './static'
-    # config.output_file = 'prova-video.mp4'
     config.renderer = 'opengl'
     config.write_to_movie = True
-    config.flush_cache = True  # TODO check if this is needed
-    config.disable_caching = True  # TODO check if this is needed
-    # TODO maybe add consistency checks or let the function accept only the required parameters
+    config.flush_cache = True  # clear video cache
+    config.disable_caching = True  # avoid using cached data
     # Unique for to set the config in manim config
     for k, v in config_params.items():
         config[k] = v
@@ -52,7 +47,6 @@ def get_hammer(hammer_matrix, axes, position_idx):
     """
     center_y_coord = hammer_matrix[int(position_idx) - 1]*100
     center_x_coord = Settings.get_wg_striking_point()
-    # center_x_coord = 19
     center_point = Dot(axes.c2p(center_x_coord, center_y_coord, 0))
     circle = Circle(color=BLUE, fill_color=BLUE, fill_opacity=1.0).surround(center_point, buffer_factor=2.0)
     circle.move_to(circle.get_bottom())
@@ -73,14 +67,9 @@ class Visualizer(Scene):
         hammer_positions = Settings.get_hammer()  # hammer matrix
 
         string_shape = string.shape  # get string matrix shape to calculate max value
-        print('string_shape = ', string_shape)
-        string_max_value = np.max(string)  # add check on negative max value using abs
-        print('string_max_value = ', string_max_value)
+        string_max_value = np.max(np.abs(string))  # add check on negative max value using abs
         hammer_max_value = np.max(hammer_positions)
-        print('hammer_max_value = ', hammer_max_value)
         max_y_coord = math.ceil(max(string_max_value, hammer_max_value))
-        print('max_y_coord = ', max_y_coord)
-        # TODO check parameters of axes to get optimal view
         axes = Axes(
             x_range=[0, string_shape[1], 1],
             y_range=[-max_y_coord, max_y_coord, 1],
@@ -96,18 +85,13 @@ class Visualizer(Scene):
         # plot = VGroup(string_graph, axes_labels)
         # labels = VGroup(axes_labels)
         print('hammer_positions[0]: ', hammer_positions[0])
-        # hammer_center_point = Dot(point=axes.c2p(19, 0, 0), color=YELLOW)
         hammer = always_redraw(lambda: get_hammer(hammer_positions, axes, idx_tracker.get_value()))
 
-        # self.add(string_graph, hammer, hammer_center_point)
         self.add(string_graph, hammer)
-        print('Visualizer: string shape:', Settings.get_string().shape)
-        print('Visualizer: hammer shape:', Settings.get_hammer().shape)
-        # print('Visualizer: string sj:', np.max(Settings.get_string()))
 
-        # add sound
-        audio_file_path = os.path.join('media', 'audio', Settings.get_base_filename() + '.wav')
-        self.add_sound(audio_file_path, time_offset=1, gain=1)  # TODO check time_offset to align sound to vid
+        # add sound TODO needs to be scaled to the video
+        # audio_file_path = os.path.join('media', 'audio', Settings.get_base_filename() + '.wav')
+        # self.add_sound(audio_file_path, time_offset=1, gain=1)  # TODO check time_offset to align sound to vid
         self.wait()
         # animation_run_time = 5  # TODO set to fs*duration
         # self.play(ApplyMethod(idx_tracker.increment_value, (string_shape[0] - 1)),

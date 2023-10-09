@@ -21,6 +21,7 @@ export class EditorComponent {
   pianoKeys: Array<PianoKey> = []; // contains all the piano keys data
   wdResults: Array<WDResult> = []; // contains all results of the algorithm
   spectralParameters: Array<SpectralAnalysisParameters> = []; // spectral analysis parameters container
+  createVideo: boolean = false; // true if you want to create video
 
   ngOnInit() {
     // get piano keys
@@ -51,7 +52,7 @@ export class EditorComponent {
     // let summary = this.wdParams;
     let summary = JSON.parse(JSON.stringify(this.wdParams)) as WDParam[];
     let parsedParams = this.parseWDParams();
-    this.apiService.runWDPiano(parsedParams, DEFAULT_SPECTRAL_ANALYSIS_PARAMETERS)
+    this.apiService.runWDPiano(parsedParams, DEFAULT_SPECTRAL_ANALYSIS_PARAMETERS, this.createVideo)
       .subscribe((data: WDResult) => {
         console.log('Arrived from server:');
         console.log(data);

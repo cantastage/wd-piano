@@ -8,7 +8,6 @@ from model.simulator import Simulator
 from model.utils import Utils
 from model.visualizer import Visualizer
 from model.visualizer import set_visualizer_config
-from model.static_visualizer import StaticVisualizer
 
 app = Flask(__name__)
 CORS(app)
@@ -39,8 +38,6 @@ def get_feature_plot(filename):
 def get_strings():
     df = pd.read_csv('./model/transpose.csv', encoding='utf-8')
     strings = df.to_json(orient='values')
-    # json_strings = json.dumps(strings, indent=4)
-    # strings = df.to_json(orient='columns')
     return make_response(strings, 200)
 
 
@@ -70,15 +67,25 @@ def update_compare_plots():
     return make_response(jsonify({'daapFeatures': extracted_features}), 200)
 
 
+@app.route('/audio/<filename>', methods=['GET'])
+def get_audio(filename):
+    """
+    Returns the audio file to the client
+    :param filename: the name of the audio file
+    :return:
+    """
+    return send_from_directory(
+        directory='media/audio', path=filename, mimetype='audio/wav', as_attachment=False)
+
+
 @app.route('/simulation', methods=['POST'])
 def run_simulation():
     """
     Requests the rendering of the wd-piano algorithm to the server
     """
-    print('received request body: ', request.json)
     received_wd_parameters = request.json['wdParameters']
     received_spectral_parameters = request.json['spectralParameters']
-    # print('received from client: ', received_wd_parameters)
+    received_create_video = request.json['createVideo']
     scaled = Utils.scale_wd_parameters(received_wd_parameters)
     Settings.set_wd_params(scaled['iterations'],
                            scaled['samplingFrequency'],
@@ -116,17 +123,16 @@ def run_simulation():
                                                                 0)
     video_filename = Settings.get_base_filename() + ".mp4"
     set_visualizer_config({"output_file": video_filename})
-    visualizer = Visualizer()  # create Visualizer instance
-    visualizer.render()  # render visualizer scene
-    # static_visualizer = StaticVisualizer(result[0], result[1])
-    # hs_frames_b64 = static_visualizer.render_hs_plots()
+    if received_create_video:
+        visualizer = Visualizer()  # create Visualizer instance
+        visualizer.render()  # render visualizer scene
     return make_response(jsonify({
         'baseFilename': Settings.get_base_filename(),
         'videoFilename': video_filename,
-        # 'hsFrames': hs_frames_b64,
         'paramSummary': [],
         'daapFeatures': extracted_features,
-        'plotVersionIndex': 0
+        'plotVersionIndex': 0,
+        'showVideo': received_create_video
     }), 200)
 
 

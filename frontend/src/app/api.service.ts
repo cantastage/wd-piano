@@ -73,34 +73,17 @@ export class ApiService {
     return this.http.post<SpectralFeatures>(API_URL + '/compare-plots', body, { 'headers': headers });
   }
 
-  // public batchPlotUpdate(filenames: Array<string>, spectralParams: SpectralAnalysisParameters, plotVersionIndex: number) {
-  //   const headers = new HttpHeaders().set('Content-Type', 'application/json');
-  //   const body = JSON.stringify({ filenames, spectralParams, plotVersionIndex });
-  //   return this.http.post<SpectralFeatures>(API_URL + '/spectral-features', body, { 'headers': headers })
-  // }
-
   /**
    * Run WdPiano algorith
    * @param wdParams 
    * @param spectralParameters
    * @returns 
    */
-  public runWDPiano(wdParams: Object, spectralParameters: SpectralAnalysisParameters): Observable<any> {
+  public runWDPiano(wdParams: Object, spectralParameters: SpectralAnalysisParameters, createVideo: boolean): Observable<any> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    const body = JSON.stringify({ wdParameters: wdParams, spectralParameters: spectralParameters, });
+    const body = JSON.stringify({ wdParameters: wdParams, spectralParameters: spectralParameters, createVideo: createVideo });
     return this.http.post<any>(API_URL + '/simulation', body, { 'headers': headers });
   }
-
-  // /**
-  //  * Run WdPiano algorith
-  //  * @param wdParams 
-  //  * @returns 
-  //  */
-  // public runWDPiano(wdParams: Object): Observable<any> {
-  //   const headers = new HttpHeaders().set('Content-Type', 'application/json');
-  //   const body = JSON.stringify({wdParameters: wdParams});
-  //   return this.http.post<any>(API_URL + '/simulation', body, { 'headers': headers });
-  // }
 
   /**
    * Handle Http operation that failed. Taken from Angular Tour of Heroes

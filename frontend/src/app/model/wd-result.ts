@@ -7,15 +7,15 @@ export class WDResult {
     // hsFrames: Array<string>;
     paramSummary: Array<WDParam>;
     daapFeatures: SpectralFeatures;
-    plotVersionIndex: number;
+    plotVersionIndex: number = 0;
     compare: boolean = false;
+    showVideo: boolean = false;
 
-    constructor(baseFilename: string, videoFileName: string, summary: Array<WDParam>, daapFeatures: SpectralFeatures, plotVersionIndex: number) {
+    constructor(baseFilename: string, videoFileName: string, summary: Array<WDParam>, daapFeatures: SpectralFeatures) {
         this.baseFilename = baseFilename;
         this.videoFilename = videoFileName;
         // this.hsFrames = hsFrames;
         this.paramSummary = summary;
         this.daapFeatures = daapFeatures;
-        this.plotVersionIndex = plotVersionIndex;
     }
 }
