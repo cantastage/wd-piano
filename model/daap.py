@@ -25,7 +25,8 @@ class AudioFeatureExtractor(object):
         :return: the extracted features
         """
         print('Starting extraction of spectral features...')
-        bg_color = '#f2f2f2'
+        # bg_color = '#f2f2f2'
+        bg_color = '#edf2f4'
         # print('Arrived spectral parameters: ', spectral_parameters)
         if plot_version_index > 0:
             cls.clear_old_plots(base_filename)  # clear old plot files
@@ -41,7 +42,9 @@ class AudioFeatureExtractor(object):
         audio_file_path = os.path.join('media', 'audio', audio_filename)  # audio file path
 
         y, sr = librosa.load(audio_file_path, sr=sr)  # load audio file
-
+        # y = librosa.effects.trim(y_original, top_db=10, frame_length=win_length, hop_length=hop_length, ref=np.max)[0]  # trim silence
+        # print('Original signal duration: ', librosa.get_duration(y=y_original, sr=sr))
+        # print('Trimmed signal duration: ', librosa.get_duration(y=y, sr=sr))
         # print('librosa loaded audio file length: ', len(y))
         S, phase = librosa.magphase(librosa.stft(y=y,
                                                  n_fft=n_fft,
@@ -132,7 +135,8 @@ class AudioFeatureExtractor(object):
                                                               fmin=spectral_parameters['contrastMinFreqCutoff'],
                                                               n_bands=spectral_parameters['contrastNumBands'],
                                                               )
-        contrast_img = librosa.display.specshow(spectral_contrast,
+        adjusted_contrast = np.delete(spectral_contrast, 0, axis=0)
+        contrast_img = librosa.display.specshow(adjusted_contrast,
                                                 sr=sr,
                                                 hop_length=hop_length,
                                                 x_axis='time',

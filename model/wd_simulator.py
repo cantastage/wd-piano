@@ -62,6 +62,8 @@ def get_wg_lengths(length_calc_mode: int,
     folded_wg_length = int(round(total_wg_length / 2))
     print('folded wg length is = ', folded_wg_length, ' samples')
     left_length = int(round(folded_wg_length * relative_hammer_position))
+    if left_length == 0:
+        left_length = 1
     right_length = folded_wg_length - left_length
     print('left length is = ', left_length, ' samples')
     print('right length is = ', right_length, ' samples')
@@ -112,11 +114,11 @@ class WDSimulator:
         # self.right_length = 68  # TODO parametrize after debug
         # # upper rail and lower rail have the same length
         self.left_length, self.right_length = get_wg_lengths(wg_length_calc_mode,
-                                                   string_frequency,
-                                                   sampling_freq,
-                                                   hammer_relative_striking_point,
-                                                   string_length,
-                                                   sound_speed)
+                                                             string_frequency,
+                                                             sampling_freq,
+                                                             hammer_relative_striking_point,
+                                                             string_length,
+                                                             sound_speed)
         self.wg_length = self.left_length + self.right_length
         self.upper_rail = np.zeros(self.wg_length)
         self.lower_rail = np.zeros(self.wg_length)
