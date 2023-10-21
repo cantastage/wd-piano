@@ -53,20 +53,19 @@ def get_wg_lengths(length_calc_mode: int,
     :param sound_speed: speed of sound in the medium
     :return: length of the left and right part of the waveguide
     """
-    # if length_calc_mode == 0:
-    #     effective_wg_length = round(sampling_freq / (2*f0))  # it is the folded wg length
-    # else:
-    #     # wg_length = L/X_s = L/(c/fs) = fs*L/c
-    #     effective_wg_length = round((string_length / sound_speed) * sampling_freq)
-    # print('effective wg length (folded) is: ', effective_wg_length)
-    # effective_left_length = round(effective_wg_length * relative_hammer_position)
-    # effective_right_length = effective_wg_length - effective_left_length
-    # wg_left_length = effective_left_length * 2
-    # print('calculated left length: ', wg_left_length)
-    # wg_right_length = effective_right_length * 2
-    # print('calculated right length: ', wg_right_length)
-    # return wg_left_length, wg_right_length
-    return 16, 68
+    if length_calc_mode == 0:
+        total_wg_length = sampling_freq / (2 * f0)  # it is the folded wg length
+    else:
+        # wg_length = L/X_s = L/(c/fs) = fs*L/c
+        total_wg_length = ((string_length / sound_speed) * sampling_freq)
+    print('total wg length (unfolded) is = ', total_wg_length, ' samples')
+    folded_wg_length = int(round(total_wg_length / 2))
+    print('folded wg length is = ', folded_wg_length, ' samples')
+    left_length = int(round(folded_wg_length * relative_hammer_position))
+    right_length = folded_wg_length - left_length
+    print('left length is = ', left_length, ' samples')
+    print('right length is = ', right_length, ' samples')
+    return left_length, right_length
 
 
 def get_string_impedance(string_tension: float, string_diameter: float, string_volumetric_density: float) -> float:
@@ -107,14 +106,20 @@ class WDSimulator:
         self.Fs = sampling_freq  # set sampling frequency
         self.Ts = np.double(1 / self.Fs)  # sampling period calculated from sampling frequency
 
-        # Calculate waveguide lengths TODO half the length to get right frequency
-        self.wg_length = 84  # TODO parametrize after debug
-        self.left_length = 16  # TODO parametrize after debug
-        self.right_length = 68  # TODO parametrize after debug
-        # upper rail and lower rail have the same length
-        self.upper_rail = np.zeros(self.wg_length)  # TODO parametrize after debug
+        # # Calculate waveguide lengths TODO half the length to get right frequency
+        # self.wg_length = 84  # TODO parametrize after debug
+        # self.left_length = 16  # TODO parametrize after debug
+        # self.right_length = 68  # TODO parametrize after debug
+        # # upper rail and lower rail have the same length
+        self.left_length, self.right_length = get_wg_lengths(wg_length_calc_mode,
+                                                   string_frequency,
+                                                   sampling_freq,
+                                                   hammer_relative_striking_point,
+                                                   string_length,
+                                                   sound_speed)
+        self.wg_length = self.left_length + self.right_length
+        self.upper_rail = np.zeros(self.wg_length)
         self.lower_rail = np.zeros(self.wg_length)
-
         self.K = soundboard_reflection_coefficient  # set soundboard reflection coefficient
         self.A = linear_felt_stiffness  # set linear felt stiffness
         self.str_length = string_length  # string length in m
@@ -179,8 +184,6 @@ class WDSimulator:
         # self.string_matrix = np.zeros((self.iterations, self.wg_length // 2))
         self.string_matrix = np.zeros((self.iterations, self.wg_length))
         print('Initialized string matrix with shape: ', self.string_matrix.shape)
-        print('total wgLength allocated length is: ', self.wg_length)
-        print("Effective wgLength is: ", self.wg_length // 2)
 
     def run_simulation(self):
         """
@@ -202,9 +205,12 @@ class WDSimulator:
             self.lower_rail[self.left_length - 1] = self.b1  # value exits from wg to junction
             # Manage right part of the waveguide
             self.a2 = self.lower_rail[self.left_length + 1]  # value enters from wg to junction
-            self.lower_rail[self.left_length + 1:self.wg_length - 1] = self.lower_rail[self.left_length + 2:self.wg_length]  # shift values left
-            self.lower_rail[self.wg_length - 1] = self.K * self.upper_rail[self.wg_length - 1]  # value passes from upper rail to lower rail
-            self.upper_rail[self.left_length + 2:self.wg_length] = self.upper_rail[self.left_length + 1:self.wg_length - 1]  # shift values right
+            self.lower_rail[self.left_length + 1:self.wg_length - 1] = self.lower_rail[
+                                                                       self.left_length + 2:self.wg_length]  # shift values left
+            self.lower_rail[self.wg_length - 1] = self.K * self.upper_rail[
+                self.wg_length - 1]  # value passes from upper rail to lower rail
+            self.upper_rail[self.left_length + 2:self.wg_length] = self.upper_rail[
+                                                                   self.left_length + 1:self.wg_length - 1]  # shift values right
             self.upper_rail[self.left_length + 1] = self.b2  # value exits from wg to junction
             # Previous values
             self.wave_integrator_delay_old = self.wave_integrator_delay
@@ -245,19 +251,22 @@ class WDSimulator:
         print('Ended WDF-Piano algorithm')
 
         # Create audio file with the string @ contact point
-        wg_striking_point = round((self.wg_length/2)*Settings.get_hammer_relative_striking_point())
+        wg_striking_point = round((self.wg_length / 2) * Settings.get_hammer_relative_striking_point())
         Settings.set_wg_striking_point(wg_striking_point)
         base_filename = ("WD-Piano-" + datetime.now().strftime("%Y%m%d-%H%M%S.%f"))
         Settings.set_base_filename(base_filename)  # set base filename in settings
         audio_file_name = base_filename + '.wav'  # append .wav extension
         audiofile_save_path = os.path.join('media', 'audio', audio_file_name)
 
-        scaled_string = self.string / np.max(np.abs(self.string))*32767
+        scaled_string = self.string / np.max(np.abs(self.string)) * 32767
         sio.wavfile.write(audiofile_save_path, self.Fs, scaled_string.astype(np.int16))
+        # Shifts string_matrix for visualization purposes TODO remove if not necessary
+        self.visualization_string = np.roll(self.string_matrix, shift=-1, axis=1)
 
         # Scale string and hammer data for low-speed visualization
         # visualization_scaling_factor = 160
         # visualization_string = np.repeat(self.string_matrix, repeats=visualization_scaling_factor, axis=0)
         # visualization_hammer = np.repeat(self.hammer, repeats=visualization_scaling_factor, axis=0)
         # return visualization_string, visualization_hammer
-        return self.string_matrix, self.hammer
+        # return self.string_matrix, self.hammer
+        return self.visualization_string, self.hammer

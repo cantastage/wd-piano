@@ -66,6 +66,7 @@ def get_wg_lengths(length_calc_mode: int,
     wg_right_length = effective_right_length * 2
     print('calculated right length: ', wg_right_length)
     return wg_left_length, wg_right_length
+    # return 16, 68
 
 
 def get_string_impedance(string_tension: float, string_diameter: float, string_volumetric_density: float) -> float:
@@ -145,11 +146,11 @@ class Simulator:
         self.wg_left = np.zeros(self.wg_length_left)
         self.wg_right = np.zeros(self.wg_length_right)
         self.string = np.zeros(self.iterations)  # store values of string @ contact pt for audio file creation
-        self.hammer = np.zeros(self.iterations)
+        self.hammer = np.zeros(self.iterations)  # store values of hammer positions for visualization
 
         # Init incident waves for strings
-        self.a1 = 0
-        self.a2 = 0
+        self.a1 = 0  # value entering series junction from left
+        self.a2 = 0  # value entering series junction from right
         self.b3 = -self.a1 - self.a2
         self.a4 = self.b3
         self.a5 = self.Z5 * self.hammer_initial_velocity / 2
@@ -181,6 +182,7 @@ class Simulator:
 
         # matrix containing summed waveguide values at each iteration
         self.string_matrix = np.zeros((self.iterations, self.wg_length // 2))
+        # self.string_matrix = np.zeros((self.iterations, self.wg_length))
         print('Initialized string matrix with shape: ', self.string_matrix.shape)
         print('total wgLength allocated length is: ', self.wg_length)
         print("Effective wgLength is: ", self.wg_length // 2)
@@ -233,16 +235,36 @@ class Simulator:
             self.hammer[n] = self.hammer_position  # Store hammer position at current iteration
 
             # Fill string_matrix
+            # half_wg_left_length = self.wg_length_left // 2
+            # l1 = self.wg_left[0:half_wg_left_length]
+            # l2 = self.wg_left[half_wg_left_length:self.wg_length_left]
+            # left = np.add(np.flip(l2), l1)
+            # half_wg_right_length = self.wg_length_right // 2
+            # r1 = self.wg_right[0:half_wg_right_length]
+            # r2 = self.wg_right[half_wg_right_length: self.wg_length_right]
+            # right = np.add(np.flip(r2), r1)
+            # new_row = np.concatenate((left, right), axis=0)
+            # self.string_matrix[n, :] = new_row
+
+
+            # left = self.wg_left.copy()
+            # right = self.wg_right.copy()
+            # new_row = np.concatenate((left, right), axis=0)
+            # np.roll(new_row, self.wg_length // 2)
+            # self.string_matrix[n, :] = new_row
+
             half_wg_left_length = self.wg_length_left // 2
-            l1 = self.wg_left[0:half_wg_left_length]
-            l2 = self.wg_left[half_wg_left_length:self.wg_length_left]
-            left = np.add(np.flip(l2), l1)
             half_wg_right_length = self.wg_length_right // 2
-            r1 = self.wg_right[0:half_wg_right_length]
-            r2 = self.wg_right[half_wg_right_length: self.wg_length_right]
-            right = np.add(np.flip(r2), r1)
-            new_row = np.concatenate((left, right), axis=0)
-            self.string_matrix[n, :] = new_row
+            l1 = self.wg_left[0:half_wg_left_length]  # left half of the left waveguide
+            l2 = self.wg_left[half_wg_left_length:]  # right half of the left waveguide
+            left = np.add(np.flip(l2), l1)  # sum the two halves
+            r1 = self.wg_right[0:half_wg_right_length]  # left half of the right waveguide
+            r2 = self.wg_right[half_wg_right_length:]  # right half of the right waveguide
+            right = np.add(np.flip(r2), r1)  # sum the two halves
+            new_row = np.concatenate((left, right), axis=0)  # concatenate the two halves
+            self.string_matrix[n, :] = new_row  # add the new row to the string matrix
+
+
 
         print('Ended WDF-Piano algorithm')
 
@@ -258,7 +280,8 @@ class Simulator:
         sio.wavfile.write(audiofile_save_path, self.Fs, scaled_string.astype(np.int16))
 
         # Scale string and hammer data for low-speed visualization
-        visualization_scaling_factor = 160
-        visualization_string = np.repeat(self.string_matrix, repeats=visualization_scaling_factor, axis=0)
-        visualization_hammer = np.repeat(self.hammer, repeats=visualization_scaling_factor, axis=0)
-        return visualization_string, visualization_hammer
+        # visualization_scaling_factor = 160
+        # visualization_string = np.repeat(self.string_matrix, repeats=visualization_scaling_factor, axis=0)
+        # visualization_hammer = np.repeat(self.hammer, repeats=visualization_scaling_factor, axis=0)
+        # return visualization_string, visualization_hammer
+        return self.string_matrix, self.hammer

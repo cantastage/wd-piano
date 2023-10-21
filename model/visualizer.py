@@ -45,8 +45,10 @@ def get_hammer(hammer_matrix, axes, position_idx):
     :param position_idx: index of the hammer position array
     :return:
     """
-    center_y_coord = hammer_matrix[int(position_idx) - 1]*100
-    center_x_coord = Settings.get_wg_striking_point()
+    center_y_coord = hammer_matrix[int(position_idx)]*100
+    # center_x_coord = Settings.get_wg_striking_point()
+    center_x_coord = 16
+
     center_point = Dot(axes.c2p(center_x_coord, center_y_coord, 0))
     circle = Circle(color=BLUE, fill_color=BLUE, fill_opacity=1.0).surround(center_point, buffer_factor=2.0)
     circle.move_to(circle.get_bottom())
@@ -77,7 +79,7 @@ class Visualizer(Scene):
         )
         # axes.add_coordinates()
         axes_labels = axes.get_axis_labels()
-        idx_tracker = ValueTracker(0)  # initialize value tracker
+        idx_tracker = ValueTracker(-1)  # initialize value tracker TODO check correct start value
         string_graph = always_redraw(lambda: plot_string_graph(string, axes, idx_tracker.get_value()))
 
         # string_label = axes.get_graph_label(string_graph, label='PIANO STRING')
@@ -94,11 +96,11 @@ class Visualizer(Scene):
         # self.add_sound(audio_file_path, time_offset=1, gain=1)  # TODO check time_offset to align sound to vid
         self.wait()
         # animation_run_time = 5  # TODO set to fs*duration
-        # self.play(ApplyMethod(idx_tracker.increment_value, (string_shape[0] - 1)),
-        #           run_time=period * (string_shape[0] - 1))
-        scaling_factor = 160
-        duration = (Settings.get_iterations() / Settings.get_sampling_freq() * scaling_factor)/100*2
-        iterations_value_tracker = (string_shape[0])/100*4
-        print('iterations value tracker:  ', iterations_value_tracker)
-        self.play(ApplyMethod(idx_tracker.increment_value, iterations_value_tracker), run_time=duration)
-        self.wait()
+        self.play(ApplyMethod(idx_tracker.increment_value, (string_shape[0])),
+                  run_time=period * (string_shape[0]))
+        # scaling_factor = 160
+        # duration = (Settings.get_iterations() / Settings.get_sampling_freq() * scaling_factor)/100*2
+        # iterations_value_tracker = (string_shape[0])/100*4
+        # print('iterations value tracker:  ', iterations_value_tracker)
+        # self.play(ApplyMethod(idx_tracker.increment_value, iterations_value_tracker), run_time=duration)
+        # self.wait()

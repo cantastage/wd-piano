@@ -5,6 +5,7 @@ import pandas as pd
 from model.daap import AudioFeatureExtractor
 from model.settings import Settings
 from model.simulator import Simulator
+from model.wd_simulator import WDSimulator
 from model.utils import Utils
 from model.visualizer import Visualizer
 from model.visualizer import set_visualizer_config
@@ -100,20 +101,35 @@ def run_simulation():
                            scaled['hammerInitialVelocity'],
                            scaled['hammerStringDistance'],
                            scaled['linearFeltStiffness'])
-    simulator = Simulator(scaled['iterations'],
-                          scaled['samplingFrequency'],
-                          scaled['soundSpeed'],
-                          scaled['stringFundamentalFrequency'],
-                          scaled['stringTension'],
-                          scaled['stringLength'],
-                          scaled['stringDiameter'],
-                          scaled['soundboardReflectionCoefficient'],
-                          scaled['hammerMass'],
-                          scaled['hammerRelativeStrikingPoint'],
-                          scaled['hammerInitialVelocity'],
-                          scaled['hammerStringDistance'],
-                          scaled['linearFeltStiffness'],
-                          scaled['wgLengthMode'])
+    # simulator = Simulator(scaled['iterations'],
+    #                       scaled['samplingFrequency'],
+    #                       scaled['soundSpeed'],
+    #                       scaled['stringFundamentalFrequency'],
+    #                       scaled['stringTension'],
+    #                       scaled['stringLength'],
+    #                       scaled['stringDiameter'],
+    #                       scaled['soundboardReflectionCoefficient'],
+    #                       scaled['hammerMass'],
+    #                       scaled['hammerRelativeStrikingPoint'],
+    #                       scaled['hammerInitialVelocity'],
+    #                       scaled['hammerStringDistance'],
+    #                       scaled['linearFeltStiffness'],
+    #                       scaled['wgLengthMode'])
+    # TODO new simulator for debug purposes
+    simulator = WDSimulator(scaled['iterations'],
+                            scaled['samplingFrequency'],
+                            scaled['soundSpeed'],
+                            scaled['stringFundamentalFrequency'],
+                            scaled['stringTension'],
+                            scaled['stringLength'],
+                            scaled['stringDiameter'],
+                            scaled['soundboardReflectionCoefficient'],
+                            scaled['hammerMass'],
+                            scaled['hammerRelativeStrikingPoint'],
+                            scaled['hammerInitialVelocity'],
+                            scaled['hammerStringDistance'],
+                            scaled['linearFeltStiffness'],
+                            scaled['wgLengthMode'])
     result = simulator.run_simulation()  # Run simulation
     Settings.set_string(result[0])  # get string matrix
     Settings.set_hammer(result[1])  # get hammer positions vector
