@@ -24,6 +24,9 @@ class Settings(object):
     _effective_wg_length: int = None
     _wg_striking_point: int = None
 
+    _video_scaling_factor = 160
+    _video_percentage = 100
+
     def __new__(cls):
         """
         This method implements the singleton pattern
@@ -145,6 +148,14 @@ class Settings(object):
     def get_wg_striking_point(cls):
         return cls._wg_striking_point
 
+    @classmethod
+    def get_video_scaling_factor(cls):
+        return cls._video_scaling_factor
+
+    @classmethod
+    def get_video_percentage(cls):
+        return cls._video_percentage
+
     # -------------- Setters -------------- #
 
     @classmethod
@@ -166,6 +177,15 @@ class Settings(object):
     @classmethod
     def set_wg_striking_point(cls, wg_striking_point):
         cls._wg_striking_point = wg_striking_point
+
+    @classmethod
+    def set_video_scaling_factor(cls, video_scaling_factor):
+        cls._video_scaling_factor = video_scaling_factor
+
+    @classmethod
+    def set_video_percentage(cls, video_percentage):
+        cls._video_percentage = video_percentage
+
 
     # @classmethod
     # def set_sampling_freq(cls, sampling_freq):

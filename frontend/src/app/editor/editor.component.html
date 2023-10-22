@@ -2,8 +2,8 @@
   <div class="accordion" id="editorSettings">
     <div class="accordion-item">
       <h2 class="accordion-header">
-        <button class="accordion-button acc-button" type="button" data-bs-toggle="collapse" data-bs-target="#editorCollapse"
-          aria-expanded="true" aria-controls="editorCollapse">
+        <button class="accordion-button acc-button" type="button" data-bs-toggle="collapse"
+          data-bs-target="#editorCollapse" aria-expanded="true" aria-controls="editorCollapse">
           Editor Settings
         </button>
       </h2>
@@ -40,11 +40,11 @@
               </div>
               <!-- Soundboard reflection coefficient -->
               <div class="col-sm-12">
-                  <label for="{{this.wdParams[7].name}}" class="form-label">{{this.wdParams[7].name |
-                    camelcaseToWords}}: {{this.wdParams[7].value | number}} <span
-                      class='unit-of-measure'>[{{this.wdParams[7].unit}}]</span></label>
-                  <input type="range" min={{this.wdParams[7].min}} max={{this.wdParams[7].max}} step="1"
-                    class="form-range" id="{{this.wdParams[7].name}}" [(ngModel)]="this.wdParams[7].value">
+                <label for="{{this.wdParams[7].name}}" class="form-label">{{this.wdParams[7].name |
+                  camelcaseToWords}}: {{this.wdParams[7].value | number}} <span
+                    class='unit-of-measure'>[{{this.wdParams[7].unit}}]</span></label>
+                <input type="range" min={{this.wdParams[7].min}} max={{this.wdParams[7].max}} step="1"
+                  class="form-range" id="{{this.wdParams[7].name}}" [(ngModel)]="this.wdParams[7].value">
               </div>
               <!-- Hammer-string distance -->
               <div class="col-sm-12">
@@ -53,7 +53,7 @@
                     class='unit-of-measure'>[{{this.wdParams[11].unit}}]</span></label>
                 <input type="range" min={{this.wdParams[11].min}} max={{this.wdParams[11].max}} step="0.01"
                   class="form-range" id="{{this.wdParams[11].name}}" [(ngModel)]="this.wdParams[11].value">
-            </div>
+              </div>
 
             </div>
           </div>
@@ -65,7 +65,8 @@
               <div class="btn-group" role="group" aria-label="Waveguide length parameters toggle">
                 <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked
                   (change)="toggleSetWGLengthMode(0)">
-                <label class="btn btn-outline-primary" for="btnradio1">Method 1: From String fundamental frequency</label>
+                <label class="btn btn-outline-primary" for="btnradio1">Method 1: From String fundamental
+                  frequency</label>
 
                 <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off"
                   (change)="toggleSetWGLengthMode(1)">
@@ -77,24 +78,24 @@
             <div class="col-sm-12 col-lg-4">
               <label for="{{this.wdParams[3].name}}" class="form-label">{{this.wdParams[3].name |
                 camelcaseToWords}}<span class='unit-of-measure'>[{{this.wdParams[3].unit}}]</span></label>
-              <input type="number" min={{this.wdParams[3].min}} max={{this.wdParams[3].max}} step="0.01" class="form-control"
-                id="{{this.wdParams[3].name}}" [(ngModel)]="this.wdParams[3].value"
+              <input type="number" min={{this.wdParams[3].min}} max={{this.wdParams[3].max}} step="0.01"
+                class="form-control" id="{{this.wdParams[3].name}}" [(ngModel)]="this.wdParams[3].value"
                 [disabled]="currentWgLengthMode == 1" (change)="this.updateWgLengthParams(0)">
             </div>
             <!-- String length -->
             <div class="col-sm-12 col-lg-4">
               <label for="{{this.wdParams[4].name}}" class="form-label">{{this.wdParams[4].name |
                 camelcaseToWords}}<span class='unit-of-measure'>[{{this.wdParams[4].unit}}]</span></label>
-              <input type="number" min={{this.wdParams[4].min}} max={{this.wdParams[4].max}} step="0.01" class="form-control"
-                id="{{this.wdParams[4].name}}" [(ngModel)]="this.wdParams[4].value"
+              <input type="number" min={{this.wdParams[4].min}} max={{this.wdParams[4].max}} step="0.01"
+                class="form-control" id="{{this.wdParams[4].name}}" [(ngModel)]="this.wdParams[4].value"
                 [disabled]="currentWgLengthMode == 0" (change)="this.updateWgLengthParams(1)">
             </div>
             <!-- Sound speed -->
             <div class="col-sm-12 col-lg-4">
               <label for="{{this.wdParams[2].name}}" class="form-label">{{this.wdParams[2].name |
                 camelcaseToWords}}<span class='unit-of-measure'>[{{this.wdParams[2].unit}}]</span></label>
-              <input type="number" min={{this.wdParams[2].min}} max={{this.wdParams[2].max}} step="0.01" class="form-control"
-                id="{{this.wdParams[2].name}}" [(ngModel)]="this.wdParams[2].value"
+              <input type="number" min={{this.wdParams[2].min}} max={{this.wdParams[2].max}} step="0.01"
+                class="form-control" id="{{this.wdParams[2].name}}" [(ngModel)]="this.wdParams[2].value"
                 [disabled]="currentWgLengthMode == 0" (change)="this.updateWgLengthParams(1)">
             </div>
           </div>
@@ -115,8 +116,8 @@
               <label for="{{this.wdParams[6].name}}" class="form-label">{{this.wdParams[6].name |
                 camelcaseToWords}}: {{this.wdParams[6].value | number}} <span
                   class='unit-of-measure'>[{{this.wdParams[6].unit}}]</span></label>
-              <input type="range" min={{this.wdParams[6].min}} max={{this.wdParams[6].max}} step="1"
-                class="form-range" id="{{this.wdParams[6].name}}" [(ngModel)]="this.wdParams[6].value">
+              <input type="range" min={{this.wdParams[6].min}} max={{this.wdParams[6].max}} step="1" class="form-range"
+                id="{{this.wdParams[6].name}}" [(ngModel)]="this.wdParams[6].value">
             </div>
           </div>
           <div class="row">
@@ -132,14 +133,15 @@
             </div>
             <!-- hammer initial velocity -->
             <div class="col-sm-12 col-lg-3">
-              <label for="{{this.wdParams[10].name}}" class="form-label">Initial Velocity: {{this.wdParams[10].value | number}} <span
-                  class='unit-of-measure'>[{{this.wdParams[10].unit}}]</span></label>
+              <label for="{{this.wdParams[10].name}}" class="form-label">Initial Velocity: {{this.wdParams[10].value |
+                number}} <span class='unit-of-measure'>[{{this.wdParams[10].unit}}]</span></label>
               <input type="range" min={{this.wdParams[10].min}} max={{this.wdParams[10].max}} step="0.01"
                 class="form-range" id="{{this.wdParams[10].name}}" [(ngModel)]="this.wdParams[10].value">
             </div>
             <!-- hammer relative striking point -->
             <div class="col-sm-12 col-lg-3">
-              <label for="{{this.wdParams[9].name}}" class="form-label">Relative Striking Point: {{this.wdParams[9].value | number}} <span
+              <label for="{{this.wdParams[9].name}}" class="form-label">Relative Striking Point:
+                {{this.wdParams[9].value | number}} <span
                   class='unit-of-measure'>[{{this.wdParams[9].unit}}]</span></label>
               <input type="range" min={{this.wdParams[9].min}} max={{this.wdParams[9].max}} step="0.01"
                 class="form-range" id="{{this.wdParams[9].name}}" [(ngModel)]="this.wdParams[9].value">
@@ -155,12 +157,30 @@
           </div>
           <div clas="row">
             <div class="col-sm-12">
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="showVideoCheck" [checked]="createVideo == true" (change)="this.createVideo = !this.createVideo">
-                <label class="form-check-label" for="showVideoCheck">
-                    Create video for the simulation NOTE: experimental feature, may require a lot of time to render.
-                </label>
-            </div>
+              <h6>Video Renderer Options</h6>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="showVideoCheck"
+                      [checked]="createVideo == true" (change)="this.createVideo = !this.createVideo">
+                    <label class="form-check-label" for="showVideoCheck">
+                      Create video for the simulation NOTE: experimental feature, may require a lot of time to render.
+                    </label>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                  <label for="video-scaling-factor" class="form-label">Speed scaling factor: {{
+                    this.videoScalingFactor}}</label>
+                  <input type="range" min=1 max=200 step="1" class="form-range" id="video-scaling-factor"
+                    [(ngModel)]="this.videoScalingFactor" [disabled]="!this.createVideo">
+                </div>
+                <div class="col-sm-12 col-md-6">
+                  <label for="video-percentage-factor" class="form-label">Simulation View percentage: {{
+                    this.videoPercentage}} %</label>
+                  <input type="range" min=1 max=100 step="1" class="form-range" id="video-percentage-factor"
+                    [(ngModel)]="this.videoPercentage" [disabled]="!this.createVideo">
+                </div>
+              </div>
             </div>
             <div class="col-sm-12 text-center start-button">
               <button type="submit" class="btn btn-primary" (click)="runWDPiano()" [disabled]="!this.isRendered">
@@ -183,5 +203,6 @@
   <div class="col-sm-12 text-center" *ngIf="this.wdResults.length < 1">
     <p>Nothing to show yet. Let's run WD-Piano!</p>
   </div>
-  <app-wd-results [results]="this.wdResults" [spectralParameters]="spectralParameters" *ngIf="this.wdResults.length > 0"></app-wd-results>
+  <app-wd-results [results]="this.wdResults" [spectralParameters]="spectralParameters"
+    *ngIf="this.wdResults.length > 0"></app-wd-results>
 </div>

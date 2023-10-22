@@ -46,8 +46,8 @@ def get_hammer(hammer_matrix, axes, position_idx):
     :return:
     """
     center_y_coord = hammer_matrix[int(position_idx)]*100
-    # center_x_coord = Settings.get_wg_striking_point()
-    center_x_coord = 16
+    center_x_coord = Settings.get_wg_striking_point()
+    # center_x_coord = 16
 
     center_point = Dot(axes.c2p(center_x_coord, center_y_coord, 0))
     circle = Circle(color=BLUE, fill_color=BLUE, fill_opacity=1.0).surround(center_point, buffer_factor=2.0)
@@ -91,16 +91,13 @@ class Visualizer(Scene):
 
         self.add(string_graph, hammer)
 
-        # add sound TODO needs to be scaled to the video
-        # audio_file_path = os.path.join('media', 'audio', Settings.get_base_filename() + '.wav')
-        # self.add_sound(audio_file_path, time_offset=1, gain=1)  # TODO check time_offset to align sound to vid
+        scaling_factor = Settings.get_video_scaling_factor()
+        shown_percentage = Settings.get_video_percentage()
+        duration = (Settings.get_iterations() / Settings.get_sampling_freq() * scaling_factor) / 100 * shown_percentage
+        value_tracker_iterations = (string_shape[0])/100*shown_percentage
         self.wait()
-        # animation_run_time = 5  # TODO set to fs*duration
-        self.play(ApplyMethod(idx_tracker.increment_value, (string_shape[0])),
-                  run_time=period * (string_shape[0]))
-        # scaling_factor = 160
-        # duration = (Settings.get_iterations() / Settings.get_sampling_freq() * scaling_factor)/100*2
-        # iterations_value_tracker = (string_shape[0])/100*4
-        # print('iterations value tracker:  ', iterations_value_tracker)
-        # self.play(ApplyMethod(idx_tracker.increment_value, iterations_value_tracker), run_time=duration)
-        # self.wait()
+        # self.play(ApplyMethod(idx_tracker.increment_value, (string_shape[0])),
+        #           run_time=period * (string_shape[0]))
+        self.play(ApplyMethod(idx_tracker.increment_value, value_tracker_iterations), run_time=duration)
+        self.wait()
+

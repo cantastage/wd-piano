@@ -78,9 +78,9 @@ export class ApiService {
    * @param spectralParameters
    * @returns 
    */
-  public runWDPiano(wdParams: Object, spectralParameters: SpectralAnalysisParameters, createVideo: boolean): Observable<any> {
+  public runWDPiano(wdParams: Object, spectralParameters: SpectralAnalysisParameters, createVideo: boolean, videoScalingFactor: number, videoPercentage: number): Observable<any> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    const body = JSON.stringify({ wdParameters: wdParams, spectralParameters: spectralParameters, createVideo: createVideo });
+    const body = JSON.stringify({ wdParameters: wdParams, spectralParameters: spectralParameters, createVideo: createVideo, videoScalingFactor: videoScalingFactor, videoPercentage: videoPercentage });
     return this.http.post<any>(API_URL + '/simulation', body, { 'headers': headers });
   }
 

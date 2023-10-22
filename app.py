@@ -87,6 +87,10 @@ def run_simulation():
     received_wd_parameters = request.json['wdParameters']
     received_spectral_parameters = request.json['spectralParameters']
     received_create_video = request.json['createVideo']
+    received_video_scaling_factor = request.json['videoScalingFactor']
+    received_video_percentage = request.json['videoPercentage']
+    Settings.set_video_scaling_factor(received_video_scaling_factor)
+    Settings.set_video_percentage(received_video_percentage)
     scaled = Utils.scale_wd_parameters(received_wd_parameters)
     Settings.set_wd_params(scaled['iterations'],
                            scaled['samplingFrequency'],
@@ -101,21 +105,6 @@ def run_simulation():
                            scaled['hammerInitialVelocity'],
                            scaled['hammerStringDistance'],
                            scaled['linearFeltStiffness'])
-    # simulator = Simulator(scaled['iterations'],
-    #                       scaled['samplingFrequency'],
-    #                       scaled['soundSpeed'],
-    #                       scaled['stringFundamentalFrequency'],
-    #                       scaled['stringTension'],
-    #                       scaled['stringLength'],
-    #                       scaled['stringDiameter'],
-    #                       scaled['soundboardReflectionCoefficient'],
-    #                       scaled['hammerMass'],
-    #                       scaled['hammerRelativeStrikingPoint'],
-    #                       scaled['hammerInitialVelocity'],
-    #                       scaled['hammerStringDistance'],
-    #                       scaled['linearFeltStiffness'],
-    #                       scaled['wgLengthMode'])
-    # TODO new simulator for debug purposes
     simulator = WDSimulator(scaled['iterations'],
                             scaled['samplingFrequency'],
                             scaled['soundSpeed'],

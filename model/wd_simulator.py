@@ -183,7 +183,6 @@ class WDSimulator:
         self.hammer_position_old = np.double(0)
 
         # matrix containing summed waveguide values at each iteration
-        # self.string_matrix = np.zeros((self.iterations, self.wg_length // 2))
         self.string_matrix = np.zeros((self.iterations, self.wg_length))
         print('Initialized string matrix with shape: ', self.string_matrix.shape)
 
@@ -253,7 +252,8 @@ class WDSimulator:
         print('Ended WDF-Piano algorithm')
 
         # Create audio file with the string @ contact point
-        wg_striking_point = round((self.wg_length / 2) * Settings.get_hammer_relative_striking_point())
+        # wg_striking_point = round((self.wg_length / 2) * Settings.get_hammer_relative_striking_point())
+        wg_striking_point = self.left_length + 1
         Settings.set_wg_striking_point(wg_striking_point)
         base_filename = ("WD-Piano-" + datetime.now().strftime("%Y%m%d-%H%M%S.%f"))
         Settings.set_base_filename(base_filename)  # set base filename in settings
@@ -262,13 +262,11 @@ class WDSimulator:
 
         scaled_string = self.string / np.max(np.abs(self.string)) * 32767
         sio.wavfile.write(audiofile_save_path, self.Fs, scaled_string.astype(np.int16))
-        # Shifts string_matrix for visualization purposes TODO remove if not necessary
-        self.visualization_string = np.roll(self.string_matrix, shift=-1, axis=1)
 
         # Scale string and hammer data for low-speed visualization
-        # visualization_scaling_factor = 160
-        # visualization_string = np.repeat(self.string_matrix, repeats=visualization_scaling_factor, axis=0)
-        # visualization_hammer = np.repeat(self.hammer, repeats=visualization_scaling_factor, axis=0)
-        # return visualization_string, visualization_hammer
-        # return self.string_matrix, self.hammer
-        return self.visualization_string, self.hammer
+        visualization_scaling_factor = Settings.get_video_scaling_factor()
+        visualization_string = np.repeat(self.string_matrix, repeats=visualization_scaling_factor, axis=0)
+        visualization_hammer = np.repeat(self.hammer, repeats=visualization_scaling_factor, axis=0)
+        visualization_string = np.roll(visualization_string, shift=-1, axis=1) # shift string matrix to the left for visualization purposes
+        visualization_hammer = np.roll(visualization_hammer, shift=-1, axis=0)
+        return visualization_string, visualization_hammer
