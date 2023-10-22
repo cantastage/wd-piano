@@ -3,6 +3,7 @@ from typing import Dict
 from manim import *
 from model.settings import Settings
 
+
 def set_visualizer_config(config_params: Dict):
     """
     Sets the manim config parameters for the visualizer
@@ -31,15 +32,19 @@ def plot_string_graph(string_matrix, axes, iteration_idx):
     :param iteration_idx:
     :return:
     """
-    repetition_counter = Settings.get_plot_repetition_counter()
-    real_row_idx = Settings.get_real_row_idx()
-    if iteration_idx % Settings.get_video_scaling_factor() < repetition_counter:
-        Settings.set_plot_repetition_counter(repetition_counter + 1)
+    repetition_counter = Settings.get_string_plot_repetition_counter()
+    real_row_idx = Settings.get_string_real_row_idx()
+    scaling_factor = Settings.get_video_scaling_factor()
+    if scaling_factor > 1:
+        if iteration_idx % Settings.get_video_scaling_factor() < repetition_counter:
+            Settings.set_string_plot_repetition_counter(repetition_counter + 1)
+        else:
+            Settings.set_string_plot_repetition_counter(0)
+            Settings.set_string_real_row_idx(real_row_idx + 1)
+        # NOTA: per le colonne si conta x - 1 poichè le coordinate dell'asse sono indicizzate a partire da 1
+        return axes.plot(lambda x: string_matrix[Settings.get_string_real_row_idx()][int(x) - 1], color=RED)
     else:
-        Settings.set_plot_repetition_counter(0)
-        Settings.set_real_row_idx(real_row_idx + 1)
-    # NOTA: per le colonne si conta x - 1 poichè le coordinate dell'asse sono indicizzate a partire da 1
-    return axes.plot(lambda x: string_matrix[Settings.get_real_row_idx()][int(x) - 1], color=RED)
+        return axes.plot(lambda x: string_matrix[int(iteration_idx)][int(x) - 1], color=RED)
 
 
 def get_hammer(hammer_matrix, axes, iteration_idx):
@@ -51,15 +56,18 @@ def get_hammer(hammer_matrix, axes, iteration_idx):
     :param iteration_idx: index of the hammer position array
     :return:
     """
-    repetition_counter = Settings.get_plot_repetition_counter()
-    real_position_idx = Settings.get_real_row_idx()
-    if iteration_idx % Settings.get_video_scaling_factor() < repetition_counter:
-        Settings.set_plot_repetition_counter(repetition_counter + 1)
+    repetition_counter = Settings.get_hammer_plot_repetition_counter()
+    real_position_idx = Settings.get_hammer_real_position_idx()
+    scaling_factor = Settings.get_video_scaling_factor()
+    if scaling_factor > 1:
+        if iteration_idx % scaling_factor < repetition_counter:
+            Settings.set_hammer_plot_repetition_counter(repetition_counter + 1)
+        else:
+            Settings.set_hammer_plot_repetition_counter(0)
+            Settings.set_hammer_real_position_idx(real_position_idx + 1)
+        center_y_coord = hammer_matrix[Settings.get_hammer_real_position_idx()] * 100
     else:
-        Settings.set_plot_repetition_counter(0)
-        Settings.set_real_row_idx(real_position_idx + 1)
-        
-    center_y_coord = hammer_matrix[Settings.get_real_row_idx()] * 100
+        center_y_coord = hammer_matrix[int(iteration_idx)] * 100
     center_x_coord = Settings.get_wg_striking_point()
 
     center_point = Dot(axes.c2p(center_x_coord, center_y_coord, 0))
@@ -113,6 +121,6 @@ class Visualizer(Scene):
         #           run_time=period * (string_shape[0]))
         self.play(ApplyMethod(idx_tracker.increment_value, value_tracker_iterations), run_time=duration)
         self.wait()
-        Settings.set_real_row_idx(0)
-        Settings.set_plot_repetition_counter(0)
+        Settings.set_string_real_row_idx(0)
+        Settings.set_string_plot_repetition_counter(0)
 

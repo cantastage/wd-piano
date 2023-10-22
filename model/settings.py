@@ -27,8 +27,11 @@ class Settings(object):
     _video_scaling_factor = 160
     _video_percentage = 100
 
-    _real_row_idx = 0
-    _plot_repetition_counter = 0
+    _string_real_row_idx = 0
+    _string_plot_repetition_counter = 0
+    _hammer_real_position_idx = 0
+    _hammer_plot_repetition_counter = 0
+
 
     def __new__(cls):
         """
@@ -72,12 +75,19 @@ class Settings(object):
         return cls._string_diameter
 
     @classmethod
-    def get_real_row_idx(cls):
-        return cls._real_row_idx
+    def get_string_real_row_idx(cls):
+        return cls._string_real_row_idx
 
     @classmethod
-    def get_plot_repetition_counter(cls):
-        return cls._plot_repetition_counter
+    def get_string_plot_repetition_counter(cls):
+        return cls._string_plot_repetition_counter
+    @classmethod
+    def get_hammer_real_position_idx(cls):
+        return cls._hammer_real_position_idx
+
+    @classmethod
+    def get_hammer_plot_repetition_counter(cls):
+        return cls._hammer_plot_repetition_counter
 
     @classmethod
     def set_wd_params(cls, iterations,
@@ -198,12 +208,20 @@ class Settings(object):
         cls._video_percentage = video_percentage
 
     @classmethod
-    def set_real_row_idx(cls, real_row_idx):
-        cls._real_row_idx = real_row_idx
+    def set_string_real_row_idx(cls, real_row_idx):
+        cls._string_real_row_idx = real_row_idx
 
     @classmethod
-    def set_plot_repetition_counter(cls, plot_repetition_counter):
-        cls._plot_repetition_counter = plot_repetition_counter
+    def set_string_plot_repetition_counter(cls, plot_repetition_counter):
+        cls._string_plot_repetition_counter = plot_repetition_counter
+
+    @classmethod
+    def set_hammer_real_position_idx(cls, hammer_real_position_idx):
+        cls._hammer_real_position_idx = hammer_real_position_idx
+
+    @classmethod
+    def set_hammer_plot_repetition_counter(cls, hammer_plot_repetition_counter):
+        cls._hammer_plot_repetition_counter = hammer_plot_repetition_counter
 
 
     # @classmethod
