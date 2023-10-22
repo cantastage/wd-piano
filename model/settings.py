@@ -27,6 +27,9 @@ class Settings(object):
     _video_scaling_factor = 160
     _video_percentage = 100
 
+    _real_row_idx = 0
+    _plot_repetition_counter = 0
+
     def __new__(cls):
         """
         This method implements the singleton pattern
@@ -67,6 +70,14 @@ class Settings(object):
     @classmethod
     def get_string_diameter(cls):
         return cls._string_diameter
+
+    @classmethod
+    def get_real_row_idx(cls):
+        return cls._real_row_idx
+
+    @classmethod
+    def get_plot_repetition_counter(cls):
+        return cls._plot_repetition_counter
 
     @classmethod
     def set_wd_params(cls, iterations,
@@ -185,6 +196,14 @@ class Settings(object):
     @classmethod
     def set_video_percentage(cls, video_percentage):
         cls._video_percentage = video_percentage
+
+    @classmethod
+    def set_real_row_idx(cls, real_row_idx):
+        cls._real_row_idx = real_row_idx
+
+    @classmethod
+    def set_plot_repetition_counter(cls, plot_repetition_counter):
+        cls._plot_repetition_counter = plot_repetition_counter
 
 
     # @classmethod

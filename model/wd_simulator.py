@@ -265,8 +265,10 @@ class WDSimulator:
 
         # Scale string and hammer data for low-speed visualization
         visualization_scaling_factor = Settings.get_video_scaling_factor()
-        visualization_string = np.repeat(self.string_matrix, repeats=visualization_scaling_factor, axis=0)
-        visualization_hammer = np.repeat(self.hammer, repeats=visualization_scaling_factor, axis=0)
+        visualization_string = self.string_matrix
+        visualization_hammer = self.hammer
+        # visualization_string = np.repeat(self.string_matrix, repeats=visualization_scaling_factor, axis=0)
+        # visualization_hammer = np.repeat(self.hammer, repeats=visualization_scaling_factor, axis=0)
         visualization_string = np.roll(visualization_string, shift=-1, axis=1) # shift string matrix to the left for visualization purposes
         visualization_hammer = np.roll(visualization_hammer, shift=-1, axis=0)
         return visualization_string, visualization_hammer

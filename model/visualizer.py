@@ -3,7 +3,6 @@ from typing import Dict
 from manim import *
 from model.settings import Settings
 
-
 def set_visualizer_config(config_params: Dict):
     """
     Sets the manim config parameters for the visualizer
@@ -23,31 +22,45 @@ def set_visualizer_config(config_params: Dict):
         config[k] = v
 
 
-def plot_string_graph(string_matrix, axes, row_idx):
+def plot_string_graph(string_matrix, axes, iteration_idx):
     """
     Plots the piano string graph
 
     :param string_matrix:
     :param axes:
-    :param row_idx:
+    :param iteration_idx:
     :return:
     """
+    repetition_counter = Settings.get_plot_repetition_counter()
+    real_row_idx = Settings.get_real_row_idx()
+    if iteration_idx % Settings.get_video_scaling_factor() < repetition_counter:
+        Settings.set_plot_repetition_counter(repetition_counter + 1)
+    else:
+        Settings.set_plot_repetition_counter(0)
+        Settings.set_real_row_idx(real_row_idx + 1)
     # NOTA: per le colonne si conta x - 1 poichè le coordinate dell'asse sono indicizzate a partire da 1
-    return axes.plot(lambda x: string_matrix[int(row_idx)][int(x) - 1], color=RED)
+    return axes.plot(lambda x: string_matrix[Settings.get_real_row_idx()][int(x) - 1], color=RED)
 
 
-def get_hammer(hammer_matrix, axes, position_idx):
+def get_hammer(hammer_matrix, axes, iteration_idx):
     """
     Draws the piano hammer
 
     :param hammer_matrix: the array containing the hammer positions
     :param axes: the axes system where the hammer is plot
-    :param position_idx: index of the hammer position array
+    :param iteration_idx: index of the hammer position array
     :return:
     """
-    center_y_coord = hammer_matrix[int(position_idx)]*100
+    repetition_counter = Settings.get_plot_repetition_counter()
+    real_position_idx = Settings.get_real_row_idx()
+    if iteration_idx % Settings.get_video_scaling_factor() < repetition_counter:
+        Settings.set_plot_repetition_counter(repetition_counter + 1)
+    else:
+        Settings.set_plot_repetition_counter(0)
+        Settings.set_real_row_idx(real_position_idx + 1)
+        
+    center_y_coord = hammer_matrix[Settings.get_real_row_idx()] * 100
     center_x_coord = Settings.get_wg_striking_point()
-    # center_x_coord = 16
 
     center_point = Dot(axes.c2p(center_x_coord, center_y_coord, 0))
     circle = Circle(color=BLUE, fill_color=BLUE, fill_opacity=1.0).surround(center_point, buffer_factor=2.0)
@@ -100,4 +113,6 @@ class Visualizer(Scene):
         #           run_time=period * (string_shape[0]))
         self.play(ApplyMethod(idx_tracker.increment_value, value_tracker_iterations), run_time=duration)
         self.wait()
+        Settings.set_real_row_idx(0)
+        Settings.set_plot_repetition_counter(0)
 

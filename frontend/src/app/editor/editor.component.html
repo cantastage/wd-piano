@@ -164,14 +164,14 @@
                     <input class="form-check-input" type="checkbox" value="" id="showVideoCheck"
                       [checked]="createVideo == true" (change)="this.createVideo = !this.createVideo">
                     <label class="form-check-label" for="showVideoCheck">
-                      Create video for the simulation NOTE: experimental feature, may require a lot of time to render.
+                      Enable simulation video rendering. NOTE: experimental feature, may require a lot of time to render.
                     </label>
                   </div>
                 </div>
                 <div class="col-sm-12 col-md-6">
-                  <label for="video-scaling-factor" class="form-label">Speed scaling factor: {{
+                  <label for="video-scaling-factor" class="form-label">Plot repetition factor: {{
                     this.videoScalingFactor}}</label>
-                  <input type="range" min=1 max=200 step="1" class="form-range" id="video-scaling-factor"
+                  <input type="range" min=1 max=800 step="1" class="form-range" id="video-scaling-factor"
                     [(ngModel)]="this.videoScalingFactor" [disabled]="!this.createVideo">
                 </div>
                 <div class="col-sm-12 col-md-6">
