@@ -80,11 +80,9 @@ class Visualizer(Scene):
     """
     Class used to visualize Piano Hammer-String Interaction
     """
-
-    #  TODO find if you can pass string-hammer matrices directly to Scene or you need to encapsulate it in superclass
     def construct(self):
         # -------------- PYTHON DATA --------------------------------------#
-        period = 1 / Settings.get_sampling_freq()  # calculated from settings TODO check if needs to be given as param
+        period = 1 / Settings.get_sampling_freq()
 
         string = Settings.get_string()  # string matrix
         hammer_positions = Settings.get_hammer()  # hammer matrix
@@ -92,7 +90,7 @@ class Visualizer(Scene):
         string_shape = string.shape  # get string matrix shape to calculate max value
         string_max_value = np.max(np.abs(string))  # add check on negative max value using abs
         hammer_max_value = np.max(hammer_positions)
-        max_y_coord = math.ceil(max(string_max_value, hammer_max_value))
+        max_y_coord = math.ceil(string_max_value)  # round up to the nearest integer
         axes = Axes(
             x_range=[0, string_shape[1], 1],
             y_range=[-max_y_coord, max_y_coord, 1],
